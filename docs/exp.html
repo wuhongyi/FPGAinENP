@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>状态机 &mdash; Template 1 文档</title>
+  <title>经验总结 &mdash; Template 1 文档</title>
   
 
   
@@ -37,8 +37,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="FIFO" href="FIFO.html" />
-    <link rel="prev" title="计数器" href="counter.html" /> 
+    <link rel="prev" title="FIFO" href="FIFO.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,22 +90,22 @@
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
 <p class="caption"><span class="caption-text">状态机</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">状态机</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">状态机规则</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">状态机规则1： 使用四段式写法</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
 <p class="caption"><span class="caption-text">FIFO</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
 <p class="caption"><span class="caption-text">经验总结</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">经验总结</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">计数器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">状态机</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fifo">FIFO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">波形</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -152,13 +151,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>状态机</li>
+      <li>经验总结</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/FSM.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/exp.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -172,14 +171,47 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>状态机<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<h1>经验总结<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <div class="section" id="id2">
-<h2>状态机规则<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<div class="section" id="id3">
-<h3>状态机规则1： 使用四段式写法<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
-<p>四段式不是指四个 always 代码，而是四段代码。另外需要注意的是，四段式状态机并非固定不变。如果没有输出信号就只有三段代码（两个always）；如果有多个输出信号，那么就会有多个always。</p>
-<p>第一段，同步时序的 always 模块，格式化描述次态迁移到现态寄存器。</p>
+<h2>计数器<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>画出输入、输出波形（根据功能要求、画出输入和输出的波形）</p></li>
+<li><p>画出计数器结构</p></li>
+<li><p>确定加1条件（计数器数什么，加1条件不足则加flag_add）</p></li>
+<li><p>确定计数器结束条件（数多少个，个数不同时，用变量法，即用x代替；x不足以区分时则加flag_sel）</p></li>
+<li><p>如果有更新波形</p></li>
+<li><p>其它信号变化点条件（其它信号：即输出或内部信号；变化点：0变1、1变0）</p></li>
+<li><p>写出计数器代码</p></li>
+<li><p>写出其它信号代码</p></li>
+</ul>
 </div>
+<div class="section" id="id3">
+<h2>状态机<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>明确功能</p></li>
+<li><p>输出分析</p></li>
+<li><p>状态合并</p></li>
+<li><p>状态转移条件</p></li>
+<li><p>转移条件</p></li>
+<li><p>完整性检查</p></li>
+<li><p>状态机代码</p></li>
+<li><p>功能代码</p></li>
+</ul>
+</div>
+<div class="section" id="fifo">
+<h2>FIFO<a class="headerlink" href="#fifo" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>FIFO的写使能写数据，同时用组合逻辑或者同时用时序逻辑。</p></li>
+<li><p>FIFO的读使能，用组合逻辑。</p></li>
+<li><p>数据的输出用组合逻辑。</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>波形<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>时序逻辑的波形观看方法：时钟上升沿前看输入，时钟上升沿后看输出。</p></li>
+<li><p>组合逻辑的波形观看方法：输入变输出即刻变。</p></li>
+</ul>
 </div>
 </div>
 
@@ -191,10 +223,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="FIFO.html" class="btn btn-neutral float-right" title="FIFO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="counter.html" class="btn btn-neutral float-left" title="计数器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="FIFO.html" class="btn btn-neutral float-left" title="FIFO" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

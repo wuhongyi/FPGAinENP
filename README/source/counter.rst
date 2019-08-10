@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 8月 10 21:36:04 2019 (+0800)
-.. Last-Updated: 六 8月 10 21:56:18 2019 (+0800)
+.. Last-Updated: 六 8月 10 22:05:18 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 2
+..     Update #: 4
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -108,7 +108,7 @@
   end process;
 
 **verilog**
-  
+
 .. code-block:: verilog
 
   always @(posedge clk or negedge rst_n) begin
@@ -146,7 +146,7 @@
   end process;
 
 **verilog**
-  
+
 .. code-block:: verilog
   
   always @(posedge clk or negedge rst_n) begin
@@ -174,7 +174,7 @@
   add_cnt <=  a=2;--add 1 
 
 **verilog**
-  
+
 .. code-block:: verilog
 
   assign add_cnt = a==2;//add 1 
@@ -191,7 +191,7 @@
   end_cnt <= add_cnt and (cnt =  10-1);--end
 
 **verilog**
-  
+
 .. code-block:: verilog
 
   assign end_cnt = add_cnt && cnt == 10-1; //end
@@ -235,7 +235,7 @@
   end_cnt <= add_cnt and (cnt =  -1);--补充计数器数多少数
 
 **verilog**
-  
+
 .. code-block:: verilog		
 
   reg [  :0]   cnt    ;
