@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>计数器 &mdash; Template 1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="状态机" href="FSM.html" />
+    <link rel="prev" title="软件安装" href="Install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Template
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
+</ul>
+<p class="caption"><span class="caption-text">计数器</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">计数器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">计数器规则</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">计数器规则1: 计数器逐一考虑三要素–初值、加1条件、结束条件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">计数器规则2:计数初值必须为0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">计数器规则3：使用某一计数值，必须同时满足加1条件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#x-1">计数器规则4：结束条件必须同时满足加1条件，且结束值必须是 x-1 的形式。</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assign-1-cnt-1">计数器规则5：当取某个数时，assign 形式必须为：（加1条件） &amp;&amp; （cnt==计数值-1）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">计数器规则6：结束后必须回到0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">计数器规则7：若需要限定范围，则推荐使用“&gt;=”和“&lt;”两种符号</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">计数器规则8：设计步骤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">计数器规则9：加1条件必须与计数器严格对齐，其它信号一律向计数器对齐</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">计数器规则10：命名必须符合规范</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">状态机</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">FIFO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Template</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>计数器</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/counter.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>计数器<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>计数器规则<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>计数器规则1: 计数器逐一考虑三要素–初值、加1条件、结束条件<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>任何计数器都有三个要素：初值、加1条件、结束值</p>
+<ul class="simple">
+<li><p>初值：计数器的默认值或者开始计数的值</p></li>
+<li><p>加1条件：计数器执行加1条件</p></li>
+<li><p>结束值：计数器计数周期的最后一个值 设计计数器，要逐一考虑这三个要素，一般是先考虑初值，再考虑加1条件，最后再考虑结束值。</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>计数器规则2:计数初值必须为0<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>计数器的默认值和开始值一定要为0。这是我们规范的统一要求。我们知道一般编程语言计数都是从0开始的，0表示第1个，1表示第2个，。。。这里我们也参考这种做法，计数器都从0开始计数。</p>
+<p>所有计数器都统一从0开始计数，有助于我们阅读理解、方便使用，从而不用从头看具体代码，就能清楚这个数值的含义。</p>
+</div>
+<div class="section" id="id5">
+<h3>计数器规则3：使用某一计数值，必须同时满足加1条件<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>计数器从0开始计数，计数器的默认值，也就是复位值也是0。当计数器值为0时，如何判断这是计数器的第一个值还是还没开始计数的默认值呢？</p>
+<p>可以通过加1条件来判断。当加1条件无效时，计数器值为0表示未开始计数的默认值；当加1条件有效时，计数器值为0表示计数器的第1个值。以此类推，当cnt==x-1时，不表示数到x；只有当cnt==x-1时，并且加1条件有效时，才表示数到x。</p>
+<p>例如：当加1条件为add_cnt，且 add_cnt &amp;&amp; cnt==4时，表示计数到5个；而当 add_cnt==0 &amp;&amp; cnt==4时，不表示计数到5个。</p>
+</div>
+<div class="section" id="x-1">
+<h3>计数器规则4：结束条件必须同时满足加1条件，且结束值必须是 x-1 的形式。<a class="headerlink" href="#x-1" title="永久链接至标题">¶</a></h3>
+<p>计数器的结束条件必须同时满足加1条件。例如假设要计数5个，那么结束值是4，但是结束条件不是 cnt==4 而是 add_cnt &amp;&amp; cnt==4。因为 cnt==4 不表示计数到5个，只有 add_cnt &amp;&amp; cnt==4 时，才表示计数到 5 个。</p>
+<p>为了更好地阅读代码，我们这里规定结束值必须是 x-1 的形式，即 add_cnt &amp;&amp; cnt==4 要写成 add_cnt &amp;&amp; cnt==5-1。这里的“5”表示希望计算的个数，“-1”则是固定格式。有了这个约定后，计数的边界就很明确了。</p>
+</div>
+<div class="section" id="assign-1-cnt-1">
+<h3>计数器规则5：当取某个数时，assign 形式必须为：（加1条件） &amp;&amp; （cnt==计数值-1）<a class="headerlink" href="#assign-1-cnt-1" title="永久链接至标题">¶</a></h3>
+<p>当要从计数器取某个数时，例如要取计数器的第5个点，就很容易写成cnt==5-1，这是不正确的。正确的写法时：（加1条件）&amp;&amp;（cnt==计数值-1），如 add_cnt &amp;&amp; cnt==5-1。</p>
+</div>
+<div class="section" id="id6">
+<h3>计数器规则6：结束后必须回到0<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>每轮计数周期结束后，计数器变回0，这是为了使计数器能够循环重复计数。</p>
+</div>
+<div class="section" id="id7">
+<h3>计数器规则7：若需要限定范围，则推荐使用“&gt;=”和“&lt;”两种符号<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>设计时，考虑边界值通常要花费一些心思，而且容易出错。为此，我们约定：若需要限定范围，则推荐使用“&gt;=”和“&lt;”两种符号。例如要取前8个数，那么就取 cnt&gt;=0 &amp;&amp; cnt&lt;8。注意，一定是“大与或等于”和“小于”符号，而不使用“大与”和“小于或等于”符号。</p>
+<p>该规则参考编程里的for循环语句。假如要循环 8 次，for 循环的条件通常会写成“i==0; i&lt;8; i++”，前面的0表示开始值，后面的8表示循环次数。当然，也可以写成“i==0; i&lt;=7; i++”，但是这数字的意义就实在令人费解了，虽然知道7是从8-1得来的，但多一个“-1”的思考，就纯属画蛇添足了。</p>
+</div>
+<div class="section" id="id8">
+<h3>计数器规则8：设计步骤<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p><strong>设计步骤: 先写计数器的always段，条件用名字代替；然后用assign写出加1条件；最后用assign写出结束条件</strong></p>
+<p>我们的计数器模版代码包括三段。</p>
+<p>第一段，写出计数器的 process/always 段</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>process(clk,rst_n)
+begin
+  if(rst_n = &#39;0&#39;)then
+    cnt &lt;= 0;
+  elsif(clk&#39;event and clk = &#39;1&#39;)then
+    if(加1条件)then
+      if(结束条件)then
+        cnt &lt;= 0;
+      else
+        cnt &lt;= cnt + 1;
+      end if;
+    end if;
+  end if;
+end process;
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>always @(posedge clk or negedge rst_n) begin
+   if(!rst_n) begin
+      cnt &lt;= 0;
+   end
+    else if(加1条件) begin
+        if(结束条件)
+    cnt &lt;= 0;
+      else
+    cnt &lt;= cnt + 1;
+   end
+end
+</pre></div>
+</div>
+<p>大家有没有发现上述模版的特点？这个模版只需要填两项内容：加一条件和结束条件。如果为加1条件和结束条件定义一个信号名，例如 add_cnt 和 end_cnt，则代码变成：</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">)</span>
+<span class="k">begin</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">rst_n</span> <span class="o">=</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span><span class="k">then</span>
+    <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">elsif</span><span class="p">(</span><span class="n">clk</span><span class="na">&#39;event</span> <span class="k">and</span> <span class="n">clk</span> <span class="o">=</span> <span class="sc">&#39;1&#39;</span><span class="p">)</span><span class="k">then</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">add_cnt</span> <span class="p">)</span><span class="k">then</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">end_cnt</span><span class="p">)</span><span class="k">then</span>
+        <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="k">else</span>
+        <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="n">cnt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>
+   <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">add_cnt</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">end_cnt</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+      <span class="k">else</span>
+    <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="n">cnt</span> <span class="o">+</span> <span class="mh">1</span><span class="p">;</span>
+   <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>第二段，用组合逻辑写出加1条件</p>
+<p>在此阶段，只需要想好一个点，就是计数器的加1条件。假设计数器的加1条件为 a==2，则代码如下：</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">add_cnt</span> <span class="o">&lt;=</span>  <span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="c1">--add 1</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">add_cnt</span> <span class="o">=</span> <span class="n">a</span><span class="o">==</span><span class="mh">2</span><span class="p">;</span><span class="c1">//add 1</span>
+</pre></div>
+</div>
+<p>第三段，用组合逻辑写出结束条件</p>
+<p>在此阶段，只需要想好一个点，就是计数器的结束值。参考计数器规则5的要求，结束条件的形式一定是：（加1条件）&amp;&amp;（cnt==计数值-1）.假设计数器要计数10个，则代码如下：</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">end_cnt</span> <span class="o">&lt;=</span> <span class="n">add_cnt</span> <span class="k">and</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">=</span>  <span class="mi">10</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="c1">--end</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">end_cnt</span> <span class="o">=</span> <span class="n">add_cnt</span> <span class="o">&amp;&amp;</span> <span class="n">cnt</span> <span class="o">==</span> <span class="mh">10</span><span class="o">-</span><span class="mh">1</span><span class="p">;</span> <span class="c1">//end</span>
+</pre></div>
+</div>
+<p>至此，就完成了计数器代码的设计。总结一下这段代码的特点：每次值考虑一件事，按这要求去做，就非常容易完成代码设计。</p>
+<p>以下是我们完整的模版：</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">cnt</span> <span class="o">:</span> <span class="kt">integer</span> <span class="k">range</span> <span class="mi">0</span> <span class="k">to</span>  <span class="p">;</span><span class="c1">--max number</span>
+<span class="k">signal</span> <span class="n">add_cnt</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">end_cnt</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+
+<span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">)</span>
+<span class="k">begin</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">rst_n</span> <span class="o">=</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span><span class="k">then</span>
+    <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">elsif</span><span class="p">(</span><span class="n">clk</span><span class="na">&#39;event</span> <span class="k">and</span> <span class="n">clk</span> <span class="o">=</span> <span class="sc">&#39;1&#39;</span><span class="p">)</span><span class="k">then</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">add_cnt</span> <span class="p">)</span><span class="k">then</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">end_cnt</span><span class="p">)</span><span class="k">then</span>
+        <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="k">else</span>
+        <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="n">cnt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+
+<span class="n">add_cnt</span> <span class="o">&lt;=</span>  <span class="p">;</span><span class="c1">--add 1   dout_tmp=&#39;1&#39;</span>
+<span class="n">end_cnt</span> <span class="o">&lt;=</span> <span class="n">add_cnt</span> <span class="k">and</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">=</span>  <span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="c1">--end</span>
+</pre></div>
+</div>
+<p>以上模版中，只需要补充三个地方，</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">cnt</span> <span class="o">:</span> <span class="kt">integer</span> <span class="k">range</span> <span class="mi">0</span> <span class="k">to</span>  <span class="p">;</span><span class="c1">--在 to 后面补充计数器的最大计数范围</span>
+<span class="n">add_cnt</span> <span class="o">&lt;=</span>  <span class="p">;</span><span class="c1">--补充加1条件</span>
+<span class="n">end_cnt</span> <span class="o">&lt;=</span> <span class="n">add_cnt</span> <span class="k">and</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">=</span>  <span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="c1">--补充计数器数多少数</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span>  <span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">cnt</span>    <span class="p">;</span>
+<span class="kt">wire</span>         <span class="n">add_cnt</span><span class="p">;</span>
+<span class="kt">wire</span>         <span class="n">end_cnt</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>
+   <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">add_cnt</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">end_cnt</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+      <span class="k">else</span>
+    <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="n">cnt</span> <span class="o">+</span> <span class="mh">1</span><span class="p">;</span>
+   <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">assign</span> <span class="n">add_cnt</span> <span class="o">=</span> <span class="p">;</span><span class="c1">//condition: add 1</span>
+<span class="k">assign</span> <span class="n">end_cnt</span> <span class="o">=</span> <span class="n">add_cnt</span> <span class="o">&amp;&amp;</span> <span class="n">cnt</span> <span class="o">==</span>  <span class="o">-</span><span class="mh">1</span><span class="p">;</span> <span class="c1">//End condition, last value</span>
+</pre></div>
+</div>
+<p>以上模版中，只需要补充三个地方，</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span>  <span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">cnt</span>    <span class="p">;</span><span class="c1">//补充计数器的最大计数范围</span>
+<span class="k">assign</span> <span class="n">add_cnt</span> <span class="o">=</span> <span class="p">;</span><span class="c1">//补充加1条件</span>
+<span class="k">assign</span> <span class="n">end_cnt</span> <span class="o">=</span> <span class="n">add_cnt</span> <span class="o">&amp;&amp;</span> <span class="n">cnt</span> <span class="o">==</span>  <span class="o">-</span><span class="mh">1</span><span class="p">;</span> <span class="c1">//补充计数器数多少数</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>计数器规则9：加1条件必须与计数器严格对齐，其它信号一律向计数器对齐<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>我们设计出计数器，但一般计数器不是最终的目的，最终的目的是输出各种信号。设计计数器是为了方便产生这些输出信号（包括中间信号），并能从计数器获取变化条件。例如：信号dout在计数到6时拉高，则其变1的条件是：add_cnt &amp;&amp; cnt==6-1。</p>
+<p>假设有两个信号：dout0在计数到6时拉高；dout1在计数到7时拉高。一种做法是dout0变1的条件是add_cnt &amp;&amp; cnt==6-1，dout1变1的条件是dout0==1。这个dout1就是间接与计数器对齐。这是非常不好的方法。这里我们建议一律向计数器对齐，dout1变1的条件应该为add_cnt &amp;&amp; cnt==7-1。</p>
+</div>
+<div class="section" id="id10">
+<h3>计数器规则10：命名必须符合规范<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p><strong>比如：add_cnt 表示加1条件；end_cnt 表示结束条件</strong></p>
+<p>如无特别说明，计数器的命名都要符合规范，加1条件的前缀为 “add_”，结束条件的前缀为 “end_”。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="FSM.html" class="btn btn-neutral float-right" title="状态机" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Install.html" class="btn btn-neutral float-left" title="软件安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

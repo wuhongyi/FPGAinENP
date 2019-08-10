@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>搜索 &mdash; Template 1 文档</title>
+  <title>状态机 &mdash; Template 1 文档</title>
   
 
   
@@ -26,7 +26,6 @@
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/translations.js"></script>
-        <script type="text/javascript" src="_static/searchtools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -37,7 +36,9 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
-    <link rel="search" title="搜索" href="#" /> 
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="FIFO" href="FIFO.html" />
+    <link rel="prev" title="计数器" href="counter.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -64,7 +65,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -90,8 +91,14 @@
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
 <p class="caption"><span class="caption-text">状态机</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">状态机</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">状态机规则</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">状态机规则1： 使用四段式写法</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">FIFO</span></p>
 <ul>
@@ -141,12 +148,14 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>搜索</li>
+      <li>状态机</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
+            <a href="_sources/FSM.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -158,24 +167,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="id1">
+<h1>状态机<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>状态机规则<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>状态机规则1： 使用四段式写法<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>四段式不是指四个 always 代码，而是四段代码。另外需要注意的是，四段式状态机并非固定不变。如果没有输出信号就只有三段代码（两个always）；如果有多个输出信号，那么就会有多个always。</p>
+<p>第一段，同步时序的 always 模块，格式化描述次态迁移到现态寄存器。</p>
+</div>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="FIFO.html" class="btn btn-neutral float-right" title="FIFO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="counter.html" class="btn btn-neutral float-left" title="计数器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -208,14 +225,7 @@
   
   
     
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>
