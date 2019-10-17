@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 8月 10 21:23:32 2019 (+0800)
-.. Last-Updated: 六 8月 10 21:32:35 2019 (+0800)
+.. Last-Updated: 四 10月 17 20:15:49 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 1
+..     Update #: 4
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -98,8 +98,37 @@ modelsim_ase/bin 文件夹内存放modelsim启动的脚本
   ./vsim 
   
 
-  
+----------------------------------------------------------------------
+linux usb blaster权限的设置
+----------------------------------------------------------------------
 
+对于错误 error (209053): unexpected error in jtag server -- error code 89，它产生的原因在于，在linux系统下，Quartus ii 的驱动 USB-Blaster 只能有 root 用户使用，而普通用户是无权使用的。解决思路是更改 USB-Blaster 的使用权限，使得普通用户也能使用。
+
+因为usb 默认只有root才有权限访问，所以只要把权限修改一下即可，usb blaster 链接上电脑
+
+.. code-block:: bash
+
+  [root@localhost 003]# lsusb
+  Bus 002 Device 002: ID 8087:8000 Intel Corp. 
+  Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+  Bus 001 Device 002: ID 8087:8008 Intel Corp. 
+  Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+  Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+  Bus 003 Device 004: ID 0bda:0184 Realtek Semiconductor Corp. RTS5182 Card Reader
+  Bus 003 Device 013: ID 09fb:6001 Altera Blaster
+  Bus 003 Device 003: ID 046d:c077 Logitech, Inc. M105 Optical Mouse
+  Bus 003 Device 002: ID 413c:2107 Dell Computer Corp. 
+  Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+说明 /dev/bus/usb/003/013 这个文件现在就是我们的 Altera Blaster 设备
+
+.. code-block:: bash
+		
+  cd /dev/bus/usb/003
+  chmod 666 013
+
+
+  
 ============================================================
 Vivado 安装
 ============================================================

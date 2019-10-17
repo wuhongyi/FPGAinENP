@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>临时存放 &mdash; Template 1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Template
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
+</ul>
+<p class="caption"><span class="caption-text">计数器</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
+</ul>
+<p class="caption"><span class="caption-text">状态机</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">FIFO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">经验总结</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Template</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>临时存放</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/temp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>临时存放<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="verilog-random">
+<h2>Verilog $random用法 随机数<a class="headerlink" href="#verilog-random" title="永久链接至标题">¶</a></h2>
+<p>$random函数调用时返回一个32位的随机数，它是一个带符号的整形数.</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span><span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">rand</span><span class="p">;</span>
+<span class="c1">//产生一个在 -59 — 59 范围的随机数</span>
+<span class="n">rand</span><span class="o">=</span><span class="nb">$random</span><span class="o">%</span><span class="mh">60</span><span class="p">;</span>
+
+<span class="c1">// 产生 0~59 之间的随机数的例子</span>
+<span class="n">rand</span><span class="o">=</span><span class="p">{</span><span class="nb">$random</span><span class="p">}</span> <span class="o">%</span><span class="mh">60</span><span class="p">;</span> <span class="c1">//通过位拼接操作{}</span>
+
+<span class="c1">// 产生一个在 min, max 之间随机数</span>
+<span class="n">rand</span> <span class="o">=</span> <span class="n">min</span><span class="o">+</span><span class="p">{</span><span class="nb">$random</span><span class="p">}</span><span class="o">%</span><span class="p">(</span><span class="n">max</span><span class="o">-</span><span class="n">min</span><span class="o">+</span><span class="mh">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="verilog">
+<h2>verilog数组定义及其初始化<a class="headerlink" href="#verilog" title="永久链接至标题">¶</a></h2>
+<p>这里的内存模型指的是内存的行为模型。Verilog 中提供了两维数组来帮助我们建立内存的行为模型。具体来说，就是可以将内存宣称为一个reg类型的数组，这个数组中的任何一个单元都可以通过一个下标去访问。这样的数组的定义方式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span><span class="n">wordsize</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span> <span class="n">array_name</span> <span class="p">[</span><span class="mh">0</span> <span class="o">:</span> <span class="n">arraysize</span><span class="p">];</span>
+
+<span class="c1">// 例如：</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">my_memory</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">255</span><span class="p">];</span>
+<span class="c1">// 其中 [7:0] 是内存的宽度，而[0:255]则是内存的深度（也就是有多少存储单元），其中宽度为8位，深度为256。地址0对应着数组中的0存储单元。</span>
+
+<span class="c1">// 如果要存储一个值到某个单元中去，可以这样做：</span>
+<span class="n">my_memory</span> <span class="p">[</span><span class="n">address</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_in</span><span class="p">;</span>
+
+<span class="c1">// 而如果要从某个单元读出值，可以这么做：</span>
+<span class="n">data_out</span> <span class="o">=</span> <span class="n">my_memory</span> <span class="p">[</span><span class="n">address</span><span class="p">];</span>
+
+<span class="c1">// 但要是只需要读一位或者多个位，就要麻烦一点，因为Verilog不允许读/写一个位。这时，就需要使用一个变量转换一下：</span>
+<span class="c1">// 例如：</span>
+<span class="n">data_out</span> <span class="o">=</span> <span class="n">my_memory</span><span class="p">[</span><span class="n">address</span><span class="p">];</span>
+<span class="n">data_out_it_0</span> <span class="o">=</span> <span class="n">data_out</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
+<span class="c1">// 这里首先从一个单元里面读出数据，然后再取出读出的数据的某一位的值。</span>
+</pre></div>
+</div>
+<div class="section" id="id2">
+<h3>初始化内存<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>初始化内存有多种方式，这里介绍的是使用$readmemb 和 $readmemh系统任务来将保存在文件中的数据填充到内存单元中去。$readmemb 和 $readmemh 是类似的，只不过 $readmemb 用于内存的二进制表示，而 $readmemh 则用于内存内容的 16 进制表示。这里以 $readmemh 系统任务来介绍。</p>
+<p>语法</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="nb">$readmemh</span><span class="p">(</span><span class="s">&quot;file_name&quot;</span><span class="p">,</span> <span class="n">mem_array</span><span class="p">,</span> <span class="n">start_addr</span><span class="p">,</span> <span class="n">stop_addr</span><span class="p">);</span>
+
+<span class="c1">// 注意的是：</span>
+<span class="c1">// file_name是包含数据的文本文件名，mem_array是要初始化的内存单元数组名，start_addr 和 stop_addr 是可选的，指示要初始化单元的起始地址和结束地址。</span>
+</pre></div>
+</div>
+<p>下面是一个简单的例子：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span>  <span class="n">memory</span> <span class="p">();</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">my_memory</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">255</span><span class="p">];</span>
+
+<span class="k">initial</span> <span class="k">begin</span>
+<span class="nb">$readmemh</span><span class="p">(</span><span class="s">&quot;memory.list&quot;</span><span class="p">,</span> <span class="n">my_memory</span><span class="p">);</span>
+<span class="k">end</span>
+<span class="k">endmodule</span>
+
+<span class="c1">// 这里使用内存文件 memory.list 来初始化 my_memory 数组。</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="forgeneratefor">
+<h2>组合逻辑for循环和generate生成块for循环<a class="headerlink" href="#forgeneratefor" title="永久链接至标题">¶</a></h2>
+<p>例1：给一个100位的输入向量，颠倒它的位顺序输出</p>
+<p>只需要将in[0]赋值给out[99]、in[1]赋值给out[98]……也可以直接用for循环，其规范格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>for（循环变量赋初值；循环执行条件；循环变量增值） 循环体语句块；
+</pre></div>
+</div>
+<p>通过 for 循环赋值很方便：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">top_module</span> <span class="p">(</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">99</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">in</span><span class="p">,</span>
+    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">99</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span>
+<span class="p">);</span>
+
+    <span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="nb">$bits</span><span class="p">(</span><span class="n">out</span><span class="p">);</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>      <span class="c1">// $bits() is a system function that returns the width of a signal.</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="nb">$bits</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mh">1</span><span class="p">];</span>    <span class="c1">// $bits(out) is 100 because out is 100 bits wide.</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+<p>例2：建立一个“人口计数器”来统计一个256位输入向量中1的数量</p>
+<p>统计1的个数可以直接将每一bit位加起来，得到的数值即为1的个数。缩减运算符只有与或非，由于加法不是一个简单地逻辑门就可以计算，所以只能一位一位的提取出来相加，因此用for语句</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">top_module</span> <span class="p">(</span>
+      <span class="k">input</span> <span class="p">[</span><span class="mh">254</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">in</span><span class="p">,</span>
+      <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span>
+<span class="p">);</span>
+
+      <span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>       <span class="c1">// Combinational always block</span>
+              <span class="n">out</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>        <span class="c1">// if don&#39;t assign initial value zero,simulate errors will emerge</span>
+              <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mh">255</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+                      <span class="n">out</span> <span class="o">=</span> <span class="n">out</span> <span class="o">+</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+      <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+<p>例3：通过实例化100个一位全加器制造一个100位的脉冲进位加法器</p>
+<p>这个加法器将两个100位的输入信号和一个进位进位加起来产生一个100位的输出信号和进位信号。我们依旧用for循环语句，只是这次循环内容是另一个模块，在这里就要引入一个新的概念generate生成块。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Verilog-2001添加了generate循环，允许产生module和primitive的多个实例化，同时也可以产生多个variable，net，task，function，continous assignment，initial和always。在generate语句中可以引入if-else和case语句，根据条件不同产生不同的实例化。
+用法：
+1. generate语法有generate for, genreate if和generate case三种
+2. generate for语句必须有genvar关键字定义for的变量
+3. for 的内容必须加begin和end
+4. 必须给for语段起个名字，这个名字会作为generate循环的实例名称。
+</pre></div>
+</div>
+<p>标准格式：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>generate
+genvar i；//定义变量
+for(循环变量赋初值；循环执行条件；循环变量增值) begin：gfor  //生成后的例化名，gfor[1].ui(实例化)、gfor[2].ui(实例化)......
+//需要循环的实例模块
+end
+endgenerate
+</pre></div>
+</div>
+<p>因为第一个实例的输入是cin，其他的都是上一级的cout，因此把第一个单独例化。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">99</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span>
+    <span class="k">input</span> <span class="n">cin</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">99</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">cout</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">99</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sum</span> <span class="p">);</span>
+    <span class="n">fadd</span> <span class="n">u0</span><span class="p">(.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">cin</span><span class="p">(</span><span class="n">cin</span><span class="p">),</span>
+            <span class="p">.</span><span class="n">cout</span><span class="p">(</span><span class="n">cout</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span>
+            <span class="p">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
+            <span class="p">);</span>
+    <span class="k">generate</span>
+        <span class="k">genvar</span>        <span class="n">i</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mh">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mh">100</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="k">begin</span><span class="o">:</span> <span class="n">gfor</span>
+                <span class="n">fadd</span> <span class="n">ui</span><span class="p">(.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>        <span class="c1">//this i of ui won&#39;t be replaced</span>
+                        <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                        <span class="p">.</span><span class="n">cin</span><span class="p">(</span><span class="n">cout</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mh">1</span><span class="p">]),</span>
+                        <span class="p">.</span><span class="n">cout</span><span class="p">(</span><span class="n">cout</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                        <span class="p">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                        <span class="p">);</span>
+            <span class="k">end</span>
+        <span class="k">endgenerate</span>
+<span class="k">endmodule</span>
+<span class="k">module</span> <span class="n">fadd</span><span class="p">(</span>
+    <span class="k">input</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">cin</span><span class="p">,</span>
+    <span class="k">output</span> <span class="n">cout</span><span class="p">,</span> <span class="n">sum</span> <span class="p">);</span>
+    <span class="k">assign</span> <span class="p">{</span><span class="n">cout</span><span class="p">,</span><span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="n">cin</span><span class="p">;</span>
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://blog.csdn.net/weixin_38197667/article/details/90401400">https://blog.csdn.net/weixin_38197667/article/details/90401400</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

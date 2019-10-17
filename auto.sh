@@ -10,8 +10,8 @@ make clean
 make html
 cp -r build/html/* ../docs/
 
-#make latexpdf
-#mv build/latex/mztio.pdf README.pdf
+make latexpdf
+mv build/latex/template.pdf ../book.pdf
 
 make clean
 

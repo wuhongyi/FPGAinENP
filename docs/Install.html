@@ -86,7 +86,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">软件安装</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#ise">ISE 安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#altera">Altera 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#altera">Altera 安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linux-usb-blaster">linux usb blaster权限的设置</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#vivado">Vivado 安装</a></li>
 </ul>
 </li>
@@ -219,6 +222,29 @@ ip           logs        nios2eds         quartus  uninstall
 <p>modelsim_ase/bin 文件夹内存放modelsim启动的脚本</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./vsim
 </pre></div>
+</div>
+<div class="section" id="linux-usb-blaster">
+<h3>linux usb blaster权限的设置<a class="headerlink" href="#linux-usb-blaster" title="永久链接至标题">¶</a></h3>
+<p>对于错误 error (209053): unexpected error in jtag server – error code 89，它产生的原因在于，在linux系统下，Quartus ii 的驱动 USB-Blaster 只能有 root 用户使用，而普通用户是无权使用的。解决思路是更改 USB-Blaster 的使用权限，使得普通用户也能使用。</p>
+<p>因为usb 默认只有root才有权限访问，所以只要把权限修改一下即可，usb blaster 链接上电脑</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost <span class="m">003</span><span class="o">]</span><span class="c1"># lsusb</span>
+Bus <span class="m">002</span> Device <span class="m">002</span>: ID <span class="m">8087</span>:8000 Intel Corp.
+Bus <span class="m">002</span> Device <span class="m">001</span>: ID 1d6b:0002 Linux Foundation <span class="m">2</span>.0 root hub
+Bus <span class="m">001</span> Device <span class="m">002</span>: ID <span class="m">8087</span>:8008 Intel Corp.
+Bus <span class="m">001</span> Device <span class="m">001</span>: ID 1d6b:0002 Linux Foundation <span class="m">2</span>.0 root hub
+Bus <span class="m">004</span> Device <span class="m">001</span>: ID 1d6b:0003 Linux Foundation <span class="m">3</span>.0 root hub
+Bus <span class="m">003</span> Device <span class="m">004</span>: ID 0bda:0184 Realtek Semiconductor Corp. RTS5182 Card Reader
+Bus <span class="m">003</span> Device <span class="m">013</span>: ID 09fb:6001 Altera Blaster
+Bus <span class="m">003</span> Device <span class="m">003</span>: ID 046d:c077 Logitech, Inc. M105 Optical Mouse
+Bus <span class="m">003</span> Device <span class="m">002</span>: ID 413c:2107 Dell Computer Corp.
+Bus <span class="m">003</span> Device <span class="m">001</span>: ID 1d6b:0002 Linux Foundation <span class="m">2</span>.0 root hub
+</pre></div>
+</div>
+<p>说明 /dev/bus/usb/003/013 这个文件现在就是我们的 Altera Blaster 设备</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /dev/bus/usb/003
+chmod <span class="m">666</span> <span class="m">013</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="vivado">
