@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FIFO &mdash; FPGA 在中低能实验核物理中的应用 1.0 alpha 文档</title>
+  <title>README &mdash; FPGA 在中低能实验核物理中的应用 1.0 alpha 文档</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="经验总结" href="exp.html" />
-    <link rel="prev" title="状态机" href="FSM.html" /> 
+    <link rel="next" title="软件安装" href="Install.html" />
+    <link rel="prev" title="Application of FPGA in medium and low energy experimental nuclear physics" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -83,8 +83,8 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
@@ -110,18 +110,8 @@
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
 <p class="caption"><span class="caption-text">FIFO</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">FIFO</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">FIFO 规则</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fifo1-show-ahead">FIFO规则1： 使用 Show-ahead 都模式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fifo2">FIFO规则2： 读、写隔离规则</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fifo3">FIFO规则3： 读使能必须判断空状态，并且用组合逻辑产生</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fifo4-fifo">FIFO规则4： 处理报文时，把指示信号与数据一起存入FIFO</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fifo5-fifo">FIFO规则5： 读、写时钟不同时，必须用异步FIFO</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
 <p class="caption"><span class="caption-text">经验总结</span></p>
 <ul>
@@ -172,13 +162,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>FIFO</li>
+      <li>README</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/FIFO.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -191,29 +181,94 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="fifo">
-<h1>FIFO<a class="headerlink" href="#fifo" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id1">
-<h2>FIFO 规则<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<div class="section" id="fifo1-show-ahead">
-<h3>FIFO规则1： 使用 Show-ahead 都模式<a class="headerlink" href="#fifo1-show-ahead" title="永久链接至标题">¶</a></h3>
-<p>根据 FIFO 的读模式，一般有两种使用模式：Show-ahead 和 Nornal 模式。这两种模式的区别在生成 FIFO IP核额步骤中说明。</p>
-</div>
-<div class="section" id="fifo2">
-<h3>FIFO规则2： 读、写隔离规则<a class="headerlink" href="#fifo2" title="永久链接至标题">¶</a></h3>
-<p>读、写隔离规则是指： 读控制和写控制是独立的，它们之间除了用 FIFO 交流信息外，不能有任何信息传递。因此，既不能根据 FIFO 的读状态或者读出的数据来决定写行为，也不能根据 FIFO 的写状态和写入的数据来决定读行为。</p>
-</div>
-<div class="section" id="fifo3">
-<h3>FIFO规则3： 读使能必须判断空状态，并且用组合逻辑产生<a class="headerlink" href="#fifo3" title="永久链接至标题">¶</a></h3>
-<p>rdreq 必须由组合逻辑产生，原因与 empty 有关。</p>
-</div>
-<div class="section" id="fifo4-fifo">
-<h3>FIFO规则4： 处理报文时，把指示信号与数据一起存入FIFO<a class="headerlink" href="#fifo4-fifo" title="永久链接至标题">¶</a></h3>
-</div>
-<div class="section" id="fifo5-fifo">
-<h3>FIFO规则5： 读、写时钟不同时，必须用异步FIFO<a class="headerlink" href="#fifo5-fifo" title="永久链接至标题">¶</a></h3>
-</div>
-</div>
+  <div class="section" id="readme">
+<h1>README<a class="headerlink" href="#readme" title="永久链接至标题">¶</a></h1>
+<p>国际上最大的两个 FPGA 厂家为 Xilinx 和 Altrea（已被Intel收购），Xilinx 公司的软件有 ISE(已停止更新，适用于早年推出的FPGA) 和 Vivado（适用于新推出的FPGA），Altera公司的软件为 Quartus。我们已有的 LUPO/DT5495/MZTIO 刚好对应三个软件.</p>
+<p>编程语言 VHDL/verilog 两种, 本质上没有多大的区别。 我已经写好两种语言的关键模块的模版， 直接套用就可以。 整个编程的核心就是熟练掌握计数器状态机以及FIFO的使用。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>ISE/Altera/Vivado 软件</dt><dd><ul>
+<li><dl class="simple">
+<dt>软件安装</dt><dd><ul>
+<li><p>ISE</p></li>
+<li><p>Vivado</p></li>
+<li><p>Quartus</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>刷固件</p></li>
+<li><p>工程使用案例</p></li>
+<li><p>仿真</p></li>
+<li><p>常用IP核介绍</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>语法</dt><dd><ul>
+<li><p>VHDL</p></li>
+<li><p>verilog</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>LUPO/DT5495/MZTIO 模块介绍</dt><dd><ul>
+<li><p>LUPO</p></li>
+<li><p>DT5495</p></li>
+<li><p>MZTIO</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>计数器</p></li>
+<li><p>状态机</p></li>
+<li><p>FIFO</p></li>
+<li><dl class="simple">
+<dt>项目实践</dt><dd><ul>
+<li><dl class="simple">
+<dt>计数器</dt><dd><ul>
+<li><p>时钟降频（很简单）</p></li>
+<li><p>LED灯（很简单）</p></li>
+<li><p>scaler（很简单）</p></li>
+<li><p>信号展宽（很简单）</p></li>
+<li><p>UART(有个不错的verilog模版，需要进一步优化，提高普适性)</p></li>
+<li><p>IIC</p></li>
+<li><p>显示器实现示波器功能</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>状态机</dt><dd><ul>
+<li><p>SPI(CAEN DT5495 有个VHDL模版，需要按照我们的规范重新优化)</p></li>
+<li><p>基于PCIE的在线监视（将获取的数据直接发送到可编程PCIE板卡进行处理，可进行初步的处理后，再通过网络发送到下游的服务器存储。。。这个难度有点大）</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>FIFO</dt><dd><ul>
+<li><p>信号延迟（简单）</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>脉冲发生器</dt><dd><ul>
+<li><p>基本波形的脉冲产生(简单)</p></li>
+<li><p>任意波形的脉冲产生(需要借助外部输入进行控制,因此需要利用 UART/SPI/IIC 等通讯技术)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 </div>
 
 
@@ -224,10 +279,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="exp.html" class="btn btn-neutral float-right" title="经验总结" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Install.html" class="btn btn-neutral float-right" title="软件安装" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="FSM.html" class="btn btn-neutral float-left" title="状态机" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Application of FPGA in medium and low energy experimental nuclear physics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

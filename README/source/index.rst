@@ -10,7 +10,9 @@ Application of FPGA in medium and low energy experimental nuclear physics
    :maxdepth: 2
    :caption: Contents:
 
+   README.rst
 
+	     
 ISE/Altera/Vivado软件
 ==========================
 
@@ -20,6 +22,16 @@ ISE/Altera/Vivado软件
 
    Install.rst
 
+语法
+==================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 语法
+
+   VHDL.rst
+   verilog.rst
+
 	     
 硬件介绍
 ==================
@@ -28,7 +40,10 @@ ISE/Altera/Vivado软件
    :maxdepth: 2
    :caption: 硬件介绍
 
-
+   LUPO.rst
+   DT5495.rst
+   MZTIO.rst
+	     
 
 计数器
 ==================
@@ -67,11 +82,5 @@ FIFO
    :caption: 经验总结
 
    exp.rst
-
+   temp.rst
    
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

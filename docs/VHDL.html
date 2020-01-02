@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>VHDL &mdash; FPGA 在中低能实验核物理中的应用 1.0 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="verilog" href="verilog.html" />
+    <link rel="prev" title="软件安装" href="Install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FPGA 在中低能实验核物理中的应用
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
+</ul>
+<p class="caption"><span class="caption-text">语法</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">VHDL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">程序结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">实体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">结构体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">库与包的调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">基本数据类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">数据对象</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">并行语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">顺序语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">VHDL中数据类型转换与移位</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#signedunsignedstd-logic-vector">signed、unsigned以及std_logic_vector之间的区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#numeric-std">NUMERIC_STD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shift-left-and-shift-right">shift_left() and shift_right()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MZTIO.html">MZTIO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">计数器</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
+</ul>
+<p class="caption"><span class="caption-text">状态机</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">FIFO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">经验总结</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
+<li class="toctree-l1"><a class="reference internal" href="temp.html">临时存放</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FPGA 在中低能实验核物理中的应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>VHDL</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/VHDL.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vhdl">
+<h1>VHDL<a class="headerlink" href="#vhdl" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>程序结构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>一个完整的 VHDL 程序的以及各部分说明如下：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>库(LIBRARY)</dt><dd><ul>
+<li><p>存放已经编译的包集合、实体、结构体和配置等。库的好处在于使设计者可共享已经编译过的设计结果</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>包(PACKAGE)</dt><dd><ul>
+<li><p>声明在实体中将用到的信号定义、常数定义、数据类型、元件语句、函数定义和过程定义等</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>实体(ENTITY)</dt><dd><ul>
+<li><p>定义电路的输入/输出接口</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>结构体(ARCHITECTURE)</dt><dd><ul>
+<li><p>描述电路内部的功能。一个实体可以对应很多个结构体，但在同一时间，只有一个结构体被使用</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>配置(CONFIGURATION)</dt><dd><ul>
+<li><p>决定哪一个结构体被使用</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="id2">
+<h3>实体<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>实体用于定义电路的输入/输出引脚，但并不描述电路的具体构造和实现的功能。</p>
+<p>实体声明的格式是：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>ENTITY 实体名 IS
+[GENERIC (常数名: 数据类型: 设定值)] -- 类属参数说明，&quot;[]&quot; 中内容为可选项
+PORT
+(
+  端口名1: 端口方向 端口类型; -- 端口声明语句用分号隔开
+  端口名1: 端口方向 端口类型;
+    .
+    .
+    .
+  端口名n: 端口方向 端口类型;
+);
+END [实体名]; -- 可以只用 END 结束实体声明，不一定加实体名
+</pre></div>
+</div>
+<p>格式说明：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>实体名</dt><dd><ul>
+<li><p>实体名必须与文件名相同，否则编译时会出错。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>类属参数</dt><dd><ul>
+<li><p>类属参数为实体声明中的可选项，常用来规定端口的大小、信号的定时特征等。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>端口名</dt><dd><ul>
+<li><p>端口名时设计者赋予每个外部引脚的名称。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>端口方向</dt><dd><ul>
+<li><p>端口方向用来定义外部引脚的信号方向时输入还是输出（或者同时可作为输入与输出）</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>端口类型</dt><dd><ul>
+<li><p>定义端口的数据类型。 VHDL 是一种强类型语言，即对语句中的所有端口信号、内部信号和操作数的数据类型有严格规定，只有相同数据类型的端口信号和操作数才能相互作用。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>结构体<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>结构体描述实体内部的结构或功能。一个实体可对应多个结构体。每个结构体分别代表该实体功能的不同实现方案或不同描述方式。在同一时刻，只有一个结构体起作用，可以通过配置来决定使用哪一个结构体进行综合或仿真。</p>
+<p>结构体的语法格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>ARCHITECTURE 结构体名 OF 实体名 IS
+[声明语句]
+BEGIN
+功能描述语句
+END [结构体名]
+</pre></div>
+</div>
+<p>实体名必须与实体声明部分所取的名字相同，而结构体名则可有设计者自由选择，但当一个实体具有多个结构体时，各结构体的取名不可相同。</p>
+<p>声明语句用于声明该结构体将用到的信号、数据类型、常数、子程序和元件等。需要注意的是，在一个结构体内声明的数据类型、常数、子程序（包括函数和过程）和元件只能用于该结构体中。如果希望在其它的实体或结构体中引用这些定义，那么需要将其作为包来处理。</p>
+<p>功能描述语句具体描述了结构体的功能和行为。功能描述语句可能包含有 5 种不同类型的以并行方式工作的语句结构，这几个语句结构又被称为结构体的子结构。</p>
+<ul class="simple">
+<li><p>块语句（BLOCK）： 由一系列并行语句（concurrent statement）组成，从形式上划分出模块，改善程序的可读性，对综合无影响。</p></li>
+<li><p>进程语句（PROCESS）： 进程内部为顺序语句，而不同进程间则是并行执行的。进程只有在某个敏感信号发生变化时才会触发。</p></li>
+<li><p>信号赋值语句： 将实体内的处理结果向定义的信号或端口进行赋值。</p></li>
+<li><p>子程序调用： 调用过程（PROCEDURE）或函数（FUNCTION），并将获得的结果赋值给信号。</p></li>
+<li><p>元件例化语句： 调用其它设计实体描述的电路，将其作为本设计实体的一个元件。元件例化时实现层次化设计的重要语句。</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>库与包的调用<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>当要引用一个库时，首先要对库名进行说明，其格式为：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>LIBRARY 库名; -- 如 LIBRARY IEEE;  即调用IEEE标准库
+</pre></div>
+</div>
+<p>对库名进行说明后，就可以使用库中已编译好的设计。而对库中程序包的访问，则必须通过 USE 语句实现，其格式为：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>USE 库名.程序包名.项目名; -- 如 USE IEEE.Std_logic_1164.ALL;
+</pre></div>
+</div>
+<p>其中，关键字 ALL 表示本设计实体可以引用次程序包中的所有资源。</p>
+<p>虽然 NUMERIC_STD 有时候操作有点繁琐，但是更加规矩，并且可以有效避免一些错误，所以应该首选使用该库文件。一般来说，以下三行代码足以应付大部分的 VHDL 程序设计了。调用库和程序的语句本身在综合时并不消耗更多的资源。</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span> <span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">ieee.numeric_std.</span><span class="k">all</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>基本数据类型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>。。。</p>
+<p><strong>VHDL入门解惑经典实例经验总结 P40</strong></p>
+</div>
+<div class="section" id="id6">
+<h2>数据对象<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>。。。</p>
+<p><strong>VHDL入门解惑经典实例经验总结 P45</strong></p>
+</div>
+<div class="section" id="id7">
+<h2>运算符<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>。。。</p>
+<p><strong>VHDL入门解惑经典实例经验总结 P51</strong></p>
+</div>
+<div class="section" id="id8">
+<h2>并行语句<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>。。。</p>
+<p><strong>VHDL入门解惑经典实例经验总结 P54</strong></p>
+</div>
+<div class="section" id="id9">
+<h2>顺序语句<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>。。。</p>
+<p><strong>VHDL入门解惑经典实例经验总结 P67</strong></p>
+</div>
+<div class="section" id="id10">
+<h2>VHDL中数据类型转换与移位<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="signedunsignedstd-logic-vector">
+<h3>signed、unsigned以及std_logic_vector之间的区别<a class="headerlink" href="#signedunsignedstd-logic-vector" title="永久链接至标题">¶</a></h3>
+<p>首先就是 signed 与 unsigned 这两种数据类型。他们的定义为：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="kt">UNSIGNED</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="kt">NATURAL</span> <span class="k">range</span> <span class="o">&lt;&gt;</span><span class="p">)</span> <span class="k">of</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+<span class="k">type</span> <span class="kt">SIGNED</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="kt">NATURAL</span> <span class="k">range</span> <span class="o">&lt;&gt;</span><span class="p">)</span> <span class="k">of</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>与 std_logic_vector 的定义完全相同，所不同的是表示的意义不同。举例来说：</p>
+<p>“1001” 的含义对这三者而言是不同的：</p>
+<ul class="simple">
+<li><p>std_logic_vector : 简单的四个二进制位；</p></li>
+<li><p>unsigned : 代表数字9；</p></li>
+<li><p>signed : 代表数字 -7（补码表示的）；</p></li>
+</ul>
+</div>
+<div class="section" id="numeric-std">
+<h3>NUMERIC_STD<a class="headerlink" href="#numeric-std" title="永久链接至标题">¶</a></h3>
+<p>使用 NUMERIC_STD 可以完全替代 std_logic_arith、std_logic_unsigned、std_logic_signed 这三个库文件！</p>
+<ul class="simple">
+<li><p>首先，NUMERIC_STD 这个库文件才是血统最正的IEEE库文件！！上述的其他三个其实都是 Synopsis 这个公司的，但是由于这个公司抢先了一步，所以占据了大量的用户资源。</p></li>
+<li><p>std_logic_arith、std_logic_unsigned、std_logic_signed 的问题在于当在同一文件中同时使用 signed 和 unsigned 时，会出现函数重载的冲突，导致错误。</p></li>
+<li><p>其次，NUMERIC_STD 是完全基于 signed 和 unsigned 所写的算术重载函数和数据类型转换函数。不管是 INTEGER 还是 STD_LOGIC_VECTOR 要进行算术运算，都必须转换为 signed 和 unsigned 两种数据类型。</p></li>
+</ul>
+<img alt="_images/TABLE_NUMERIC_STD.png" src="_images/TABLE_NUMERIC_STD.png" />
+<img alt="_images/NUMERIC_STD.png" src="_images/NUMERIC_STD.png" />
+<p>下面举个例子来说明NUMERIC_STD库的使用。</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">DOUT</span> <span class="o">&lt;=</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="n">to_unsigned</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">64</span><span class="p">));</span>
+<span class="n">DOUT</span><span class="p">(</span><span class="n">to_integer</span><span class="p">(</span><span class="kt">unsigned</span><span class="p">(</span><span class="n">DIN</span><span class="p">)))</span> <span class="o">&lt;=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="shift-left-and-shift-right">
+<h3>shift_left() and shift_right()<a class="headerlink" href="#shift-left-and-shift-right" title="永久链接至标题">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>r_Unsigned_L &lt;= shift_left(unsigned(r_Shift1), 1);
+r_Signed_L   &lt;= shift_left(signed(r_Shift1), 1);
+
+r_Unsigned_R &lt;= shift_right(unsigned(r_Shift1), 2);
+r_Signed_R   &lt;= shift_right(signed(r_Shift1), 2)；
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="verilog.html" class="btn btn-neutral float-right" title="verilog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Install.html" class="btn btn-neutral float-left" title="软件安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

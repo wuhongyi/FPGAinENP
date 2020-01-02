@@ -11,7 +11,7 @@ make html
 cp -r build/html/* ../docs/
 
 make latexpdf
-mv build/latex/template.pdf ../book.pdf
+mv build/latex/*.pdf ../book.pdf
 
 make clean
 

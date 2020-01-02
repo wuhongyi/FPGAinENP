@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Template'
-copyright = '2019, Hongyi Wu(吴鸿毅)'
+project = 'FPGA 在中低能实验核物理中的应用'
+copyright = '2020, Hongyi Wu(吴鸿毅)'
 author = 'Hongyi Wu(吴鸿毅)'
 
 # The full version, including alpha/beta/rc tags
-release = '1'
+release = '1.0 alpha'
 
 
 # -- General configuration ---------------------------------------------------

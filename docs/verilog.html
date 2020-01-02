@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FIFO &mdash; FPGA 在中低能实验核物理中的应用 1.0 alpha 文档</title>
+  <title>verilog &mdash; FPGA 在中低能实验核物理中的应用 1.0 alpha 文档</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="经验总结" href="exp.html" />
-    <link rel="prev" title="状态机" href="FSM.html" /> 
+    <link rel="next" title="LUPO" href="LUPO.html" />
+    <link rel="prev" title="VHDL" href="VHDL.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,9 +91,9 @@
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 </ul>
 <p class="caption"><span class="caption-text">语法</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
-<li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">verilog</a></li>
 </ul>
 <p class="caption"><span class="caption-text">硬件介绍</span></p>
 <ul>
@@ -110,18 +110,8 @@
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
 <p class="caption"><span class="caption-text">FIFO</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">FIFO</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">FIFO 规则</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fifo1-show-ahead">FIFO规则1： 使用 Show-ahead 都模式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fifo2">FIFO规则2： 读、写隔离规则</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fifo3">FIFO规则3： 读使能必须判断空状态，并且用组合逻辑产生</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fifo4-fifo">FIFO规则4： 处理报文时，把指示信号与数据一起存入FIFO</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fifo5-fifo">FIFO规则5： 读、写时钟不同时，必须用异步FIFO</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
 <p class="caption"><span class="caption-text">经验总结</span></p>
 <ul>
@@ -172,13 +162,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>FIFO</li>
+      <li>verilog</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/FIFO.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/verilog.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -191,29 +181,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="fifo">
-<h1>FIFO<a class="headerlink" href="#fifo" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id1">
-<h2>FIFO 规则<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<div class="section" id="fifo1-show-ahead">
-<h3>FIFO规则1： 使用 Show-ahead 都模式<a class="headerlink" href="#fifo1-show-ahead" title="永久链接至标题">¶</a></h3>
-<p>根据 FIFO 的读模式，一般有两种使用模式：Show-ahead 和 Nornal 模式。这两种模式的区别在生成 FIFO IP核额步骤中说明。</p>
-</div>
-<div class="section" id="fifo2">
-<h3>FIFO规则2： 读、写隔离规则<a class="headerlink" href="#fifo2" title="永久链接至标题">¶</a></h3>
-<p>读、写隔离规则是指： 读控制和写控制是独立的，它们之间除了用 FIFO 交流信息外，不能有任何信息传递。因此，既不能根据 FIFO 的读状态或者读出的数据来决定写行为，也不能根据 FIFO 的写状态和写入的数据来决定读行为。</p>
-</div>
-<div class="section" id="fifo3">
-<h3>FIFO规则3： 读使能必须判断空状态，并且用组合逻辑产生<a class="headerlink" href="#fifo3" title="永久链接至标题">¶</a></h3>
-<p>rdreq 必须由组合逻辑产生，原因与 empty 有关。</p>
-</div>
-<div class="section" id="fifo4-fifo">
-<h3>FIFO规则4： 处理报文时，把指示信号与数据一起存入FIFO<a class="headerlink" href="#fifo4-fifo" title="永久链接至标题">¶</a></h3>
-</div>
-<div class="section" id="fifo5-fifo">
-<h3>FIFO规则5： 读、写时钟不同时，必须用异步FIFO<a class="headerlink" href="#fifo5-fifo" title="永久链接至标题">¶</a></h3>
-</div>
-</div>
+  <div class="section" id="verilog">
+<h1>verilog<a class="headerlink" href="#verilog" title="永久链接至标题">¶</a></h1>
+<p>。。。</p>
 </div>
 
 
@@ -224,10 +194,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="exp.html" class="btn btn-neutral float-right" title="经验总结" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="LUPO.html" class="btn btn-neutral float-right" title="LUPO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="FSM.html" class="btn btn-neutral float-left" title="状态机" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="VHDL.html" class="btn btn-neutral float-left" title="VHDL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
