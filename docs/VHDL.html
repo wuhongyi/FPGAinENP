@@ -99,12 +99,32 @@
 <li class="toctree-l3"><a class="reference internal" href="#id4">库与包的调用</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">基本数据类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">数据对象</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">运算符</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">并行语句</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">顺序语句</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id10">VHDL中数据类型转换与移位</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id5">基本数据类型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">预定义数据类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ieee">IEEE 预定义标准逻辑位与矢量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">用户自定义的数据类型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">数据对象</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">信号</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">常数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">运算符</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">算术运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">并置运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">关系运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">逻辑运算符</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">并行语句</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id18">并行信号赋值语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">进程语句</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id20">顺序语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id21">VHDL中数据类型转换与移位</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#signedunsignedstd-logic-vector">signed、unsigned以及std_logic_vector之间的区别</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#numeric-std">NUMERIC_STD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#shift-left-and-shift-right">shift_left() and shift_right()</a></li>
@@ -342,31 +362,381 @@ END [结构体名]
 </div>
 <div class="section" id="id5">
 <h2>基本数据类型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
-<p>。。。</p>
-<p><strong>VHDL入门解惑经典实例经验总结 P40</strong></p>
-</div>
 <div class="section" id="id6">
-<h2>数据对象<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
-<p>。。。</p>
-<p><strong>VHDL入门解惑经典实例经验总结 P45</strong></p>
+<h3>预定义数据类型<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>常见的预定义数据类型及其简要说明如下：</p>
+<ul class="simple">
+<li><p>布尔量（boolean）：取值位false和true，用于逻辑运算</p></li>
+<li><p>位（bit）：取值为0和1，用于逻辑运算</p></li>
+<li><p>位矢量（bit_vector）：基于bit类型的数组，用于逻辑运算</p></li>
+<li><p>整数（integer）：整数的取值范围是 -(2^31 -1) ~ (2^31 -1)，可用 32 位 有符号的二进制数表示，用于数值运算</p></li>
+<li><p>实数（real）：实数的取值范围是 -1.0E38 ～ +1.0E38，仅用于仿真，不可综合</p></li>
+<li><p>时间（time）：完整的时间类型包括整数和物理量单位两部分，整数与单位之间至少留 1 个空格，如 20 ms、 30 us 等。整数部分取值范围与 integer 相同。此类型仅用于仿真，不可综合</p></li>
+</ul>
+<p><strong>布尔数据类型</strong></p>
+<p>布尔数据类型实际上是一个二值枚举型数据类型，取值为 false 和 true。</p>
+<p><strong>位数据类型</strong></p>
+<p>位与布尔一样，同属二值枚举型数据类型。取值为 0 或者 1。对应于实际电路中的低电平与高电平。 bit 类型的数据对象可以进行 “与”、“或”、“非”等逻辑运算，结果仍为 bit 类型。</p>
+<p><strong>位矢量数据类型</strong></p>
+<p>位矢量是基于位类型的数组。使用 bit_vector 时，必须注明数组中的元素个数和排列方向。例如：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">a</span><span class="o">:</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">7</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>信号 a 被定义成一个具有 8 个元素的数组，而且它的最高位为 a(0)，而最低位为 a(7)。</p>
+<p>若希望这个数组的排列符合日常使用的顺序，即最高位为 a(7)，而最低位为 a(0)，则应将该信号声明语句改写成：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">a</span> <span class="o">:</span> <span class="kt">bit_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>关键字 to 表示数组从左到右是生序排列，而 downto 则是降序排列。</p>
+<p><strong>整数数据类型</strong></p>
+<p>整数类型的数包括正整数、负整数和零。 在 VHDL 中，整数的取值范围为 -(2^31 -1) ~ (2^31 -1)。整数类型的数常用于加、减、乘、除四则运算。在使用整数时，必须用 range … to … 限定整数的范围，综合器将根据所限定的范围来决定此信号或变量的二进制数的位数。若所设计的整数范围包括负数，则该数将以二进制补码的形式出现。</p>
+</div>
+<div class="section" id="ieee">
+<h3>IEEE 预定义标准逻辑位与矢量<a class="headerlink" href="#ieee" title="永久链接至标题">¶</a></h3>
+<p>在 IEEE 库的程序包 std_logic_1164 中，定义了两个十分重要的数据类型，即标准逻辑位 std_logic 和标准逻辑矢量 std_logic_vector。</p>
+<p><strong>标准逻辑位数据类型</strong></p>
+<p>标准逻辑位数据类型共定义了 9 种信号状态。</p>
+<ul class="simple">
+<li><p>U ： 未初始化的</p></li>
+<li><p>X ： 强未知的</p></li>
+<li><p>0 ： 强 0</p></li>
+<li><p>1 ： 强 1</p></li>
+<li><p>Z ： 高阻态</p></li>
+<li><p>W ： 弱未知的</p></li>
+<li><p>L ： 弱 0</p></li>
+<li><p>H ： 弱 1</p></li>
+<li><p>- ： 忽略</p></li>
+</ul>
+<p>std_logic 的信号定义比 bit 类型对数字电路的逻辑特性描述更完整，更真实。 std_logic 中的 X 态和 Z 态可以使设计者模拟一些未知的和高阻态的线路情况，“-” 态常用于一些 boolean 表达式的化简。但就综合而言，只有 4 种状态可被综合，即 0、1、“-”和 Z。其它态虽然不可综合，但对行为仿真仍有十分重要的意义。</p>
+<p><strong>标准逻辑位矢量数据类型</strong></p>
+<p>标准逻辑位矢量是基于 std_logic 类型的数组。简而言之， std_logic_vector 和 std_logic 的关系就像 bit_vector 与 bit 的关系。</p>
+<p>需要强调的是，使用 std_logic 和 std_logic_vector 时，一定要调用 IEEE 库中的 std_logic_1164 的程序包。</p>
 </div>
 <div class="section" id="id7">
-<h2>运算符<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
-<p>。。。</p>
-<p><strong>VHDL入门解惑经典实例经验总结 P51</strong></p>
+<h3>用户自定义的数据类型<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>用户自定义的数据类型主要有枚举类型（enumerated types）和数组类型（array types）等，前者常用于状态机描述，而后者常用于 ROM 和 RAM 的描述等。</p>
+<p><strong>枚举类型</strong></p>
+<p>枚举类型的语法格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>type 数据类型名 is (元素1, 元素2, ...);
+</pre></div>
+</div>
+<p>在状态机描述中，常常使用枚举类型为每一状态命名，使程序更具有可读性。例如：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">state_type</span> <span class="k">is</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">step1</span><span class="p">,</span> <span class="n">step2</span><span class="p">,</span> <span class="n">stop</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">state</span> <span class="o">:</span> <span class="n">state_type</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>上面这个例子为状态机定义了 4 个状态： start、step1、step2、stop。表征当前状态的信号 state 就在这 4 个状态中取值。</p>
+<p><strong>数组类型</strong></p>
+<p>数组类型常用于组合同样数据类型的元素，其语法格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>type 数组名 is array (范围) of 数据类型;
+</pre></div>
+</div>
+<p>下面是几个数组定义的例子：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">byte</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span> <span class="k">of</span> <span class="kt">bit</span><span class="p">;</span> <span class="c1">-- 1 byte=8 bits</span>
+<span class="k">type</span> <span class="n">word</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span> <span class="k">of</span> <span class="kt">bit</span><span class="p">;</span> <span class="c1">-- 1 word= 32 bits</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="id8">
-<h2>并行语句<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
-<p>。。。</p>
-<p><strong>VHDL入门解惑经典实例经验总结 P54</strong></p>
-</div>
+<h2>数据对象<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>在 VHDL 中，数据对象（data object）有 3 类: 信号（signal）、变量（variable）和常量（constant）。</p>
+<p>VHDL 中的变量和常量与软件高级语言中的变量和常量相似，而信号则具有更多的硬件特征，是硬件描述语言所特有的数据对象。</p>
 <div class="section" id="id9">
-<h2>顺序语句<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<h3>信号<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>信号是用来描述实体内部节点的重要数据类型。</p>
+<img alt="_images/differentsignalandport.png" src="_images/differentsignalandport.png" />
+<p>从图中可以看出，信号(signal)与端口(port)之间的相似之处和差异点。信号与端口都描述了电路中实际存在的节点（node），只是信号描述的是实体内部的节点，而端口则描述了实体与外界的接口。在语法上，信号的声明与端口的声明很相似，下面是信号声明的语法格式：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>signal 信号名: 数据类型 [:= 初始值]; --初始值仅在仿真时有意义，综合时将忽略此值
+</pre></div>
+</div>
+<p>对比信号声明与端口声明的格式可以发现，除了端口声明中规定的方向之外，二者无任何差别（虽然信号声明比端口声明多了初始值的赋值，但是这一赋值仅在仿真时有意义，综合器会忽略这一赋值。因此在实际应用中，基本不使用初始值赋值语句）。换句话说，可以将信号理解为“实体内部不限定数据流动方向的端口”，或者将端口理解为“限定数据流动方向的信号”。因此，信号赋值语句同样适用于端口。</p>
+<p>信号赋值语句的格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>目标信号名 &lt;= 表达式;
+</pre></div>
+</div>
+<p>信号赋值语句同样适用于位矢量和标准逻辑矢量，只要赋值符号左、右两边的位数相同即可。</p>
+<p>需要特别强调的是，信号的赋值具有“非立即性”，即会有延时。这与实际硬件的传播延迟特性十分吻合。</p>
+</div>
+<div class="section" id="id10">
+<h3>变量<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>变量只能在进程和子程序中使用，主要用于描述算法和方便程序中的数值计算。</p>
+<p>定义变量的语法格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>variable 变量名: 数据类型 [:= 初始值]; --初始值仅在仿真时有意义，综合时将忽略此值
+</pre></div>
+</div>
+<p>定义变量与定义信号的语法格式十分相似，只是将关键字 signal 变成 variable。与信号一样，变量的初始值赋值只在仿真中有用，综合时将被忽略，因此在实际应用中很少对变量赋初值。虽然二者语法格式十分相似，但在程序中的位置却不同。</p>
+<p>变量赋值语句的格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>目标变量名 := 表达式;
+</pre></div>
+</div>
+<p>表达式可以是一个数值，也可以是一个与目标变量数据类型相同的变量，或者是运算表达式。</p>
+<p>变量与信号的区别不仅仅再与声明与赋值语句的格式，最重要的区别在于信号与实际电路的某个节点或信号线对应，因此硬件具有传播延迟特征，所有信号的赋值具有延时特性；而变量是一个抽象值，它不与任何实际电路连线对应，因此它的赋值是立即生效的。</p>
+<p>在实际应用中，信号的行为更接近硬件的实际情况，因此将更多时用信号进行电路内部数据传递。只有在描述一些算法时，才用到变量。当然，有些情况下（如作矢量的索引值等）只能时用变量。</p>
+</div>
+<div class="section" id="id11">
+<h3>常数<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>VHDL 中的常数与软件高级语言中的常数十分相似，作用如下：</p>
+<ul class="simple">
+<li><p>保证该常数描述的那部分数据在程序中不会因操作被改变；</p></li>
+<li><p>对程序中的某些关键数值进行命名，可以提高程序的可读性；</p></li>
+<li><p>将出现次数较多的关键数值用常数表示，可以使程序易于修改：只需修改常数就可以替换所有相关数值。</p></li>
+</ul>
+<p>定义常数的语法格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>constant 常数名 : 数据类型 := 设置值
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h2>运算符<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<p>VHDL 的运算符主要有 4 种：算术运算符、并置运算符、关系运算符和逻辑运算符。</p>
+<div class="section" id="id13">
+<h3>算术运算符<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default" id="id22">
+<caption><span class="caption-text">常见算术运算符及其说明</span><a class="headerlink" href="#id22" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>运算符</p></th>
+<th class="head"><p>含义</p></th>
+<th class="head"><p>备注</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>+</p></td>
+<td><p>加</p></td>
+<td><p>一般情况下，+号两边只能是整形信号（变量）。但若事先调用了 IEEE 库中的 std_logic_1164 和 std_logic_unsigned(或 std_logic_signed)程序包，则+号两边可以是：1）std_logic_vector+std_logic_vector; 2)std_logic_vector+integer; 3)integer+std_logic_vector; 4)integer+integer</p></td>
+</tr>
+<tr class="row-odd"><td><p>-</p></td>
+<td><p>减</p></td>
+<td><p>同上</p></td>
+</tr>
+<tr class="row-even"><td><p>*</p></td>
+<td><p>乘</p></td>
+<td><p>一般情况下，*号两边只能是整形信号（变量）。但若事先调用了 IEEE 库中的 std_logic_1164 和 std_logic_unsigned(或 std_logic_signed)程序包，则 * 号两边可以是：1）std_logic_vector * std_logic_vector; 2)integer *  integer</p></td>
+</tr>
+<tr class="row-odd"><td><p>/</p></td>
+<td><p>除</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>**</p></td>
+<td><p>乘方</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>MOD</p></td>
+<td><p>求模</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>REM</p></td>
+<td><p>求余</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ABS</p></td>
+<td><p>求绝对值</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id14">
+<h3>并置运算符<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>并置运算符 “&amp;” 用于将多个元素或矢量连接成新的矢量。例如：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">A</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">B</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">C</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">5</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">D</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">4</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">E</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">2</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="n">C</span><span class="o">&lt;=</span><span class="n">A</span><span class="o">&amp;</span><span class="n">B</span><span class="p">;</span><span class="c1">--矢量于矢量并置</span>
+<span class="n">D</span><span class="o">&lt;=</span><span class="n">A</span><span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span><span class="o">&amp;</span><span class="n">B</span><span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span><span class="o">&amp;</span><span class="sc">&#39;1&#39;</span><span class="p">;</span><span class="c1">--矢量与元素并置</span>
+<span class="n">E</span><span class="o">&lt;=</span><span class="n">B</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">&amp;</span><span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="c1">--元素与元素并置</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>关系运算符<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<p>VHDL 预定义的关系运算符如下所列：</p>
+<ul class="simple">
+<li><p>= 等于</p></li>
+<li><p>/= 不等于</p></li>
+<li><p>&lt; 小于</p></li>
+<li><p>&lt;= 小于或等于</p></li>
+<li><p>&gt; 大于</p></li>
+<li><p>&gt;= 大于或等于</p></li>
+</ul>
+<p>关系运算符的作用是将相同数据类型的数据对象进行数值比较或关系排序判断，并将结果以 boolean 类型的数据表示，即 true 或 false。</p>
+<p>VHDL 规定，“=” 和 “/=” 的操作对象可以是 VHDL 种任何数据类型构成的操作数；其余关系运算符的操作对象，则仅限于整数数据类型、枚举数据类型以及由整数型或枚举型数据类型元素构成的一维数组。</p>
+<p>需要注意的是，“小于或等于”关系运算符 “&lt;=” 的形式与信号赋值操作符一模一样。判别二者的关键在于其使用环境：在条件语句（如 if_then_else、when 等）中的条件式（即条件判断语句）中出现的 “&lt;=” 是关系运算符，其它情况则是信号赋值操作符。</p>
+</div>
+<div class="section" id="id16">
+<h3>逻辑运算符<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
+<p>VHDL 共定义了 7 种逻辑运算符。</p>
+<ul class="simple">
+<li><p>AND 与</p></li>
+<li><p>OR 或</p></li>
+<li><p>NOT 非</p></li>
+<li><p>NAND 与非</p></li>
+<li><p>NOR 或非</p></li>
+<li><p>XOR 异或</p></li>
+<li><p>XNOR 同或</p></li>
+</ul>
+<p>逻辑操作符的操作对象一般为以下 5 种数据类型之一： boolean、bit、bit_vector、std_logic 和 std_logic_vector。</p>
+<p>虽然 NOT 比其它逻辑运算符的优先级高，但为了避免犯错，在写程序时仍应用括号将 NOT 与其对应的操作数括起来。其它逻辑运算符也应照此处理。例如：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">&lt;=</span> <span class="n">B</span> <span class="k">AND</span> <span class="p">(</span><span class="k">NOT</span> <span class="n">C</span><span class="p">);</span>
+<span class="n">A</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">B</span> <span class="k">AND</span> <span class="n">C</span><span class="p">)</span> <span class="k">XOR</span> <span class="p">(</span><span class="n">C</span> <span class="k">AND</span> <span class="n">D</span><span class="p">);</span>
+<span class="n">A</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">NOT</span> <span class="p">(</span><span class="n">B</span> <span class="k">AND</span> <span class="n">C</span><span class="p">))</span> <span class="k">NAND</span> <span class="p">(</span><span class="n">C</span> <span class="k">XOR</span> <span class="n">D</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>这样可使整个逻辑表达式层次清除，提高程序的可读性，同时方便查错。</p>
+</div>
+</div>
+<div class="section" id="id17">
+<h2>并行语句<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h2>
+<p>并行语句（concurrent statements）是硬件描述语言区别于一般软件程序语言的最显著的特点之一。所有并行语句在结构体中的执行都是同时进行的，即它们的执行顺序与语句书写的顺序无关。</p>
+<p>所谓 “并行”，指的是这些并行语句之间没有执行顺序的先、后之分，但并不意味着并行语句内部也一定是并行方式运行的。事实上，并行语句内部的语句运行可以是并行的（如块语句），也可以是顺序的（如进程）。</p>
+<p>VHDL 的并行语句主要有以下 6 种：</p>
+<ul class="simple">
+<li><p>进程语句</p></li>
+<li><p>并行信号赋值语句</p></li>
+<li><p>并行过程调用语句</p></li>
+<li><p>元件例化语句</p></li>
+<li><p>生成语句</p></li>
+<li><p>块语句</p></li>
+</ul>
+<img alt="_images/concurrentstatements.png" src="_images/concurrentstatements.png" />
+<div class="section" id="id18">
+<h3>并行信号赋值语句<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<p>并行信号赋值语句又分为以下 3 种类型：</p>
+<ul class="simple">
+<li><p>简单信号赋值语句</p></li>
+<li><p>选择信号赋值语句</p></li>
+<li><p>条件信号赋值语句</p></li>
+</ul>
+<p>这 3 种信号赋值语句的赋值目标都必须是信号。下面分别介绍这几种并行信号赋值语句。</p>
+<p><strong>简单信号赋值语句</strong></p>
+<p>简单信号赋值语句它的语句格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>目标信号名 &lt;= 表达式;
+</pre></div>
+</div>
+<p>因为 VHDL 是强类型语言，所以目标信号的数据类型必须与赋值符号 “&lt;=” 右边表达式的数据类型一致。</p>
+<p><strong>选择信号赋值语句</strong></p>
+<p>选择信号赋值语句的格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>with 选择表达式 select
+  赋值目标信号 &lt;= 表达式1 when 选择值1,
+                表达式2 when 选择值2,
+                .
+                .
+                .
+                表达式n when others;
+</pre></div>
+</div>
+<p>从 with_select 语句的格式不难猜出它的用法：当“选择表达式”等于某一个“选择值”时，就将其对应的表达式的值赋给目标信号；若“选择表达式”与任何一个“选择值”均不相等，则 when others 前的表达式的值赋给目标信号。</p>
+<p>使用 with_select 语句的注意事项：</p>
+<ul class="simple">
+<li><p>“选择值”要覆盖所有可能的情况，若不可能一一指定，则要借助 others 为其它情况找一个“出口”；</p></li>
+<li><p>“选择值”必须互斥，不能出现条件重复或重叠的情况。</p></li>
+</ul>
+<p><strong>条件信号赋值语句</strong></p>
+<p>选择信号赋值语句简单、易用，但它仅对某一特定信号进行选择值的判断（所以叫“选择信号赋值语句”），当粗要对较多信号条件进行判断时，它就无能为力了。这时，则需要用到条件信号赋值语句。</p>
+<p>条件信号赋值语句的格式如下：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>赋值目标信号 &lt;= 表达式1 when 赋值条件1 else
+              表达式2 when 赋值条件2 else
+              .
+              .
+              .
+              表达式n-1 when 赋值条件n-1 else
+              表达式n;
+</pre></div>
+</div>
+<p>在执行 when_else 语句时，赋值条件按书写的先后顺序逐项测试，一旦发现某一项赋值条件得到满足，即将相应表达式的值赋给目标信号，并不再测试下面的赋值条件。换言之，各赋值子句有优先级的差别，按书写先后顺序从高到低排列。</p>
+</div>
+<div class="section" id="id19">
+<h3>进程语句<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
+<p>进程语句 process 可以说是 VHDL 语言中最重要的语句之一，它的特点如下：</p>
+<ul class="simple">
+<li><p>进程本身是并行语句，但其内部则为顺序语句</p></li>
+<li><p>进程只有在特定的时刻（敏感信号发生变化）才会被激活</p></li>
+</ul>
+<p><strong>进程语句的语法格式</strong></p>
+<p>process 语句的语法格式有如下两种：</p>
+<p>process 语法格式1：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>[进程标号:] process (敏感信号参数表)
+[声明区];
+begin
+  顺序语句
+end process [进程标号];
+</pre></div>
+</div>
+<p>process 语法格式2：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>[进程标号:] process
+[声明区];
+begin
+  wait until (激活进程的条件);
+  顺序语句
+end process [进程标号];
+</pre></div>
+</div>
+<p>上面这两种语法格式是等价的，但一般只采用第 1 种语法格式，而避免使用 wait 语句。</p>
+<p>下面对语法格式1 种的各项进行说明：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>进程标号</dt><dd><ul>
+<li><p>简单地说，就是给进程起名。这个标号不是必须的，在大型的多个进程并存的程序中，标号可提高程序的可读性。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>敏感信号参数列表</dt><dd><ul>
+<li><p>如前所述，进程只在敏感信号发生变化的情况下被激活，而这些敏感信号就包括在敏感信号参数表中。</p></li>
+<li><p>注意：一个进程可有多个敏感信号，任一敏感信号发生变化都会激活进程，各敏感信号间以逗号隔开。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>声明区</dt><dd><ul>
+<li><p>定义一些仅在本进程中起作用的局部量，最常在此处定义的是变量。</p></li>
+<li><p>注意： 信号是全局变量，不可在此处声明。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>顺序语句</dt><dd><ul>
+<li><p>按书写顺序执行的语句，如 if_then_else 和 case 语句.</p></li>
+<li><p>注意：所谓“顺序执行”是指在仿真意义上具有一定的顺序性（并不意味着这些语句对应的硬件结构也有相同的顺序性）</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>进程的工作原理</strong></p>
+<p>下图说明了进程工作的基本原理.</p>
+<img alt="_images/jinchenggongzuoyuanlishiyitu.png" src="_images/jinchenggongzuoyuanlishiyitu.png" />
+<ul class="simple">
+<li><p>当进程的敏感信号参数表中的任一敏感信号发生变化时，进程被激活，开始从上而下按顺序执行进程中的顺序语句；当最后一个语句执行完毕，进程刮起，等待下一次敏感信号的变化。从系统上电开始，这个过程就周而复始地进行，就像软件中的死循环。</p></li>
+<li><p>虽然进程内部的语句是顺序执行的，但进程与进程之间则是并行的关系。例如，一个 architecture 中有若干个 process，颠倒各 process 在程序中的顺序并不会造成仿真与综合结果的改变。</p></li>
+</ul>
+<p><strong>进程与时钟</strong></p>
+<p>虽然进程可用来描述组合逻辑电路，但最重要的还是用它来设计时序电路（或是时序电路与组合逻辑电路的综合电路）。对于组合逻辑电路的设计，用前面所提到的一些语句和关系符就可以实现，而时序电路的设计则必须借助 process 的力量。</p>
+<p>。。。</p>
+<p><strong>VHDL入门解惑经典实例经验总结 P60</strong></p>
+</div>
+</div>
+<div class="section" id="id20">
+<h2>顺序语句<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h2>
 <p>。。。</p>
 <p><strong>VHDL入门解惑经典实例经验总结 P67</strong></p>
 </div>
-<div class="section" id="id10">
-<h2>VHDL中数据类型转换与移位<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id21">
+<h2>VHDL中数据类型转换与移位<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h2>
 <div class="section" id="signedunsignedstd-logic-vector">
 <h3>signed、unsigned以及std_logic_vector之间的区别<a class="headerlink" href="#signedunsignedstd-logic-vector" title="永久链接至标题">¶</a></h3>
 <p>首先就是 signed 与 unsigned 这两种数据类型。他们的定义为：</p>
