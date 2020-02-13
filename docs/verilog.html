@@ -93,7 +93,13 @@
 <p class="caption"><span class="caption-text">语法</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">verilog</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">verilog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">程序结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">端口声明</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">硬件介绍</span></p>
 <ul>
@@ -183,7 +189,18 @@
             
   <div class="section" id="verilog">
 <h1>verilog<a class="headerlink" href="#verilog" title="永久链接至标题">¶</a></h1>
-<p>。。。</p>
+<div class="section" id="id1">
+<h2>程序结构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Verilog 的基本设计单元是模块（module）。一个模块是由两部分组成的，一部分描述接口，一部分描述逻辑功能，用来定义怎么由输入到输出的。</p>
+<p>Verilog 程序由三部分构成：I/O 端口声明、信号声明、功能描述。</p>
+<div class="section" id="id2">
+<h3>端口声明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>模块的端口声明了模块的输入输出接口。其格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>module 模块名(口1, 口2, 口3, ...);
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
