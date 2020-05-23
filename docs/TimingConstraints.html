@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>时序约束 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="LUPO" href="LUPO.html" />
+    <link rel="prev" title="verilog" href="verilog.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FPGA 在中低能实验核物理中的应用
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
+</ul>
+<p class="caption"><span class="caption-text">语法</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">时序约束</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#create-clocks">create clocks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">输入时钟</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#clk">输入管脚CLK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">差分时钟</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gt">GT或恢复的时钟</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pll">PLL等衍生时钟</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">自己分频时钟</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#input-delays">input delays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-delays">output delays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-timing-exceptions">set timing exceptions</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MZTIO.html">MZTIO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">计数器</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
+</ul>
+<p class="caption"><span class="caption-text">状态机</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">FIFO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">经验总结</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
+<li class="toctree-l1"><a class="reference internal" href="temp.html">临时存放</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FPGA 在中低能实验核物理中的应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>时序约束</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/TimingConstraints.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>时序约束<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><p>按前面的顺序去索引，找到对应情况，按要求约束</p></li>
+<li><p>开始时至配置时钟，不配置 input delays、output delays和时序例外</p></li>
+<li><p>待内容时钟完全通过后，再配置input delays、output delays</p></li>
+<li><p>时序例外是最后差不多要完工了再配置</p></li>
+</ul>
+<div class="section" id="create-clocks">
+<h2>create clocks<a class="headerlink" href="#create-clocks" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>建立/保持时间是D触发器的一个固有属性</p></li>
+<li><p>在时钟跳变沿到来前、后的一段时间内输入数据要稳定不变，“前”称之为建立时间，“后”称之为保持时间</p></li>
+<li><p>D触发器的数据输入端必须在建立时间前到达，而且要保持到持续时间之后</p></li>
+<li><p>Tmin = Tco+Tdata+Tus 寄存器传输延时、组合逻辑延时、建立时间</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>建立/保持时间</p></td>
+<td><p>建立时间是电路延时的一部分</p></td>
+</tr>
+<tr class="row-even"><td><p>电路的延时</p></td>
+<td><p>寄存器间最长的延时</p></td>
+</tr>
+<tr class="row-odd"><td><p>关键路径</p></td>
+<td><p>决定最高的时钟频率</p></td>
+</tr>
+<tr class="row-even"><td><p>时钟频率</p></td>
+<td><p>提高一个电路工作频率的方法</p></td>
+</tr>
+<tr class="row-odd"><td><p>流水线设计</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>时钟定义的先后顺序</p>
+<ul class="simple">
+<li><p>时钟的定义也遵从 XDC/Tcl 的一般优先级</p></li>
+<li><p>同一个点上，用户定义的时钟会覆盖工具自动推导的时钟</p></li>
+<li><p>后定义的时钟会覆盖先定义的时钟</p></li>
+<li><p>若要二者并存，必须使用 –add 选项</p></li>
+</ul>
+<div class="section" id="id2">
+<h3>输入时钟<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<div class="section" id="clk">
+<h4>输入管脚CLK<a class="headerlink" href="#clk" title="永久链接至标题">¶</a></h4>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">create_clock</span>  <span class="o">-</span>name SysClk  <span class="o">-</span>period <span class="mi">10</span> <span class="o">-</span>waveform <span class="k">{</span><span class="nv">0</span> <span class="mi">5</span><span class="k">}</span> <span class="k">[</span><span class="nv">get_ports</span> Clk<span class="k">]</span>
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">create_clock</span>  <span class="o">-</span>name SysClk  <span class="o">-</span>period <span class="mi">10</span> <span class="o">-</span>waveform <span class="k">{</span><span class="nv">0</span> <span class="mi">5</span><span class="k">}</span> <span class="k">[</span><span class="nv">get_ports</span> Clk<span class="k">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>差分时钟<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h4>
+<p>使用create_clock来约束P端即可（XILINX）</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">create_clock</span>  <span class="o">-</span>name clk_200  <span class="o">-</span>period <span class="mi">5</span>  <span class="k">[</span><span class="nv">get_ports</span>  clk_200_p<span class="k">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gt">
+<h4>GT或恢复的时钟<a class="headerlink" href="#gt" title="永久链接至标题">¶</a></h4>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">create_clock</span>  <span class="o">-</span>name txclk  <span class="o">-</span>period <span class="mf">6.667</span>  <span class="k">[</span><span class="nv">get_pins</span> GT<span class="o">/</span>TXOUTCLK<span class="k">]</span>
+</pre></div>
+</div>
+<p>约束 GT IP 核的输出 TXCLK</p>
+</div>
+</div>
+<div class="section" id="pll">
+<h3>PLL等衍生时钟<a class="headerlink" href="#pll" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>工具自动推导，一般无需约束</p></li>
+<li><p>但建议用下面约束，可以确定时钟名，方便用其来生成其它约束</p></li>
+</ul>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">create_clock</span>  <span class="o">-</span>name clk_200  <span class="o">-</span>period <span class="mi">5</span>  <span class="k">[</span><span class="nv">get_ports</span>  clk_200_p<span class="k">]</span>
+
+<span class="nv">Create_generated_clock</span>  <span class="o">-</span>name my_clk_name <span class="k">[</span><span class="nv">get_pins</span>  mmcm0<span class="o">/</span>CLKOUT<span class="k">]</span>  <span class="o">-</span>source <span class="k">[</span><span class="nv">get_pins</span> mmcm0<span class="o">/</span>CLKIN<span class="k">]</span>  <span class="o">-</span>master_clock  clk_200
+</pre></div>
+</div>
+<p>ALTERA如想让工具自动推导，只需要下面约束</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">create_clock</span>  <span class="o">-</span>name clk_200  <span class="o">-</span>period <span class="mi">5</span>  <span class="k">[</span><span class="nv">get_ports</span>  clk_200_p<span class="k">]</span>
+
+<span class="nv">derive_pll_clocks</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>自己分频时钟<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">create_clock</span>  <span class="o">-</span>name CLK1  <span class="o">-</span>period <span class="mi">5</span>  <span class="k">[</span><span class="nv">get_ports</span>  CKP1<span class="k">]</span>
+
+<span class="nv">create_generated_clock</span>  <span class="o">-</span>name  CLK2 <span class="k">[</span><span class="nv">get_pins</span> REGA<span class="o">/</span>Q<span class="k">]</span>  <span class="o">-</span>source <span class="k">[</span><span class="nv">get_ports</span> CKP1<span class="k">]</span>  <span class="o">-</span>divide_by <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="input-delays">
+<h2>input delays<a class="headerlink" href="#input-delays" title="永久链接至标题">¶</a></h2>
+<p>zheli</p>
+</div>
+<div class="section" id="output-delays">
+<h2>output delays<a class="headerlink" href="#output-delays" title="永久链接至标题">¶</a></h2>
+<p>zheli</p>
+</div>
+<div class="section" id="set-timing-exceptions">
+<h2>set timing exceptions<a class="headerlink" href="#set-timing-exceptions" title="永久链接至标题">¶</a></h2>
+<p>zheli</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="LUPO.html" class="btn btn-neutral float-right" title="LUPO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="verilog.html" class="btn btn-neutral float-left" title="verilog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
