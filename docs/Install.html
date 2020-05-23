@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>软件安装 &mdash; FPGA 在中低能实验核物理中的应用 1.0 alpha 文档</title>
+  <title>软件安装 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="VHDL" href="VHDL.html" />
+    <link rel="next" title="ISE 软件" href="ISE.html" />
     <link rel="prev" title="README" href="README.html" /> 
 </head>
 
@@ -97,6 +97,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#vivado">Vivado 安装</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
 <p class="caption"><span class="caption-text">语法</span></p>
 <ul>
@@ -193,6 +196,7 @@
 <h1>软件安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <div class="section" id="ise">
 <h2>ISE 安装<a class="headerlink" href="#ise" title="永久链接至标题">¶</a></h2>
+<p>ISE 最后一个版本是 14.7，该版本在LINUX 系统中只能支持 CentOS 6，在 CentOS 7 中存在问题。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar -xvf Xilinx_ISE_DS_Lin_14.7_1015_1.tar
 <span class="nb">cd</span> Xilinx_ISE_DS_Lin_14.7_1015_1
 ./xsetup
@@ -231,12 +235,34 @@ modelsim-part2-19.2.0.57-linux.qdz    stratix10-19.2.0.57.qdz
 ip           logs        nios2eds         quartus  uninstall
 </pre></div>
 </div>
-<p>quartus/bin 文件夹内存放quartus启动的脚本</p>
+<p>quartus/bin 文件夹内存放 quartus 启动的脚本</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./quartus
 </pre></div>
 </div>
-<p>modelsim_ase/bin 文件夹内存放modelsim启动的脚本</p>
+<p>modelsim_ase/bin 文件夹内存放 modelsim 启动的脚本</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./vsim
+</pre></div>
+</div>
+<p>CentOS 7 中 ModelSim 对依赖软件 freetype 版本有一定的要求。经过测试表明 2.4.12 版本可以支持。通常采用 modulefile 来对系统中的软件进行多版本控制，以下是该软件的配置示例。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#%Module 1.0</span>
+<span class="c1"># 这一行一般 module file 都有</span>
+
+<span class="nb">set</span> _module_name  <span class="o">[</span>module-info name<span class="o">]</span>
+<span class="nb">set</span> is_module_rm  <span class="o">[</span>module-info mode remove<span class="o">]</span>
+<span class="nb">set</span> sys        <span class="o">[</span>uname sysname<span class="o">]</span>
+<span class="nb">set</span> os         <span class="o">[</span>uname release<span class="o">]</span>
+
+<span class="c1"># 冲突标识符gcc</span>
+conflict        freetype
+
+<span class="nb">set</span> FREETYPE_CURPATH /opt/freetype/2.4.12
+<span class="nb">set</span> FREETYPE_LEVEL <span class="m">2</span>.4.12
+<span class="nb">set</span> FREETYPE_MAJLEVEL <span class="m">2</span>.4
+
+<span class="c1"># 所需路径</span>
+prepend-path    PATH            <span class="nv">$FREETYPE_CURPATH</span>/bin
+prepend-path    LD_LIBRARY_PATH <span class="nv">$FREETYPE_CURPATH</span>/lib
+prepend-path    LIBRARY_PATH    <span class="nv">$FREETYPE_CURPATH</span>/lib
 </pre></div>
 </div>
 <div class="section" id="linux-usb-blaster">
@@ -300,7 +326,7 @@ chmod <span class="m">666</span> <span class="m">013</span>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="VHDL.html" class="btn btn-neutral float-right" title="VHDL" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ISE.html" class="btn btn-neutral float-right" title="ISE 软件" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="README.html" class="btn btn-neutral float-left" title="README" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

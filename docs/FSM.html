@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>状态机 &mdash; FPGA 在中低能实验核物理中的应用 1.0 alpha 文档</title>
+  <title>状态机 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
@@ -89,6 +89,9 @@
 <p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
 <p class="caption"><span class="caption-text">语法</span></p>
 <ul>
@@ -110,6 +113,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">状态机</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">状态机规则</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id3">状态机规则1： 使用四段式写法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">状态机规则2：四段式状态机第一段写法不变</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">状态机规则3：第二段的状态转移条件用信号来表示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assign-xx2xx-start">状态机规则4：用 assign 将状态转移条件写成 XX2XX_start 的形式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assign">状态机规则5：assign 定义状态转移条件信号时，必须加上当前状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state-n-state-c">状态机规则6：状态不变时使用state_n = state_c</a></li>
 </ul>
 </li>
 </ul>
@@ -195,6 +203,163 @@
 <h3>状态机规则1： 使用四段式写法<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 <p>四段式不是指四个 always 代码，而是四段代码。另外需要注意的是，四段式状态机并非固定不变。如果没有输出信号就只有三段代码（两个always）；如果有多个输出信号，那么就会有多个always。</p>
 <p>第一段，同步时序的 always 模块，格式化描述次态迁移到现态寄存器。</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- code here</span>
+<span class="n">xxxxx</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always</span><span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span><span class="k">begin</span>
+   <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="k">begin</span>
+      <span class="n">state_c</span><span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">begin</span>
+      <span class="n">state_c</span><span class="o">&lt;=</span> <span class="n">state_n</span><span class="p">;</span>
+   <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>第二段，组合逻辑的 always 模块，描述状态转移判断条件。注意，转移条件用信号来表示，信号名要按规则来命名。</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- code here</span>
+<span class="n">xxxxx</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+    <span class="k">case</span><span class="p">(</span><span class="n">state_c</span><span class="p">)</span>
+        <span class="nl">IDLE:</span><span class="k">begin</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">idle2s1_start</span><span class="p">)</span><span class="k">begin</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="no">S1</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="k">else</span> <span class="k">begin</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="n">state_c</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+        <span class="nl">S1:</span><span class="k">begin</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">s12s2_start</span><span class="p">)</span><span class="k">begin</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="no">S2</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="k">else</span> <span class="k">begin</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="n">state_c</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+        <span class="nl">S2:</span><span class="k">begin</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">s22idl</span><span class="p">)</span><span class="k">begin</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="k">else</span> <span class="k">begin</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="n">state_c</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+        <span class="k">default</span><span class="o">:</span><span class="k">begin</span>
+            <span class="n">state_n</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">endcase</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>第三段，用 assign 定义转移条件。注意，条件一定要加上现态。</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- code here</span>
+<span class="n">xxxxx</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">idle2s1_start</span> <span class="o">=</span>  <span class="n">state_c</span><span class="o">==</span><span class="no">IDLE</span> <span class="o">&amp;&amp;</span> <span class="p">;</span>
+<span class="k">assign</span>  <span class="n">s12s2_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="no">S1</span>   <span class="o">&amp;&amp;</span> <span class="p">;</span>
+<span class="k">assign</span>  <span class="n">s22idl_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="no">S2</span>   <span class="o">&amp;&amp;</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p>第四段，设计输出信号。规范要求一段 always 代码设计一个信号，因此有多少个输出信号就有多少段 always 代码。</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- code here</span>
+<span class="n">xxxxx</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<dl>
+<dt>always  &#64;(posedge clk or negedge rst_n)begin</dt><dd><dl class="simple">
+<dt>if(!rst_n)begin</dt><dd><p>out1 &lt;=1’b0</p>
+</dd>
+</dl>
+<p>end
+else if(state_c==S1)begin</p>
+<blockquote>
+<div><p>out1 &lt;= 1’b1;</p>
+</div></blockquote>
+<p>end
+else begin</p>
+<blockquote>
+<div><p>out1 &lt;= 1’b0;</p>
+</div></blockquote>
+<p>end</p>
+</dd>
+</dl>
+<p>end</p>
+</div>
+<div class="section" id="id4">
+<h3>状态机规则2：四段式状态机第一段写法不变<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>设计状态机时所有四段式状态机模板的第一段除了名字外的代码都可以直接用，不需要进行改动。</p>
+</div>
+<div class="section" id="id5">
+<h3>状态机规则3：第二段的状态转移条件用信号来表示<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>设计状态机时，要求四段式状态机的第二段中用信号名来表示转移条件，而无须直接写出具体的转移条件。</p>
+<p>用信号名表示的好处是后续修改时只需改动信号的名字，并且方便根据状态机的命名修改对应的跳转条件。</p>
+</div>
+<div class="section" id="assign-xx2xx-start">
+<h3>状态机规则4：用 assign 将状态转移条件写成 XX2XX_start 的形式<a class="headerlink" href="#assign-xx2xx-start" title="永久链接至标题">¶</a></h3>
+<p>状态机规则 3 要求转移条件用信号名来表示，这样一来设计就要编写很多信号名称，这也是设计工作中的一大困扰。因此制定此规则：将状态转移的条件信号用 xx2xx_start 的形式表示。</p>
+<p>例如有三个状态 IDLE、READ、WRITE，若从 IDLE 跳转到 READ 状态，其跳转条件可以命名为：idle2read_start；若从 IDLE 跳转到 WRITE，其跳转条件可以命名为：idle2write_start。</p>
+<p>这个命名方式既能够解决命名的困扰，又能直接从信号名看出信号的作用。</p>
+</div>
+<div class="section" id="assign">
+<h3>状态机规则5：assign 定义状态转移条件信号时，必须加上当前状态<a class="headerlink" href="#assign" title="永久链接至标题">¶</a></h3>
+<p>状态机的第二段代码中使用信号名来表示转移条件，在代码后则需用 assign 对相应信号进行定义。注意，定义这个转移条件信号时必须加上当前状态，以避免因两个不同状态由同一种变化条件发生转移而导致错误。</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- code here</span>
+<span class="n">xxxxx</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">idle2s1_start</span> <span class="o">=</span> <span class="n">state_c</span><span class="o">==</span><span class="no">IDLE</span>  <span class="o">&amp;&amp;</span> <span class="no">XX</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">s12s2_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="no">S1</span>   <span class="o">&amp;&amp;</span> <span class="no">XX</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">s22idl_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="no">S2</span>   <span class="o">&amp;&amp;</span> <span class="no">XX</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="state-n-state-c">
+<h3>状态机规则6：状态不变时使用state_n = state_c<a class="headerlink" href="#state-n-state-c" title="永久链接至标题">¶</a></h3>
+<p>编写状态机代码时有很大一部分错误是复制粘贴过程出错造成的，很多会出现复制其它状态的代码时忘记修改状态的错误。此外，也有一部分写第二段状态机时，容易把状态保持不变写成 state_n=state_n。这个写法是错误的，因为组合逻辑只有锁存器才能有保持电路，而数字电路中通常不希望出现锁存器。</p>
+<p>为此，这里规定，其四段式状态机的第二段，状态不变时使用 state_n=state_c。如下所示，可以自行对比。这样写不但可以减少出错的可能，还可以减少调试的时间。</p>
+<p><strong>VHDL</strong></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- code here</span>
+<span class="n">xxxxx</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>verilog</strong></p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="nl">IDLE:</span><span class="k">begin</span>
+   <span class="k">if</span><span class="p">(</span><span class="n">idle2s1_start</span><span class="p">)</span><span class="k">begin</span>
+     <span class="n">state_n</span> <span class="o">=</span> <span class="no">S1</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">begin</span>
+     <span class="n">state_n</span> <span class="o">=</span> <span class="n">state_c</span><span class="p">;</span>
+   <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nl">IDLE:</span><span class="k">begin</span>
+   <span class="k">if</span><span class="p">(</span><span class="n">idle2s1_start</span><span class="p">)</span><span class="k">begin</span>
+     <span class="n">state_n</span> <span class="o">=</span> <span class="no">S1</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">begin</span>
+     <span class="n">state_n</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+   <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

@@ -21,7 +21,10 @@ ISE/Altera/Vivado软件
    :caption: ISE/Altera/Vivado软件
 
    Install.rst
-
+   ISE.rst
+   Altera.rst
+   Vivado.rst
+   
 语法
 ==================
 

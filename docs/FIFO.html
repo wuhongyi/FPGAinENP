@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FIFO &mdash; FPGA 在中低能实验核物理中的应用 1.0 alpha 文档</title>
+  <title>FIFO &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
@@ -89,6 +89,9 @@
 <p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
 <p class="caption"><span class="caption-text">语法</span></p>
 <ul>
@@ -197,7 +200,9 @@
 <h2>FIFO 规则<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <div class="section" id="fifo1-show-ahead">
 <h3>FIFO规则1： 使用 Show-ahead 都模式<a class="headerlink" href="#fifo1-show-ahead" title="永久链接至标题">¶</a></h3>
-<p>根据 FIFO 的读模式，一般有两种使用模式：Show-ahead 和 Nornal 模式。这两种模式的区别在生成 FIFO IP核额步骤中说明。</p>
+<p>根据 FIFO 的读模式，一般有两种使用模式：Show-ahead 和 Nornal 模式。这两种模式的区别在生成 FIFO IP 核步骤中说明。</p>
+<p>其中 Normal 模式是读使能有效后的下一拍读出相应数据。而 Show-ahead 模式是先进行数据输出，在读使能有效时对 FIFO 输出数据进行更新。即 FIFO 中的第一个数据输出在总线上，在读使能信号到来的下一拍直接输出第二个数据。</p>
+<p>推荐使用 Show-ahead 模式，因为在这种模式下可以将读使能信号与读出数据当做有效信号和数据来使用，只要读使能有效则对应的数据就始终有效。</p>
 </div>
 <div class="section" id="fifo2">
 <h3>FIFO规则2： 读、写隔离规则<a class="headerlink" href="#fifo2" title="永久链接至标题">¶</a></h3>
@@ -212,6 +217,9 @@
 </div>
 <div class="section" id="fifo5-fifo">
 <h3>FIFO规则5： 读、写时钟不同时，必须用异步FIFO<a class="headerlink" href="#fifo5-fifo" title="永久链接至标题">¶</a></h3>
+<p>FIFO 按时钟分可以分为同步 FIFO 和异步 FIFO。</p>
+<p>同步 FIFO：指读时钟和写时钟都相同的 FIFO。同步 FIFO 内部没有异步处理，因此结构简单，资源占用较少。</p>
+<p>异步 FIFO 是指读时钟和写时钟可以不同的 FIFO。异步 FIFO 内部有专门的异步处理电路，处理读、写信号的交互，因此异步 FIFO 结构复杂，占用资源较大。</p>
 </div>
 </div>
 </div>

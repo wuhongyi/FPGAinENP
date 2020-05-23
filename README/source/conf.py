@@ -22,7 +22,7 @@ copyright = '2020, Hongyi Wu(吴鸿毅)'
 author = 'Hongyi Wu(吴鸿毅)'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0 alpha'
+release = '编写中'
 
 
 # -- General configuration ---------------------------------------------------

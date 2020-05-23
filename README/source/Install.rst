@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 8月 10 21:23:32 2019 (+0800)
-.. Last-Updated: 四 1月  2 20:16:42 2020 (+0800)
+.. Last-Updated: 六 5月 23 22:06:22 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 5
+..     Update #: 8
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -16,6 +16,8 @@
 ============================================================
 ISE 安装
 ============================================================
+
+ISE 最后一个版本是 14.7，该版本在LINUX 系统中只能支持 CentOS 6，在 CentOS 7 中存在问题。
 
 .. code-block:: bash
 		
@@ -85,19 +87,45 @@ Altera 安装
   devdata  licenses  modelsim_ase  qsys     syscon
   ip           logs        nios2eds         quartus  uninstall
 
-quartus/bin 文件夹内存放quartus启动的脚本
+quartus/bin 文件夹内存放 quartus 启动的脚本
 
 .. code-block:: bash
 		
   ./quartus
 
-modelsim_ase/bin 文件夹内存放modelsim启动的脚本
+modelsim_ase/bin 文件夹内存放 modelsim 启动的脚本
 
 .. code-block:: bash
 		
   ./vsim 
   
 
+
+CentOS 7 中 ModelSim 对依赖软件 freetype 版本有一定的要求。经过测试表明 2.4.12 版本可以支持。通常采用 modulefile 来对系统中的软件进行多版本控制，以下是该软件的配置示例。
+  
+.. code-block:: bash
+
+  #%Module 1.0
+  # 这一行一般 module file 都有
+   
+  set _module_name  [module-info name]
+  set is_module_rm  [module-info mode remove]
+  set sys        [uname sysname]
+  set os         [uname release]
+   
+  # 冲突标识符gcc
+  conflict        freetype
+   
+  set FREETYPE_CURPATH /opt/freetype/2.4.12
+  set FREETYPE_LEVEL 2.4.12
+  set FREETYPE_MAJLEVEL 2.4
+   
+  # 所需路径
+  prepend-path    PATH            $FREETYPE_CURPATH/bin
+  prepend-path    LD_LIBRARY_PATH $FREETYPE_CURPATH/lib
+  prepend-path    LIBRARY_PATH    $FREETYPE_CURPATH/lib
+  
+  
 ----------------------------------------------------------------------
 linux usb blaster权限的设置
 ----------------------------------------------------------------------
