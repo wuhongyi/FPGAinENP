@@ -90,7 +90,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">ISE 软件</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">ISE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">ISE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ip">IP 核</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#isim">ISim</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#chipscope">chipscope</a></li>
 </ul>
@@ -194,7 +197,47 @@
 <h1>ISE 软件<a class="headerlink" href="#ise" title="永久链接至标题">¶</a></h1>
 <div class="section" id="id1">
 <h2>ISE<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p>zheli</p>
+<p>新建工程</p>
+<img alt="_images/ISE_use0.png" src="_images/ISE_use0.png" />
+<p>右键 New Source 建立 Top Module</p>
+<img alt="_images/ISE_use1.png" src="_images/ISE_use1.png" />
+<p>右键 New Source 建立约束文件</p>
+<img alt="_images/ISE_use2.png" src="_images/ISE_use2.png" />
+<img alt="_images/ISE_use3.png" src="_images/ISE_use3.png" />
+<p>编译生成 xxx.bit 文件</p>
+<ul class="simple">
+<li><p>选中主程序</p></li>
+<li><p>在下方的Generate Programming File</p></li>
+<li><p>右键选择Rerun All</p></li>
+<li><p>等待完成或者报错</p></li>
+</ul>
+<img alt="_images/ISE_use4.png" src="_images/ISE_use4.png" />
+<p>刷新固件</p>
+<img alt="_images/ISE_use5.png" src="_images/ISE_use5.png" />
+<ul class="simple">
+<li><p>Add a device? -&gt; OK</p></li>
+<li><p>选择之前生成的 xxx.bit 文件</p></li>
+<li><p>Any other device? -&gt; No</p></li>
+</ul>
+<img alt="_images/ISE_use6.png" src="_images/ISE_use6.png" />
+<p>MSC</p>
+<img alt="_images/ISE_use7.png" src="_images/ISE_use7.png" />
+<img alt="_images/ISE_use8.png" src="_images/ISE_use8.png" />
+<img alt="_images/ISE_use9.png" src="_images/ISE_use9.png" />
+<div class="section" id="ip">
+<h3>IP 核<a class="headerlink" href="#ip" title="永久链接至标题">¶</a></h3>
+<p>CLOCK</p>
+<img alt="_images/ISE_IP_CLOCK0.png" src="_images/ISE_IP_CLOCK0.png" />
+<img alt="_images/ISE_IP_CLOCK1.png" src="_images/ISE_IP_CLOCK1.png" />
+<img alt="_images/ISE_IP_CLOCK2.png" src="_images/ISE_IP_CLOCK2.png" />
+<p>ROM</p>
+<img alt="_images/ISE_IP_ROM0.png" src="_images/ISE_IP_ROM0.png" />
+<img alt="_images/ISE_IP_ROM1.png" src="_images/ISE_IP_ROM1.png" />
+<img alt="_images/ISE_IP_ROM2.png" src="_images/ISE_IP_ROM2.png" />
+<p>FIFO</p>
+<img alt="_images/ISE_IP_FIFO0.png" src="_images/ISE_IP_FIFO0.png" />
+<p><a class="reference external" href="http://www.eefocus.com/guoke1993102/blog/15-06/313183_36284.html">http://www.eefocus.com/guoke1993102/blog/15-06/313183_36284.html</a></p>
+</div>
 </div>
 <div class="section" id="isim">
 <h2>ISim<a class="headerlink" href="#isim" title="永久链接至标题">¶</a></h2>

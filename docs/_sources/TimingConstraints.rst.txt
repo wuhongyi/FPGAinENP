@@ -4,14 +4,16 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 5月 23 22:56:56 2020 (+0800)
-.. Last-Updated: 六 5月 23 23:12:46 2020 (+0800)
+.. Last-Updated: 日 5月 24 13:17:50 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 2
+..     Update #: 3
 .. URL: http://wuhongyi.cn 
 
 ##################################################
 时序约束
 ##################################################
+
+.. image:: /_static/img/TimingConstraints.jpeg
 
 - 按前面的顺序去索引，找到对应情况，按要求约束
 - 开始时至配置时钟，不配置 input delays、output delays和时序例外
