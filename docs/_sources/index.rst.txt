@@ -85,5 +85,5 @@ FIFO
    :caption: 经验总结
 
    exp.rst
-   temp.rst
-   
+   tempverilog.rst
+   tempvhdl.rst
