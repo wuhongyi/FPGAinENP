@@ -75,8 +75,19 @@ FIFO
    :caption: FIFO
 
    FIFO.rst
-      
 
+
+   
+高层次综合
+==================
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: HLS
+
+   HLS.rst
+
+   
 经验总结
 ==================
 
