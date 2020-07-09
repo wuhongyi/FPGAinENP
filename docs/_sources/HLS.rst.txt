@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  7 19:57:40 2020 (+0800)
-.. Last-Updated: 三 7月  8 20:26:24 2020 (+0800)
+.. Last-Updated: 四 7月  9 15:07:27 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 2
+..     Update #: 5
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -55,9 +55,126 @@ HLS 项目的第一步是确认 C 代码是正确的。这个过程称为 C 验�
 
 .. image:: /_static/img/VivadoHLS_6.png
 
+============================================================
+综合创建的端口
+============================================================
+
+输入的原始程序如下：
+
+.. code-block:: c
+
+   void fir (data_t *y, coef_t c[N], data_t x)
+   {
+     static data_t shift_reg[N];
+     acc_t acc;
+     data_t data;
+     int i;
+     
+     acc=0;
+    Shift_Accum_Loop:
+     for (i=N-1;i>=0;i--)
+       {
+         if (i==0)
+    	{
+    	  shift_reg[0]=x;
+    	  data = x;
+    	}
+         else
+    	{
+    	  shift_reg[i]=shift_reg[i-1];
+    	  data = shift_reg[i];
+    	}
+         acc+=data*c[i];;       
+       }
+     *y=acc;
+   }
+
+综合生成的 verilog 代码接口如下：
+
+.. code-block:: verilog
+
+   module fir (
+           ap_clk,
+           ap_rst,
+           ap_start,
+           ap_done,
+           ap_idle,
+           ap_ready,
+           y,
+           y_ap_vld,
+           c_address0,
+           c_ce0,
+           c_q0,
+           x
+   );
+    
+   input   ap_clk;
+   input   ap_rst;
+   input   ap_start;
+   output   ap_done;
+   output   ap_idle;
+   output   ap_ready;
+   output  [31:0] y;
+   output   y_ap_vld;
+   output  [3:0] c_address0;
+   output   c_ce0;
+   input  [31:0] c_q0;
+   input  [31:0] x;
+    
+   endmodule //fir		
+
+综合生成的 VHDL 代码接口如下：
+
+.. code-block:: VHDL
+
+   entity fir is
+   port (
+       ap_clk : IN STD_LOGIC;
+       ap_rst : IN STD_LOGIC;
+       ap_start : IN STD_LOGIC;
+       ap_done : OUT STD_LOGIC;
+       ap_idle : OUT STD_LOGIC;
+       ap_ready : OUT STD_LOGIC;
+       y : OUT STD_LOGIC_VECTOR (31 downto 0);
+       y_ap_vld : OUT STD_LOGIC;
+       c_address0 : OUT STD_LOGIC_VECTOR (3 downto 0);
+       c_ce0 : OUT STD_LOGIC;
+       c_q0 : IN STD_LOGIC_VECTOR (31 downto 0);
+       x : IN STD_LOGIC_VECTOR (31 downto 0) );
+   end;
 
 
-	   
-   
+- 设计有一个时钟和复位端口(ap_clk, ap_reset)，这些都与设计本身的源对象相关联。
+- 有与设计相关的额外端口。自动添加了一些块级控制端口: ap_start、ap_done、ap_idle 和 ap_ready。 
+- 变量 output y 现在是一个 32 位的数据端口，带有一个相关的输出有效信号指示器 y_ap_vld。
+- 输入参数 c(一个数组)已经被实现为一个块 RAM 接口。具有 4 位输出地址端口、一个输出 CE 端口和一个 32 位输入数据端口。
+- 标量输入参数 x 被实现为一个没有 I/O 协议(ap_none)的数据端口。
+
+
+
+
+高级综合可以重用 C 测试平台,通过仿真验证 RTL。
+
+- 单击 Run C/RTL CoSimulation 工具栏按钮
+- 在 C/RTL 协同仿真对话框中单击 OK 以执行 RTL 仿真。RTL 联合仿真的默认选项是使用 Vivado 模拟器和 Verilog RTL 执行仿真。要使用不同的模拟器或语言执行验证,请使用 C/RTL 联合模拟对话框中的选项。  
+- 当 RTL 联合模拟完成时,报告将在信息窗格中自动打开。这是在 C 仿真结束时产生的相同消息。
+- C 测试平台为 RTL 设计生成输入向量。
+- 对 RTL 设计进行了仿真。
+- 将 RTL 的输出向量应用回 C 测试台中,测试台中的结果检查验证结果是否正确。
+- Vivado HLS 表明,如果测试工作台返回的值为 0,模拟就通过。它是测试台中返回变量的值,仅这一点就表示模拟是否成功。重要的是,测试工作台仅在结果正确时才返回值 0。
+
+
+高级综合流程的最后一步是将设计打包为 IP 块,以便与 Vivado 设计套件中的其他工具一起使用。
+
+- 单击 Export RTL 工具栏按钮
+- 确保格式选择下拉菜单显示 IP 目录。
+- 单击 OK。IP 打包程序为 Vivado IP 目录创建一个包。
+- 在浏览器中扩展解决方案 1。
+- 展开 Export RTL 命令创建的 impl 文件夹。  
+- 展开文件夹，找到打包成 zip 文件的 IP，准备添加到 Vivado IP 目录
+
+
+
+  
 .. 
 .. HLS.rst ends here
