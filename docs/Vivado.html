@@ -91,7 +91,10 @@
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Vivado 软件</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Vivado 软件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">仿真</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">语法</span></p>
 <ul>
@@ -193,6 +196,16 @@
   <div class="section" id="vivado">
 <h1>Vivado 软件<a class="headerlink" href="#vivado" title="永久链接至标题">¶</a></h1>
 <p>zheli</p>
+<div class="section" id="id1">
+<h2>仿真<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>DCP 文件不能直接用于仿真，需要转成可仿真的文件</p>
+<p>转换的方法(在 tcl console 命令行输入转换命令)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>open_checkpoint XXX.dcp
+write_vhdl -mode funcsim XXX.vhd
+write_verilog -mode funcsim XXX.v
+</pre></div>
+</div>
+</div>
 </div>
 
 
