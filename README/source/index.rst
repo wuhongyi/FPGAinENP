@@ -35,7 +35,9 @@ ISE/Altera/Vivado软件
    VHDL.rst
    verilog.rst
    TimingConstraints.rst
-	     
+   Primitive.rst
+
+   
 硬件介绍
 ==================
 

@@ -1,0 +1,631 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>原语 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="LUPO" href="LUPO.html" />
+    <link rel="prev" title="时序约束" href="TimingConstraints.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FPGA 在中低能实验核物理中的应用
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
+</ul>
+<p class="caption"><span class="caption-text">语法</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">原语</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#altera">Altera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xilinx">Xilinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">计算组件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#i-o">I/O端口组件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ibufds">IBUFDS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#obufds">OBUFDS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iobuf">IOBUF</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pulldown-pullup">PULLDOWN 和 PULLUP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">寄存器和锁存器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fdcpe">FDCPE</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">时钟组件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bufg">BUFG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bufmux">BUFMUX</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bufio">BUFIO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bufr">BUFR</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">处理器组件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">移位寄存器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#srl16">SRL16</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ram-rom">RAM/ROM组件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ram16x1s">RAM16X1S</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#slice-clb">Slice/CLB组件</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MZTIO.html">MZTIO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">计数器</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
+</ul>
+<p class="caption"><span class="caption-text">状态机</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">FIFO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">经验总结</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tempvhdl.html">VHDL temp</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FPGA 在中低能实验核物理中的应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>原语</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Primitive.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>原语<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="altera">
+<h2>Altera<a class="headerlink" href="#altera" title="永久链接至标题">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="xilinx">
+<h2>Xilinx<a class="headerlink" href="#xilinx" title="永久链接至标题">¶</a></h2>
+<p>Xilinx 公司的原语按照功能分为10类，包括：计算组件、I/O端口组件、寄存器和锁存器、时钟组件、处理器组件、移位寄存器、配置和检测组件、RAM/ROM组件、Slice/CLB组件以及G比特收发器组件。</p>
+<div class="section" id="id2">
+<h3>计算组件<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>计算组件指的就是 DSP48 核，也有人将其称为硬件乘法器</p>
+</div>
+<div class="section" id="i-o">
+<h3>I/O端口组件<a class="headerlink" href="#i-o" title="永久链接至标题">¶</a></h3>
+<p>I/O 组件提供了本地时钟缓存、标准单端 I/O 缓存、差分 I/O 信号缓存、DDR 专用 I/O 信号缓存、可变抽头延迟链、上拉、下拉以及单端信号和差分信号之间的相互转换</p>
+<ul class="simple">
+<li><p>BUFIO I/O的本地时钟缓存</p></li>
+<li><p>DCIRESER FPGA配置成功后DCI状态机的复位信号</p></li>
+<li><p>IBUF 标准容量可选择I/O单端口输入缓存</p></li>
+<li><p>IBUFDS 带可选择端口的差分信号输入缓存</p></li>
+<li><p>IBUFG 带可选择端口的专用输入缓存</p></li>
+<li><p>IBUFGDS 带可选择端口的专用差分信号输入缓存</p></li>
+<li><p>IDDR 用于接收外部DDR输入信号的专用输入寄存器</p></li>
+<li><p>IDELAY 专用的可变抽头输入延迟链</p></li>
+<li><p>IDELAYCTRL IDELAY抽头数的控制模块</p></li>
+<li><p>IOBUF 带可选择端口的双向缓存</p></li>
+<li><p>IOBUFDS 低有效输出的三态差分信号I/O缓存</p></li>
+<li><p>ISERDES 专用I/O缓存的输入分解器</p></li>
+<li><p>KEEPER KEEPER符号</p></li>
+<li><p>OBUF 单端输出端口缓存</p></li>
+<li><p>OBUFT 带可选择端口的低有效输出的三态输出缓冲</p></li>
+<li><p>OBUFDS 带可选择端口的差分信号输出缓冲</p></li>
+<li><p>OBUFTDS 带可选择端口的低有效输出的三态差分输出缓冲</p></li>
+<li><p>ODDR 用于向外部DDR发送信号的专用输出寄存器</p></li>
+<li><p>OSERDES 用于快速实现输入源同步接口</p></li>
+<li><p>PULLDOWN 输入端寄存器下拉至0</p></li>
+<li><p>PULLUP 输入端寄存器、开路以及三态输出端口上拉至VCC</p></li>
+</ul>
+<div class="section" id="ibufds">
+<h4>IBUFDS<a class="headerlink" href="#ibufds" title="永久链接至标题">¶</a></h4>
+<p>IBUFDS 原语用于将差分输入信号转化成标准单端信号，且可加入可选延迟。在 IBUFDS 原语中，输入信号为 I、IB，一个为主，一个为从，二者相位相反。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// IBUFDS: 差分输入缓冲器（Differential Input Buffer）</span>
+<span class="c1">// 适用芯片：Virtex-II/II-Pro/4, Spartan-3/3E</span>
+<span class="no">IBUFDS</span> <span class="p">#(</span>
+<span class="p">.</span><span class="no">DIFF_TERM</span><span class="p">(</span><span class="s">&quot;FALSE&quot;</span><span class="p">),</span>
+<span class="c1">// 差分终端，只有 Virtex-4 系列芯片才有，可设置为 True/Flase</span>
+<span class="p">.</span><span class="no">IOSTANDARD</span><span class="p">(</span><span class="s">&quot;DEFAULT&quot;</span><span class="p">)</span>
+<span class="c1">// 指定输入端口的电平标准，如果不确定，可设为 DEFAULT</span>
+<span class="p">)</span> <span class="n">IBUFDS_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span> <span class="c1">// 时钟缓冲输出</span>
+<span class="p">.</span><span class="no">I</span><span class="p">(</span><span class="no">I</span><span class="p">),</span> <span class="c1">// 差分时钟的正端输入，需要和顶层模块的端口直接连接</span>
+<span class="p">.</span><span class="no">IB</span><span class="p">(</span><span class="no">IB</span><span class="p">)</span> <span class="c1">// 差分时钟的负端输入，需要和顶层模块的端口直接连接</span>
+<span class="p">);</span>
+<span class="c1">// 结束 IBUFDS 模块的例化过程</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obufds">
+<h4>OBUFDS<a class="headerlink" href="#obufds" title="永久链接至标题">¶</a></h4>
+<p>OBUFDS 将标准单端信号转换成差分信号，输出端口需要直接对应到顶层模块的输出信号，和 IBUFDS 为一对互逆操作。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// OBUFDS: 差分输出缓冲器（Differential Output Buffer）</span>
+<span class="c1">// 适用芯片：Virtex-II/II-Pro/4, Spartan-3/3E</span>
+<span class="no">OBUFDS</span> <span class="p">#(</span>
+<span class="p">.</span><span class="no">IOSTANDARD</span><span class="p">(</span><span class="s">&quot;DEFAULT&quot;</span><span class="p">)</span>
+<span class="c1">// 指名输出端口的电平标准</span>
+<span class="p">)</span> <span class="n">OBUFDS_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span> <span class="c1">// 差分正端输出，直接连接到顶层模块端口</span>
+<span class="p">.</span><span class="no">OB</span><span class="p">(</span><span class="no">OB</span><span class="p">),</span> <span class="c1">// 差分负端输出，直接连接到顶层模块端口</span>
+<span class="p">.</span><span class="no">I</span><span class="p">(</span><span class="no">I</span><span class="p">)</span> <span class="c1">// 缓冲器输入</span>
+<span class="p">);</span>
+<span class="c1">// 结束 OBUFDS 模块的例化过程</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iobuf">
+<h4>IOBUF<a class="headerlink" href="#iobuf" title="永久链接至标题">¶</a></h4>
+<p>IOBUF 原语是单端双向缓冲器，其 I/O 接口必须和指定的电平标准相对应，支持 LVTTL、LVCMOS15、LVCMOS18、LVCMOS25 以及 LVCMOS33 等信号标准，同时还可通过 DRIVE、 FAST 以及 SLOW 等约束来满足的不同驱动和抖动速率的需求。默认的驱动能力为 12mA，低抖动。IOBUF 由 IBUF 和 OBUFT 两个基本组件构成，当 I/O 端口为高阻时，其输出端口 O 为不定态。IOBUF 原语的功能也可以通过其组成组件的互联来实现。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// IOBUF: 单端双向缓冲器（Single-ended Bi-directional Buffer）</span>
+<span class="c1">// 适用芯片：所有芯片</span>
+<span class="no">IOBUF</span> <span class="p">#(</span>
+<span class="p">.</span><span class="no">DRIVE</span><span class="p">(</span><span class="mh">12</span><span class="p">),</span>
+<span class="c1">// 指定输出驱动的强度</span>
+<span class="p">.</span><span class="no">IOSTANDARD</span><span class="p">(</span><span class="s">&quot;DEFAULT&quot;</span><span class="p">),</span>
+<span class="c1">// 指定 I/O 电平的标准，不同的芯片支持的接口电平可能会有所不同</span>
+<span class="p">.</span><span class="no">SLEW</span><span class="p">(</span><span class="s">&quot;SLOW&quot;</span><span class="p">)</span>
+<span class="c1">// 制定输出抖动速率</span>
+<span class="p">)</span> <span class="n">IOBUF_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span> <span class="c1">// 缓冲器的单元输出</span>
+<span class="p">.</span><span class="no">IO</span><span class="p">(</span><span class="no">IO</span><span class="p">),</span> <span class="c1">// 缓冲器的双向输出</span>
+<span class="p">.</span><span class="no">I</span><span class="p">(</span><span class="no">I</span><span class="p">),</span> <span class="c1">// 缓冲器的输人</span>
+<span class="p">.</span><span class="no">T</span><span class="p">(</span><span class="no">T</span><span class="p">)</span> <span class="c1">// 3 态使能输入信号</span>
+<span class="p">);</span>
+<span class="c1">// 结束 IOBUF 模块的例化过程</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pulldown-pullup">
+<h4>PULLDOWN 和 PULLUP<a class="headerlink" href="#pulldown-pullup" title="永久链接至标题">¶</a></h4>
+<p>数字电路有三种状态：高电平、低电平、和高阻状态。有些应用场合不希望出现高阻状态，可以通过上拉电阻或下拉电阻的方式使其处于稳定状态。FPGA 的 I/O 端口，可以通过外接电阻上下拉，也可以在芯片内部，通过配置完成上下拉。上拉电阻是用来解决总线驱动能力不足时提供电流的，而下拉电阻是用来吸收电流。通过 FPGA 内部配置完成上下拉，能有效节约电路板面积，是设计的首选方案。上、下拉的原语分别为 PULLUP 和 PULLDOWN。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// PULLUP: 上拉原语（I/O Buffer Weak Pull-up）</span>
+<span class="c1">// 适用芯片：所有芯片</span>
+<span class="no">PULLUP</span> <span class="n">PULLUP_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span>
+<span class="c1">//上拉输出，需要直接连接到设计的顶层模块端口上);</span>
+<span class="c1">// 结束 PULLUP 模块的例化过程</span>
+
+<span class="c1">// PULLDOWN:下拉原语（ I/O Buffer Weak Pull-down）</span>
+<span class="c1">// 适用芯片：所有芯片</span>
+<span class="no">PULLDOWN</span> <span class="n">PULLDOWN_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span>
+<span class="c1">// 下拉输出，需要直接连接到设计的顶层模块端口上</span>
+<span class="p">);</span>
+<span class="c1">// 结束 PULLDOWN 模块的例化过程</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>寄存器和锁存器<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>寄存器和锁存器是时序电路中常用的基本元件。</p>
+<ul class="simple">
+<li><p>FDCPE 带有时钟使能、异步预配置和清空信号的D触发器</p></li>
+<li><p>FDRSE 带有同步时钟使能、同步预配置和清空信号的RS触发器</p></li>
+<li><p>LCDPE 带有时钟使能、异步预配置和清空信号的透明数据锁存器</p></li>
+</ul>
+<div class="section" id="fdcpe">
+<h4>FDCPE<a class="headerlink" href="#fdcpe" title="永久链接至标题">¶</a></h4>
+<p>FDCPE 指带单数据输入信号 D、单输出 O、时钟使能信号 CE、异步复位 PRE 和异步清空信号 CLR 的 D 触发器。当 PRE 信号为高时，输出端 O 为高；当 CLR 为高时，输出端 O 为低；当 PRE 和 CLR 都为低、CE 信号为高时，输入信号 D 在时钟上升沿被加载到触发器中，并被送到输出端；当 PRE 和 CLR 都为低、CE 信号为低时，输出端保持不变。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// FDCPE: D 触发器（Single Data Rate D Flip-Flop ）</span>
+<span class="c1">// 适用芯片：所有 FPGA 芯片</span>
+<span class="no">FDCPE</span> <span class="p">#(</span>
+<span class="p">.</span><span class="no">INIT</span><span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">)</span>
+<span class="c1">//初始化寄存器的值，可设置为 1&#39;b0 或 1&#39;b1</span>
+<span class="p">)</span> <span class="n">FDCPE_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">Q</span><span class="p">(</span><span class="no">Q</span><span class="p">),</span> <span class="c1">// 数据输出端口</span>
+<span class="p">.</span><span class="no">C</span><span class="p">(</span><span class="no">C</span><span class="p">),</span> <span class="c1">// 时钟输入端口</span>
+<span class="p">.</span><span class="no">CE</span><span class="p">(</span><span class="no">CE</span><span class="p">),</span> <span class="c1">// 时钟使能输入信号</span>
+<span class="p">.</span><span class="no">CLR</span><span class="p">(</span><span class="no">CLR</span><span class="p">),</span> <span class="c1">// 异步清空输入信号</span>
+<span class="p">.</span><span class="no">D</span><span class="p">(</span><span class="no">D</span><span class="p">),</span> <span class="c1">// 数据输入信号</span>
+<span class="p">.</span><span class="no">PRE</span><span class="p">(</span><span class="no">PRE</span><span class="p">)</span> <span class="c1">// 异步复位输入信号</span>
+<span class="p">);</span>
+<span class="c1">// 结束 FDCPE 模块的例化过程</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>时钟组件<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>时钟组件包括各种全局时钟缓冲器、全局时钟复用器、普通I/O本地的时钟缓冲器以及高级数字时钟管理模块</p>
+<ul class="simple">
+<li><p>BUFG 全局时钟缓冲器</p></li>
+<li><p>BUFGCE 全局时钟复用器，附带时钟使能信号和0状态输出</p></li>
+<li><p>BUFGCE_1 全局时钟复用缓冲器，附带时钟使能信号和1状态输出</p></li>
+<li><p>BUFGCTRL 全局时钟复用缓冲器</p></li>
+<li><p>BUFGMUX 全局时钟复用缓冲器，附带时钟使能信号和0状态输出</p></li>
+<li><p>BUFMUX_1 全局时钟复用器，附带0状态输出</p></li>
+<li><p>BUFGMUX_VIRTEX4 Virtex-4器件特有的全局时钟复用缓冲器</p></li>
+<li><p>BUFIO I/O端口本地时钟缓冲器</p></li>
+<li><p>BUFR I/O端口和CLB的本地时钟缓冲器</p></li>
+<li><p>DCM_ADV 带有高级特征的数字时钟管理模块</p></li>
+<li><p>DCM_BASE 带有基本特征的数字时钟管理模块</p></li>
+<li><p>DCM_PS 带有基本特征和移相特征的数字时钟管理模块</p></li>
+<li><p>PMCD 匹配相位时钟分频器</p></li>
+</ul>
+<div class="section" id="bufg">
+<h4>BUFG<a class="headerlink" href="#bufg" title="永久链接至标题">¶</a></h4>
+<p>BUFG 是具有高扇出的全局时钟缓冲器，一般由综合器自动推断并使用。</p>
+<p>全局时钟是具有高扇出驱动能力的缓冲器，可以将信号连到时钟抖动可以忽略不计的全局时钟网络，BUFG 组件还可应用于典型的高扇出信号和网络，如复位信号和时钟使能信号。如果要对全局时钟实现 PLL 或 DCM 等时钟管理，则需要手动例化该缓冲器。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// BUFG: 全局时钟缓存（Global Clock Buffer），只能以内部信号驱动</span>
+<span class="no">BUFG</span> <span class="n">BUFG_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span> <span class="c1">//时钟缓存输出信号</span>
+<span class="p">.</span><span class="no">I</span><span class="p">(</span><span class="no">I</span><span class="p">)</span> <span class="c1">// /时钟缓存输入信号</span>
+<span class="p">);</span>
+<span class="c1">// 结束 BUFG_ins 模块的例化过程</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bufmux">
+<h4>BUFMUX<a class="headerlink" href="#bufmux" title="永久链接至标题">¶</a></h4>
+<p>BUFMUX 是全局时钟复用器，选择两个输入时钟 I0 或 I1 中的一个作为全局时钟。</p>
+<p>当选择信号 S 为低时，选择 I0；否则输出 I1，其真值表如表 M 所示。BUFMUX 原语和 BUFMUX1 原语的功能一样，只是选择逻辑不同，对于 BUFMUX1，当选择信号 S 为低时，选择 I1；否则输出 I0。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// BUFGMUX: 全局时钟的 2 到 1 复用器（Global Clock Buffer 2-to-1 MUX）</span>
+<span class="c1">// 适用芯片：Virtex-II/II-Pro/4/5, Spartan-3/3E/3A</span>
+<span class="no">BUFGMUX</span> <span class="n">BUFGMUX_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span> <span class="c1">//时钟复用器的输出信号</span>
+<span class="p">.</span><span class="no">I0</span><span class="p">(</span><span class="no">I0</span><span class="p">),</span> <span class="c1">// 0 时钟输入信号</span>
+<span class="p">.</span><span class="no">I1</span><span class="p">(</span><span class="no">I1</span><span class="p">),</span> <span class="c1">//1 时钟输入信号</span>
+<span class="p">.</span><span class="no">S</span><span class="p">(</span><span class="no">S</span><span class="p">)</span> <span class="c1">// 时钟选择信号</span>
+<span class="p">);</span>
+<span class="c1">// 结束 BUFGMUX_inst 模块的例化过程</span>
+</pre></div>
+</div>
+<p>需要注意的是：该原语只用用全局时钟处理，不能作为接口使用。</p>
+</div>
+<div class="section" id="bufio">
+<h4>BUFIO<a class="headerlink" href="#bufio" title="永久链接至标题">¶</a></h4>
+<p>BUFIO 是本地 I/O 时钟缓冲器，只有一个输入与输出，非常简单。BUFIO 使用独立于全局时钟网络的专用时钟网络来驱动纵向 I/O 管脚，所以非常适合同步数据采集。BUFIO 要求时钟和相应的 I/O 必须在同一时钟区域，而不同时钟网络的驱动需要 BUFR 原语来实现。需要注意的是，由于 BUFIO 引出的时钟只到达了 I/O 列，所以不能来驱动逻辑
+资源，如 CLB 和块 RAM。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// BUFIO: 本地 I/O 时钟缓冲器（ Local Clock Buffer）</span>
+<span class="c1">// 适用芯片：Virtex-4/5</span>
+<span class="no">BUFIO</span> <span class="n">BUFIO_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span> <span class="c1">//本地 I/O 时钟缓冲器的输出信号</span>
+<span class="p">.</span><span class="no">I</span><span class="p">(</span><span class="no">I</span><span class="p">)</span> <span class="c1">//本地 I/O 时钟缓冲器的输入信号</span>
+<span class="p">);</span>
+<span class="c1">// 结束 BUFIO 模块的例化过程</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bufr">
+<h4>BUFR<a class="headerlink" href="#bufr" title="永久链接至标题">¶</a></h4>
+<p>BUFR 是本地 I/O 时钟、逻辑缓冲器。BUFR 和 BUFIO 都是将驱动时钟引入某一时钟区域的专用时钟网络，而独立于全局时钟网络；不同的是，BUFR 不仅可以跨越不同的时钟区域（最多 3 个），还能够驱动 I/O 逻辑以及自身或邻近时钟区域的逻辑资源。BUFIO 的输出和本地内部互联都能驱动 BUFR 组件。此外，BUFR 能完成输入时钟 1～8 的整数分频。因此，BUFR 是同步设计中实现跨时钟域以及串并转换的最佳方式。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// BUFR: 本地 I/O 时钟、逻辑缓冲器（Regional Clock Buffer）</span>
+<span class="c1">// 适用芯片：Virtex-4/5</span>
+<span class="no">BUFR</span> <span class="p">#(</span>
+<span class="p">.</span><span class="no">BUFR_DIVIDE</span><span class="p">(</span><span class="s">&quot;BYPASS&quot;</span><span class="p">),</span>
+<span class="c1">//分频比，可选择 &quot;BYPASS&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;。</span>
+<span class="p">.</span><span class="no">SIM_DEVICE</span><span class="p">(</span><span class="s">&quot;VIRTEX4&quot;</span><span class="p">)</span>
+<span class="c1">// 指定目标芯片, &quot;VIRTEX4&quot; 或者 &quot;VIRTEX5&quot;</span>
+<span class="p">)</span> <span class="n">BUFR_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">O</span><span class="p">(</span><span class="no">O</span><span class="p">),</span> <span class="c1">//时钟缓存输出信号</span>
+<span class="p">.</span><span class="no">CE</span><span class="p">(</span><span class="no">CE</span><span class="p">),</span> <span class="c1">//时钟使能信号，输入信号</span>
+<span class="p">.</span><span class="no">CLR</span><span class="p">(</span><span class="no">CLR</span><span class="p">),</span> <span class="c1">//时钟缓存清空信号</span>
+<span class="p">.</span><span class="no">I</span><span class="p">(</span><span class="no">I</span><span class="p">)</span> <span class="c1">// 时钟缓存输入信号</span>
+<span class="p">);</span>
+<span class="c1">// 结束 BUFR 模块的例化过程</span>
+</pre></div>
+</div>
+<p>需要注意的是：BUFIO 和 BUFR 只能在 Virtex-4 系列以及更高系列芯片中使用。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>处理器组件<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>处理器组件主要包括高速以太网 MAC 控制器和 PowerPC 硬核</p>
+</div>
+<div class="section" id="id6">
+<h3>移位寄存器<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>移位寄存器组件为 Xilinx 芯片所独有，由于属性的不同，具体有 8 个。各个移位寄存器原语都是在 SRL16 的基础上发展起来的。</p>
+<ul class="simple">
+<li><p>SRL16 16比特移位寄存器查找表</p></li>
+<li><p>SRL16_1 时钟下降作用的16比特移位寄存器查找表</p></li>
+<li><p>SRL16E 带有时钟使能信号的16比特移位寄存器查找表</p></li>
+<li><p>SRL16E_1 带有时钟使能信号且在时钟下降沿作用的16比特移动寄存器查找表</p></li>
+<li><p>SRLC16 带有进位的16比特移位寄存器查找表</p></li>
+<li><p>SRLC616_1 带有进位且在时钟下降沿作用的16比特移位寄存器查找表</p></li>
+<li><p>SRLC6E 带有时钟使能和进位信号的16比特移位寄存器查找表</p></li>
+<li><p>SRLC6E_1 带有时钟使能和进位信号，且在时钟下降沿作用的16比特移位寄存器查找表</p></li>
+</ul>
+<div class="section" id="srl16">
+<h4>SRL16<a class="headerlink" href="#srl16" title="永久链接至标题">¶</a></h4>
+<p>SRL16 是基于查找表（LUT）的移位寄存器，在实际应用中既能节省资源，还能保证时序。其输入信号 A3、A2、A1 以及 A0 选择移位寄存器的读取地址，当写使能信号高有效时，输入信号将被加载到移位寄存器中。单个移位寄存器的深度可以是固定的，也可以动态调整，最大不能超过 16。需要更大深度的移位寄存器时，则需要将多个 SRL16 拼接起来。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// SRL16: 16 位查找表移位寄存器（16-bit shift register LUT operating on posedge of clock）</span>
+<span class="c1">// 适用芯片：所有 FPGA 芯片</span>
+<span class="no">SRL16</span> <span class="p">#(</span>
+<span class="p">.</span><span class="no">INIT</span><span class="p">(</span><span class="mh">16&#39;h0000</span><span class="p">)</span>
+<span class="c1">// 初始化移位寄存器的值，可以为 16 比特任意整数</span>
+<span class="p">)</span> <span class="n">SRL16_inst</span> <span class="p">(</span>
+<span class="p">.</span><span class="no">Q</span><span class="p">(</span><span class="no">Q</span><span class="p">),</span> <span class="c1">// SRL16 的数据输出信号</span>
+<span class="p">.</span><span class="no">A0</span><span class="p">(</span><span class="no">A0</span><span class="p">),</span> <span class="c1">// 选择[0]输入</span>
+<span class="p">.</span><span class="no">A1</span><span class="p">(</span><span class="no">A1</span><span class="p">),</span> <span class="c1">// 选择[1]输入</span>
+<span class="p">.</span><span class="no">A2</span><span class="p">(</span><span class="no">A2</span><span class="p">),</span> <span class="c1">// 选择[2]输入</span>
+<span class="p">.</span><span class="no">A3</span><span class="p">(</span><span class="no">A3</span><span class="p">),</span> <span class="c1">// 选择[3]输入</span>
+<span class="p">.</span><span class="no">CLK</span><span class="p">(</span><span class="no">CLK</span><span class="p">),</span> <span class="c1">// 时钟输入信号</span>
+<span class="p">.</span><span class="no">D</span><span class="p">(</span><span class="no">D</span><span class="p">)</span> <span class="c1">// SRL16 的数据输入信号</span>
+<span class="p">);</span>
+<span class="c1">// 结束 SRL16 模块的例化过程</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ram-rom">
+<h3>RAM/ROM组件<a class="headerlink" href="#ram-rom" title="永久链接至标题">¶</a></h3>
+<p>RAM/ROM 组件可用于例化 FIFO、分布式 RAM、分布式 ROM、块 RAM 以及块 ROM</p>
+<ul class="simple">
+<li><p>FIFO16 基于Virtex-4块RAM的内嵌FIFO</p></li>
+<li><p>RAM16X1D 深度为16，位宽为1的静态同步双口RAM</p></li>
+<li><p>RAM16X1S 深度为16，位宽为1的静态同步RAM</p></li>
+<li><p>RAM32X1S 深度为32，位宽为1的静态同步RAM</p></li>
+<li><p>RAM64X1S 深度为64，位宽为1的静态同步RAM</p></li>
+<li><p>RAMB16 单口块RAM，位宽可配置成1/2/4/9/18/36，其大小可配置成16384比特的数据存储器，或者2048的奇偶存储器</p></li>
+<li><p>RAMB32_S64_ECC 带有差错处理的深度为64位，位宽为64位的同步双口块RAM</p></li>
+<li><p>ROM16X1 深度为16，位宽为1的静态同步ROM</p></li>
+<li><p>ROM32X1 深度为32，位宽为1的静态同步ROM</p></li>
+<li><p>ROM64X1 深度为64，位宽为1的静态同步ROM</p></li>
+<li><p>ROM128X1 深度为128，位宽为1的静态同步ROM</p></li>
+<li><p>ROM256X1 深度为256，位宽为1的静态同步ROM</p></li>
+</ul>
+<div class="section" id="ram16x1s">
+<h4>RAM16X1S<a class="headerlink" href="#ram16x1s" title="永久链接至标题">¶</a></h4>
+<p>RAM16X1S 是深度为 16 比特，位宽为 1 的同步 RAM。当写使能信号 WE 为低时，写端口的数据操作无效，RAM 内部的数据不会改变；当 WE 为高时，可以在任意地址中写入比特。为了保证数据的稳定性，地址和数据应该在 WCLK 的上升沿前保持稳定。输出信号 O 为 RAM 中由读地址信号所确定的地址中所存数据的值。此外，还可通过属性指定 RAM 的初始值。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>// RAM16X1S: 16比特 1深度同步 RAM（16 x 1 posedge write distributed (LUT)
+RAM）
+// 适用芯片：所有芯片
+RAM16X1S #(
+.INIT(16&#39;h0000)
+//对 RAM 的内容进行初始化，这里初始化为全 1
+) RAM16X1S_inst (
+.O(O), // RAM output
+.A0(A0), // RAM address[0] input
+.A1(A1), // RAM address[1] input
+.A2(A2), // RAM address[2] input
+.A3(A3), // RAM address[3] input
+.D(D), // RAM data input
+.WCLK(WCLK), // Write clock input
+.WE(WE) // Write enable input
+);
+// 结束 RAM16X1S 模块的例化过程
+</pre></div>
+</div>
+<p>需要注意的是，RAM16X1S 原语是 Xilinx 独有的一类结构，在小数据量存储方面非常节省资源。</p>
+</div>
+</div>
+<div class="section" id="slice-clb">
+<h3>Slice/CLB组件<a class="headerlink" href="#slice-clb" title="永久链接至标题">¶</a></h3>
+<p>Slice/CLB 组件涵盖了 Xilinx FPGA 中所有的逻辑单元，包括各种查找表、复用器以及逻辑操作等 21 个原语</p>
+<ul class="simple">
+<li><p>BUFCF 快速连接缓冲</p></li>
+<li><p>LUT1 带通用输出的1比特查找表</p></li>
+<li><p>LUT2 带通用输出的2比特查找表</p></li>
+<li><p>LUT3 带通用输出的3比特查找表</p></li>
+<li><p>LUT4 带通用输出的4比特查找表</p></li>
+<li><p>LUT1_D 带两个输出的1比特查找表</p></li>
+<li><p>LUT2_D 带两个输出的2比特查找表</p></li>
+<li><p>LUT3_D 带两个输出的3比特查找表</p></li>
+<li><p>LUT4_D 带两个输出的4比特查找表</p></li>
+<li><p>LUT1_L 带本地输出的1比特查找表</p></li>
+<li><p>LUT2_L 带本地输出的2比特查找表</p></li>
+<li><p>LUT3_L 带本地输出的3比特查找表</p></li>
+<li><p>LUT4_L 带本地输出的4比特查找表</p></li>
+<li><p>MULT_AND 用于乘法的快速与门</p></li>
+<li><p>MUXCY 带有进位和通用输出的2到1复用器</p></li>
+<li><p>MUXCY_D 带有进位和双输出的2到1复用器</p></li>
+<li><p>MUXCY_L 带有进位和本地输出的2到1复用器</p></li>
+<li><p>MUXF5 基于查找表的2到1复用器，带通用输出</p></li>
+<li><p>MUXF5_D 基于查找表的2到1复用器，带双输出</p></li>
+<li><p>MUXF5_L 基于查找表的2到1复用器，带本地输出</p></li>
+<li><p>MUXF6 基于查找表的2到1复用器，带通用输出</p></li>
+<li><p>MUXF6_D 基于查找表的2到1复用器，带本地输出</p></li>
+<li><p>MUXF6_L 基于查找表的2到1复用器，带本地输出</p></li>
+<li><p>MUXF7 基于查找表的2到1复用器，带通用输出</p></li>
+<li><p>MUXF7_D 基于查找表的2到1复用器，带本地输出</p></li>
+<li><p>MUXF7_L 基于查找表的2到1复用器，带本地输出</p></li>
+<li><p>MUXF8 基于查找表的2到1复用器，带通用输出</p></li>
+<li><p>MUXF8_D 基于查找表的2到1复用器，带本地输出</p></li>
+<li><p>MUXF8_L 基于查找表的2到1复用器，带本地输出</p></li>
+<li><p>XORCY 带通用输出进位逻辑的XOR</p></li>
+<li><p>XORCY_D 带两个输出进位逻辑的XOR</p></li>
+<li><p>XORCY_L 带本地输出进位逻辑的XOR</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="LUPO.html" class="btn btn-neutral float-right" title="LUPO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="TimingConstraints.html" class="btn btn-neutral float-left" title="时序约束" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

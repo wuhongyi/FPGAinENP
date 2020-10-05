@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 五 7月 26 20:21:45 2019 (+0800)
-.. Last-Updated: 四 1月  2 19:58:37 2020 (+0800)
+.. Last-Updated: 一 10月  5 21:39:47 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 5
+..     Update #: 6
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -59,6 +59,13 @@ README
 
 
 
+**参考文献**
+
+- 手把手教你学FPGA设计--基于大道至简的至简设计法
+- VHDL 入门-解惑-经典实例-经验总结  
+- Verilog 数字系统设计教程
+
+  
    
 .. 
 .. README.rst ends here
