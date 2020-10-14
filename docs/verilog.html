@@ -99,6 +99,21 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">verilog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">程序结构</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">端口声明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">模块内容</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">数据类型及其常量和变量</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">常量</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">数字</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameter">参数（parameter）型</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">变量</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wire">wire 型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reg">reg 型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#memory">memory 型</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -208,6 +223,129 @@
 <p>模块的端口声明了模块的输入输出接口。其格式如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>module 模块名(口1, 口2, 口3, ...);
 </pre></div>
+</div>
+<p>模块的端口表示的是模块的输入和输出口名，也就是说，它与别的模块联系端口的标识。在模块被引用时，在被引用的模块中，有些信号要输入到被引用的模块中，有的信号需要从被引用的模块中取出来。在引用模块时其端口可以用两种方法连接：
+- 在引用时，严格按照模块定义的端口顺序来连接，不用标明原模块定义的规定的端口名，例如：模块名(连接端口1信号名,连接端口2信号名,连接端口3信号名,…);
+- 在引用时用“.”符号，标明原模块时定义时规定的端口名，例如：模块名(.端口1名(连接信号1名),.端口2名(连接信号2名), …);。这样表示的好出在于可以用端口名与被引用模块的端口相对应，而不必严格按端口顺序对应，提高了程序的可读性和可移植性。</p>
+</div>
+<div class="section" id="id3">
+<h3>模块内容<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>模块的内容包括 I/O 说明、内部信号声明和功能定义。</p>
+<p>I/O 说明的格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>// 输入口
+input [信号位宽-1:0] 端口名1;
+input [信号位宽-1:0] 端口名2;
+// ...
+input [信号位宽-1:0] 端口名i;//共有i个输入口
+
+// 输出口
+output [信号位宽-1:0] 端口名1;
+output [信号位宽-1:0] 端口名2;
+// ...
+output [信号位宽-1:0] 端口名j;//共有j个输出口
+
+// 输入/输出口
+inout [信号位宽-1:0] 端口名1;
+inout [信号位宽-1:0] 端口名2;
+// ...
+inout [信号位宽-1:0] 端口名k;//共有k个双向总线端口
+</pre></div>
+</div>
+<p>I/O 说明也可以写在端口声明语句中。其格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">module_name</span><span class="p">(</span><span class="k">input</span> <span class="n">port1</span><span class="p">,</span> <span class="k">input</span> <span class="n">port2</span><span class="p">,</span> <span class="p">...,</span> <span class="k">output</span> <span class="n">port1</span><span class="p">,</span> <span class="k">output</span> <span class="n">port2</span><span class="p">,</span> <span class="p">...);</span>
+</pre></div>
+</div>
+<p>在模块内部用到的与端口有关的 wire 和 reg 类型变量的声明。例如：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span><span class="n">width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span> <span class="mh">0</span><span class="p">]</span> <span class="no">R变量1</span><span class="p">,</span> <span class="no">R变量2</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="n">width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span> <span class="mh">0</span><span class="p">]</span> <span class="no">W变量1</span><span class="p">,</span> <span class="no">W变量2</span><span class="p">;</span>
+<span class="c1">// ...</span>
+</pre></div>
+</div>
+<p>模块中最重要的部分是逻辑功能定义部分。有 3 种方法可在模块中产生逻辑。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>用“assign”声明语句，如 assgin a = b&amp;c;</dt><dd><ul>
+<li><p>这种方法的句法很简单，只需写一个“assgin”，后面再加一个方程式即可。示例中的方程式描述了一个有两个输入的与门</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>用实例原件，如 and #2 ul(q,a,b);</dt><dd><ul>
+<li><p>采用实例元件的方法像在电路图输入方式下调入库元件一样，键入元件的名字和相连的引脚即可。</p></li>
+<li><p>这表示在设计中用到一个跟与门（and）一样的名为 ul 的与门，其输入端为 a、b，输出端为 q。输出延迟为 2 个单位时间。</p></li>
+<li><p>要求每个实例元件的名字必须是唯一的，以避免与其它调用与门（and）的实例混淆。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>用“always”块，如 always&#64;(posedge clk or posedge clr) begin if(clr) q&lt;=0; else if(en) q&lt;= d; end</p></li>
+</ul>
+<p>采用“assgin”语句是描述组合逻辑最常用的方法之一。而“always”块既可用于描述组合逻辑，也可描述时序逻辑。用“always”块的例子生成了一个带有异步清除端的 D 触发器。“always”块可用很多描述手段来表达逻辑，例如上例就用了 if…else 语句来表达逻辑关系。如按一定的风格来编写“always”块，可以通过综合工具把源代码自动综合成用门级结构表示的组合或时序逻辑电路。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>数据类型及其常量和变量<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>verilog 中总共有 19 种数据类型。数据类型是用来表示数字电路硬件中的数据存储和传送元素的。这里介绍 4 种最基本的数据类型，它们是：reg 型、wire 型、integer 型和 parameter 型。</p>
+<p>verilog 语言种也有常量和变量之分，它们分别属于 19 种数据类型。下面就最常用的几种进行介绍。</p>
+<div class="section" id="id5">
+<h3>常量<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>在程序运行中，其值不能被改变的量城为常量。下面首先对在 verilog 语言中使用的数字及其表示方式进行介绍。</p>
+<div class="section" id="id6">
+<h4>数字<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
+<p><strong>整数</strong></p>
+<p>在 verilog 中，整型常量即整常数有以下 4 种进制表示形式：
+- 二进制整数（b或B）
+- 十进制整数（d或D）
+- 十六进制整数（h或H）
+- 八进制整数（o或O）</p>
+<p>数字表达方式有以下三种：</p>
+<ul class="simple">
+<li><p>&lt;位宽&gt;&lt;进制&gt;&lt;数字&gt;，这是一种全面的描述方式。</p></li>
+<li><p>在 &lt;进制&gt;&lt;数字&gt; 这种描述方式中，数字的位宽采用默认位宽。</p></li>
+<li><p>在 &lt;数字&gt; 这种描述方式中，采用默认进制（十进制）。</p></li>
+</ul>
+<p>在表达式中，位宽指明了数字的精确位数。例如：一个 4 位二进制数的数字的位宽为 4，一个 4 位十六进制数字的位宽为 16（因为每单个十六进制数就要用 4 位二进制数来表示）。</p>
+<p>例如：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="mh">8</span><span class="mb">&#39;b10101100</span> <span class="c1">// 位宽位 8 的数的二进制表示，&#39;b 表示二进制</span>
+<span class="mh">8&#39;ha2</span>       <span class="c1">// 位宽为 8 的数的十六进制表示，&#39;h 表示十六进制</span>
+</pre></div>
+</div>
+<p><strong>x和z值</strong></p>
+<p>在数字电路中，x 代表不定值，z 代表高阻值。一个 x 可以用来定义十六进制数的 4 位二进制数的状态，八进制数的 3 位，二进制数的 1 位。z 的表示方式同 x 类似。z 还有一种表达方式是可以写作“?”。在使用 case 表达式时建议使用这种写法，以提高程序的可读性。</p>
+<p>例如：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="mh">4</span><span class="mb">&#39;b10</span><span class="n">x0</span>  <span class="c1">// 位宽为 4 的二进制数从低位数起第 2 位为不定值</span>
+<span class="mh">4</span><span class="mb">&#39;b101</span><span class="n">z</span>  <span class="c1">// 位宽为 4 的二进制数从低位数起第 1 位位高阻值</span>
+<span class="mh">12</span><span class="p">&#39;</span><span class="n">dz</span>    <span class="c1">// 位宽为 12 的十进制数，其值为高阻值（第1种表达方式）</span>
+<span class="mh">12</span><span class="p">&#39;</span><span class="n">d</span><span class="o">?</span>    <span class="c1">// 位宽为 12 的十进制数，其值为高阻值（第2种表达方式）</span>
+<span class="mh">8&#39;h4</span><span class="n">x</span>    <span class="c1">// 位宽为 8 的十六进制数，其低 4 位值为不定值</span>
+</pre></div>
+</div>
+<p><strong>负数</strong></p>
+<p>一个数字可以被定义为负数，只需在位宽表达式前加一个减号，减号必须写在数字定义表达式的最前面。减号不可以放在位宽和进制之间，也不可以放在进制和具体的数之间。</p>
+<p>例如：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mh">8</span><span class="mi">&#39;d5</span>   <span class="c1">// 这个表达式代表 5 的补数（用八位二进制数表示）</span>
+<span class="mh">8</span><span class="p">&#39;</span><span class="n">d</span><span class="o">-</span><span class="mh">5</span>   <span class="c1">// 非法格式</span>
+</pre></div>
+</div>
+<p><strong>下划线</strong></p>
+<p>下划线可以用来分隔开数的表达以提高程序的可读性。</p>
+<p>page 30</p>
+</div>
+<div class="section" id="parameter">
+<h4>参数（parameter）型<a class="headerlink" href="#parameter" title="永久链接至标题">¶</a></h4>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>变量<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="section" id="wire">
+<h4>wire 型<a class="headerlink" href="#wire" title="永久链接至标题">¶</a></h4>
+</div>
+<div class="section" id="reg">
+<h4>reg 型<a class="headerlink" href="#reg" title="永久链接至标题">¶</a></h4>
+</div>
+<div class="section" id="memory">
+<h4>memory 型<a class="headerlink" href="#memory" title="永久链接至标题">¶</a></h4>
 </div>
 </div>
 </div>
