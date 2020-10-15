@@ -116,6 +116,21 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">运算符及表达式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">算术运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">位运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">逻辑运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">关系运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">等式运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">移位运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">位拼接运算符</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">赋值语句和块语句</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">赋值语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">块语句</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
@@ -329,24 +344,218 @@ inout [信号位宽-1:0] 端口名k;//共有k个双向总线端口
 </pre></div>
 </div>
 <p><strong>下划线</strong></p>
-<p>下划线可以用来分隔开数的表达以提高程序的可读性。</p>
-<p>page 30</p>
+<p>下划线可以用来分隔开数的表达以提高程序的可读性。它不可以用在位宽和进制处，只能用在具体的数字之间。</p>
+<p>例如：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="mh">16</span><span class="mb">&#39;b1010</span><span class="n">_1011_1111_1010</span>  <span class="c1">// 合法格式</span>
+<span class="mh">8</span><span class="p">&#39;</span><span class="n">b_0011_1010</span>            <span class="c1">// 非法格式</span>
+</pre></div>
+</div>
+<p>当常量不说明位数时，默认值是 32 位，每个字母用 8 位的 ASCII 值表示。例如：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="mh">10</span><span class="o">=</span><span class="mh">32</span><span class="mi">&#39;d10</span><span class="o">=</span><span class="mh">32</span><span class="mb">&#39;b1010</span>
+<span class="mh">1</span><span class="o">=</span><span class="mh">32</span><span class="mi">&#39;d1</span><span class="o">=</span><span class="mh">32</span><span class="mb">&#39;b1</span>
+<span class="o">-</span><span class="mh">1</span><span class="o">=-</span><span class="mh">32</span><span class="mi">&#39;d1</span><span class="o">=</span><span class="mh">32&#39;hFFFFFFFF</span>
+<span class="p">&#39;</span><span class="no">BX</span><span class="o">=</span><span class="mh">32</span><span class="p">&#39;</span><span class="no">BX</span><span class="o">=</span><span class="mh">32</span><span class="p">&#39;</span><span class="no">BXXXXXXX</span><span class="p">...</span><span class="no">X</span>
+<span class="s">&quot;AB&quot;</span><span class="o">=</span><span class="mh">16</span><span class="p">&#39;</span><span class="no">B01000001_01000010</span>  <span class="c1">// 字符串 AB，为十六进制数 16&#39;h4142</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="parameter">
 <h4>参数（parameter）型<a class="headerlink" href="#parameter" title="永久链接至标题">¶</a></h4>
+<p>在 verilog 中用 parameter 来定义常量，即用 parameter 来定义一个标识符代表一个常量，称为符号常量，即标识符形式的常量，采用标识符代表一个常量可提高程序的可读性和可维护性。parameter 型数据是一种常数型的数据，其说明格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>parameter 参数名1=表达式, 参数名2=表达式, ..., 参数名n=表达式;
+</pre></div>
+</div>
+<p>parameter 是参数型数据的确认符。确认符后跟着一个用逗号分隔开的赋值语句表。在每一个赋值语句的右边必须是一个常数表达式。也就是说，该表达式只能包含数字或先前已经定义过的参数。例如：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">parameter</span> <span class="n">msb</span> <span class="o">=</span> <span class="mh">7</span><span class="p">;</span>     <span class="c1">// 定义参数 msb 为常量 7</span>
+<span class="k">parameter</span> <span class="n">e</span> <span class="o">=</span> <span class="mh">25</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="mh">29</span><span class="p">;</span>  <span class="c1">// 定义两个常数参数</span>
+<span class="k">parameter</span> <span class="n">f</span> <span class="o">=</span> <span class="mf">5.7</span><span class="p">;</span>     <span class="c1">// 声明 r 为一个实型参数</span>
+<span class="k">parameter</span> <span class="n">byte_size</span> <span class="o">=</span> <span class="mh">8</span><span class="p">,</span> <span class="n">byte_msb</span><span class="o">=</span><span class="n">byte_size</span><span class="o">-</span><span class="mh">1</span><span class="p">;</span>  <span class="c1">// 用常数表达式赋值</span>
+<span class="k">parameter</span> <span class="n">average_delay</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="o">+</span><span class="n">f</span><span class="p">)</span><span class="o">/</span><span class="mh">2</span><span class="p">;</span>  <span class="c1">// 用常数表达式赋值</span>
+</pre></div>
+</div>
+<p>参数型常量经常用于定义延迟时间和变量宽度。在模块或实例引用时，可通过参数传递改变在被引用模块或实例中已定义的参数。</p>
 </div>
 </div>
 <div class="section" id="id7">
 <h3>变量<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>变量是一种在程序运行过程中可以改变的量，在 verilog 中变量的数据类型有多种，这里介绍几种常用的。</p>
+<p>网络数据类型表示结构实体之间的物理连接。网络类型的变量不能储存值，而且它必须受到驱动器（例如门或连续赋值语句，assign）的驱动。如果没有驱动器连接到网络类型的变量上，则该变量就是高阻值，即其值为 z。</p>
 <div class="section" id="wire">
 <h4>wire 型<a class="headerlink" href="#wire" title="永久链接至标题">¶</a></h4>
+<p>wire 型数据常用来表示用以 assign 关键字指定的组合逻辑信号。verilog 程序模块中输入、输出信号类型默认时自动定义为 wire 型。wire 型信号可以用做任何方程式的输入，也可以用做“assign”语句或实例元件的输出。</p>
+<p>wire 型信号的格式同 reg 型信号的格式很类似。其格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>wire [n-1:0] 数据名1, 数据名2, ..., 数据名i; // 共有 i 条总线，每条总线内有 n 条线路
+wire [n:1] 数据名1, 数据名2, ..., 数据名i;
+// wire 是 wire 型数据的确认符； [n-1:0] 和 [n:1] 代表该数据的位宽，即该数据有几位；最后跟着的是数据的名字。如果一次定义多个数据，数据名之间之间用逗号隔开。声明语句的最后要用分号表示语句结束。例如：
+</pre></div>
+</div>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">a</span><span class="p">;</span>   <span class="c1">// 定义了一个 1 位的 wire 型数据</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">b</span><span class="p">;</span> <span class="c1">// 定义了一个 8 位的 wire 型数据</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">1</span><span class="p">]</span> <span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">;</span> <span class="c1">// 定义了二个 4 位的 wire 型数据</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="reg">
 <h4>reg 型<a class="headerlink" href="#reg" title="永久链接至标题">¶</a></h4>
+<p>寄存器是数据储存单元的抽象。寄存器数据类型的关键字是 reg。通过赋值语句可以改变寄存器储存的值，其作用与改变触发器储存的值相当。verilog 语言提供了功能强大的结构语句，使设计者能有效地控制是否执行这些赋值语句。这些控制结构用来描述硬件触发条件，例如时钟的上升沿和多路器的选通信号。reg 类型数据的默认初始值位不定值 x。</p>
+<p>reg 型数据常用来表示“always”模块内的指定，常代表触发器。通常，在设计中要由“always”模块通过使用行为描述语句来表达逻辑关系。在“always”模块内被赋值的每一个信号都必须定义成 reg 型。</p>
+<p>reg 型数据的格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>reg [n-1:0] 数据名1, 数据名2, ..., 数据名i;
+reg [n:1] 数据名1, 数据名2, ...,数据名i;
+// reg 是 reg 型数据的确认标识符；[n-1:0] 和 [n:1] 代表该数据的位宽，即该数据有几位；最后跟着的是数据的名字。如果一次定义多个数据，数据名之间之间用逗号隔开。声明语句的最后要用分号表示语句结束。例如：
+</pre></div>
+</div>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="n">rega</span><span class="p">;</span>   <span class="c1">// 定义了一个 1 位的名位 rega 的 reg 型数据</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">regb</span><span class="p">;</span>  <span class="c1">// 定义了一个 4 位的名位 regb 的 reg 型数据</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">1</span><span class="p">]</span> <span class="n">regc</span><span class="p">,</span> <span class="n">regd</span><span class="p">;</span>  <span class="c1">// 定义了二个 4 位的名为 regc 和 regd 的 reg 型数据</span>
+</pre></div>
+</div>
+<p>对于 reg 型数据，其赋值语句的作用就如同改变一组触发器的存储单元的值。在 verilog 中有许多构造（construct）用来控制何时或是否执行这些赋值语句。这些控制构造可用来描述硬件触发器的各种具体情况，如触发条件时用时间的上升沿，或用来描述判断逻辑的细节，如各种多路选择器。</p>
+<p>reg 型数据的默认初始值时不定值。reg 型数据可以赋正值，也可以赋负值。但当一个 reg 型数据时一个表达式中的操作数时，它的值被当作时无符号值，即正值。例如，当一个 4 位的寄存器用做表达式中的操作数时，如果开始寄存器被赋以值 -1，则在表达式中进行运算时，其值被认为是 +15。</p>
 </div>
 <div class="section" id="memory">
 <h4>memory 型<a class="headerlink" href="#memory" title="永久链接至标题">¶</a></h4>
+<p>verilog 通过对 reg 型变量建立数组来对存储器建模，可以描述 RAM 型存储器、ROM 存储器和 reg 文件。数组中的每一个单元通过一个数组索引进行寻址。在 verilog 语言中没有多维数组存在。menory 型数据是通过扩展 reg 型数据的地址范围来生成的。其格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>reg [n-1:0] 存储器名[m-1:0];
+reg [n-1:0] 存储器名[m:1];
+// reg[n-1:0] 定义了存储器中每一个存储单元的大小，即该存储单元是一个 n 位的寄存器；存储器名后面的 [m-1:0] 或 [m:1] 则定义了该存储器中有多少个这样的寄存器；最后用分号结束定义语句。
+</pre></div>
 </div>
+<p>这里通过一个例子来说明：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">mema</span> <span class="p">[</span><span class="mh">255</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="c1">// 定义了一个名为 mema 的存储器，该存储器有 256 个 8 位的存储器。该存储器的地址范围是 0 到 255。</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>运算符及表达式<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>verilog 语言的运算符范围很广，其运算符按其功能可分为以下几类：</p>
+<ul class="simple">
+<li><p>算术运算符（+,-,x,/,%）</p></li>
+<li><p>赋值运算符（=,&lt;=）</p></li>
+<li><p>关系运算符（&gt;,&lt;,&gt;=,&lt;=）</p></li>
+<li><p>逻辑运算符（&amp;&amp;,||,!）</p></li>
+<li><p>条件运算符（?:）</p></li>
+<li><p>位运算符（~,|,^,&amp;,^~）</p></li>
+<li><p>移位运算符（&lt;&lt;,&gt;&gt;）</p></li>
+<li><p>拼接运算符（{ }）</p></li>
+<li><p>其它</p></li>
+</ul>
+<div class="section" id="id9">
+<h3>算术运算符<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>在 verilog 语言中，算术运算符又称为二进制运算符，共有下面几种：</p>
+<ul class="simple">
+<li><ul>
+<li><p>（加法运算符，或正值运算符）</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>（减法运算符，或负值运算符）</p></li>
+</ul>
+</li>
+<li><p>x （乘法运算符）</p></li>
+<li><p>/ （除法运算符）</p></li>
+<li><p>% （模运算符，或称为求余运算符，要求%两侧均为整型数据。）</p></li>
+</ul>
+<p>在进行整数除法运算时，结果值要略去小数部分，只取整数部分；而进行取模运算时，结果值的符号位采用模运算式里第一个操作数的符号位。</p>
+</div>
+<div class="section" id="id10">
+<h3>位运算符<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>verilog 作为一种硬件描述语言，是针对硬件电路而言的。在硬件电路中信号有 4 种状态值，即 1，0，x，z。在电路中信号进行与、或、非时，反映在 verilog 中则是相应的操作数的位运算。verilog 提供了以下 5 种位运算符：</p>
+<ul>
+<li><p>~    取反</p></li>
+<li><p>&amp;    按位与</p></li>
+<li><div class="line-block">
+<div class="line">按位或</div>
+</div>
+</li>
+<li><p>^    按位异或</p></li>
+<li><p>^~   按位同或（异或非）</p></li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>逻辑运算符<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>在 verilog 语言中存在 3 种逻辑运算符：</p>
+<ul class="simple">
+<li><p>&amp;&amp;  逻辑与</p></li>
+<li><p>||  逻辑或</p></li>
+<li><p>!   逻辑非</p></li>
+</ul>
+<p>逻辑运算符中“&amp;&amp;”和“||”的优先级别低于关系运算符，“!”高于算术运算符。</p>
+<p>为了提高程序的可读性，明确表达各运算符元间的优先关系，建议使用括号。</p>
+</div>
+<div class="section" id="id12">
+<h3>关系运算符<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>关系运算符共有以下 4 种：</p>
+<ul class="simple">
+<li><p>a&lt;b，读作a小于b</p></li>
+<li><p>a&gt;b，读作a大于b</p></li>
+<li><p>a&lt;=b，读作a小于或等于b</p></li>
+<li><p>a&gt;=b，读作a大于或等于b</p></li>
+</ul>
+<p>在进行关系运算时，如果声明的关系是假的（false），则返回值是0；如果声明的关系是真的（true），则返回值是1；如果某个操作数的值不定，则关系是模糊的，返回值是不定值。</p>
+<p>所有的关系运算符有着相同的优先级别。关系运算符的优先级别低于算术运算符的优先级别。</p>
+</div>
+<div class="section" id="id13">
+<h3>等式运算符<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>在 verilog 语言中存在 4 种等式运算符：</p>
+<ul class="simple">
+<li><p>== （等于）</p></li>
+<li><p>!=  （不等于）</p></li>
+<li><p>=== （等于）</p></li>
+<li><p>!== （不等于）</p></li>
+</ul>
+<p>“==”和“!=”又称为逻辑等式运算符，其结果由两个操作数的值决定。由于操作数种某些位可能是不定值 x 和高阻值 z，结果可能为不定值 x。而“===”和“!==” 运算符则不同，它在对操作数进行比较时对某些位的不定值 x 和高阻值 z 也进行比较，两个操作数必须完全一致，其结果才是1，否则为0。“===”和“!==” 运算符常用于 case 表达式的判别，所以又称为“case 等式运算符”。这 4 个等式运算符的优先级别是相同的。</p>
+</div>
+<div class="section" id="id14">
+<h3>移位运算符<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>在 verilog 种有两种移位运算符：“&lt;&lt;”（左移位运算符）和“&gt;&gt;”（右移位运算符）。其使用方法如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="n">n</span>
+<span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">n</span>
+<span class="c1">// a 代表要进行移位的操作数，n 代表要移几位。这两种移位运算都用0来填补移出的空位。</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>位拼接运算符<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<p>在 verilog 语言中有一个特殊的运算符：位拼接运算符。用这个运算符可以把两个或多个信号的某些位拼接起来进行运算操作。其使用方法如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>{信号1的某几位, 信号2的某几位, ..., ..., 信号n的某几位}
+// 即把某些信号的某些位详细地列出来，中间用逗号分开，最后用大括号括起来表示一个整体信号。
+// 例如
+{a, b[3:0], w, 3&#39;b101}
+</pre></div>
+</div>
+<p>在位拼接表达式中不允许存在没有指明位数的信号。这是因为在计算拼接信号位宽的大小时必须知道其中每个信号的位宽。</p>
+</div>
+</div>
+<div class="section" id="id16">
+<h2>赋值语句和块语句<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id17">
+<h3>赋值语句<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h3>
+<p>在 verilog 中，信号有两种赋值方式：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>非阻塞赋值方式</dt><dd><ul>
+<li><p>在语句块中，上面语句所赋的变量值不能立即就为下面的语句所用</p></li>
+<li><p>块结束后才能完成这次赋值操作，而所赋值的变量值是上一次赋值得到的</p></li>
+<li><p>在编写可综合的时序逻辑模块时，这是最常用的赋值方法</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>阻塞赋值方式</dt><dd><ul>
+<li><p>赋值语句执行完后，块才结束</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h3>块语句<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
 </div>
 </div>
 </div>
