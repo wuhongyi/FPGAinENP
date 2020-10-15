@@ -131,6 +131,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#id18">块语句</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">条件语句</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#if-else">if_else 语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#case">case 语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">条件语句的语法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">多路分支语句</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">循环语句</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
@@ -548,6 +556,8 @@ reg [n-1:0] 存储器名[m:1];
 <li><dl class="simple">
 <dt>阻塞赋值方式</dt><dd><ul>
 <li><p>赋值语句执行完后，块才结束</p></li>
+<li><p>值在赋值语句执行完后立刻就改变的</p></li>
+<li><p>在时序逻辑中使用时，可能会产生意想不到的结果</p></li>
 </ul>
 </dd>
 </dl>
@@ -556,7 +566,73 @@ reg [n-1:0] 存储器名[m:1];
 </div>
 <div class="section" id="id18">
 <h3>块语句<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<p>块语句用来将两条或多条语句组合在一起，使其在格式上看更像一条语句。通常用 begin_end 来标识顺序执行的语句，用它来标识的块称为顺序块。块内的语句时按顺序执行的，即只有上面一条语句执行完后下面的语句才能执行</p>
+<p>顺序块的格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>begin
+  语句 1;
+  语句 2;
+  // ...
+  语句 n;
+end
+
+// 或者
+
+begin: 块名
+  块内声明语句
+  语句 1;
+  语句 2;
+  // ...
+  语句 n;
+end
+// 块名即该块的名字，一个标识名。块内声明语句可以是参数声明语句、reg 型变量声明语句、integer型变量声明语句和reg型变量声明语句。
+</pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="id19">
+<h2>条件语句<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h2>
+<div class="section" id="if-else">
+<h3>if_else 语句<a class="headerlink" href="#if-else" title="永久链接至标题">¶</a></h3>
+<p>if 语句是用来判断所给定的条件是否满足，根据判定的结果（真或假）决定执行给出的两种操作之一。 verilog 语言提供了 3 种形式的 if 语句。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// if(表达式) 语句</span>
+<span class="c1">// 例如</span>
+<span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
+  <span class="n">out1</span> <span class="o">=</span> <span class="n">int1</span><span class="p">;</span>
+
+<span class="c1">// if(表达式)</span>
+<span class="c1">//    语句1</span>
+<span class="c1">// else</span>
+<span class="c1">//    语句2</span>
+<span class="c1">// 例如</span>
+<span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
+  <span class="n">out1</span> <span class="o">=</span> <span class="n">int1</span><span class="p">;</span>
+<span class="k">else</span>
+  <span class="n">out1</span> <span class="o">=</span> <span class="n">int2</span><span class="p">;</span>
+
+<span class="c1">// if(表达式)</span>
+<span class="c1">// else if(表达式2) 语句2;</span>
+<span class="c1">// else if(表达式3) 语句3;</span>
+<span class="c1">// ...</span>
+<span class="c1">// else if(表达式m) 语句m;</span>
+<span class="c1">// else            语句n;</span>
+</pre></div>
+</div>
+<p>条件语句必须在过程块语句中使用。所谓的过程块是指由 initial 和 always 语句引导的执行语句集合。除这两种块语句引导的 bengin end 块中可以编写条件语句外，模块汇总的其它地方都不能编写。</p>
+</div>
+<div class="section" id="case">
+<h3>case 语句<a class="headerlink" href="#case" title="永久链接至标题">¶</a></h3>
+<p>case 语句是一种多分支选择语句，if 语句只有两个分支可供选择，而实际问题中常常需要用到多分支选择。verilog 语言提供的 case 语句直接处理多分支选择。它的一般形式如下：</p>
+<p>file page 67</p>
+</div>
+<div class="section" id="id20">
+<h3>条件语句的语法<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id21">
+<h3>多路分支语句<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id22">
+<h2>循环语句<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h2>
 </div>
 </div>
 
