@@ -138,7 +138,19 @@
 <li class="toctree-l3"><a class="reference internal" href="#id21">多路分支语句</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id22">循环语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">循环语句</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#forever">forever 语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#repeat">repeat 语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#while">while 语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#for">for 语句</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id23">生成块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id24">循环生成语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">条件生成语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">case 生成语句</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
@@ -622,17 +634,274 @@ end
 <div class="section" id="case">
 <h3>case 语句<a class="headerlink" href="#case" title="永久链接至标题">¶</a></h3>
 <p>case 语句是一种多分支选择语句，if 语句只有两个分支可供选择，而实际问题中常常需要用到多分支选择。verilog 语言提供的 case 语句直接处理多分支选择。它的一般形式如下：</p>
-<p>file page 67</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>case(表达式) &lt;case分支项&gt; endcase
+// case 分支项的一般格式如下
+// 分支表达式: 语句；
+// 默认项（default项）： 语句；
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>case 括弧内的表达式称为控制表达式，case 分支项中的表达式称为分支表达式。控制表达式通常表示为控制信号的某些位，分支表达式则用这些控制信号的具体状态值来表示，因此分支表达式又可以称为常量表达式。</p></li>
+<li><p>当控制表达式的值与分支表达式的值相等时，就执行分支表达式后面的语句。如果所有的分支表达式的值都没有与控制表达式的值相匹配，就执行default后面的语句。</p></li>
+<li><p>default 项可有可无，一个case 语句里只准有一个default项。</p></li>
+<li><p>每一个 case 分项的分支表达式的值必须互不相同，否则就会出现问题，即对表达式的同一个值，将出现多种执行方案，产生矛盾。</p></li>
+<li><p>执行完 case 分项后的语句，则跳出该 case语句结构，终止 case 语句的执行。</p></li>
+<li><p>在用 case 语句表达式进行比较的过程中，只有当信号的对应位的值能明确进行比较时，比较才能成功。因此，要注意详细说明 case 分项的分支表达式的值。</p></li>
+<li><p>case 语句的所有表达式的位宽必须相等，只有这样，控制表达式和分支表达式才能进行对应位的比较。</p></li>
+</ul>
+<p>case 语句与 if_else_if 的区别主要有两点:</p>
+<ul class="simple">
+<li><p>与 case 语句中的控制表达式和多分支表达式这种比较结构相比，if_else_if 结构中的条件表达式更为直观一些。</p></li>
+<li><p>对于那些分支式中存在不定值x和高阻值z的位时，case语句提供了处理这种情况的手段。</p></li>
+</ul>
 </div>
 <div class="section" id="id20">
 <h3>条件语句的语法<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
+<p>条件语句用于根据某个条件来确定是否执行其后的语句，关键字 if 和 else 用于表示条件语句。verilog 语言共有3种类型的条件语句，条件语句的用法如下所示。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// 第一类条件语句：没有 else 语句</span>
+<span class="c1">// 其后的语句执行或不执行</span>
+<span class="k">if</span><span class="p">(</span> <span class="o">&lt;</span><span class="n">expression</span><span class="o">&gt;</span> <span class="p">)</span> <span class="n">true_statement</span><span class="p">;</span>
+
+<span class="c1">// 第二类条件语句：有一条 else 语句</span>
+<span class="c1">// 根据表达式的值，决定执行 true_statement 或者 false_statement</span>
+<span class="k">if</span><span class="p">(</span> <span class="o">&lt;</span><span class="n">expression</span><span class="o">&gt;</span> <span class="p">)</span> <span class="n">true_statement</span><span class="p">;</span> <span class="k">else</span> <span class="n">false_statement</span><span class="p">;</span>
+
+<span class="c1">// 第三类条件语句：嵌套的 if_else_if 语句</span>
+<span class="c1">// 可供选择的语句有许多条，只有一条被执行</span>
+<span class="k">if</span><span class="p">(</span> <span class="o">&lt;</span><span class="n">expression1</span><span class="o">&gt;</span> <span class="p">)</span> <span class="n">true_statement1</span><span class="p">;</span>
+<span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="o">&lt;</span><span class="n">expression2</span><span class="o">&gt;</span> <span class="p">)</span> <span class="n">true_statement2</span><span class="p">;</span>
+<span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="o">&lt;</span><span class="n">expression3</span><span class="o">&gt;</span> <span class="p">)</span> <span class="n">true_statement3</span><span class="p">;</span>
+<span class="k">else</span> <span class="n">default_statement</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>条件语句的执行过程为：计算条件表达式 &lt;expression&gt;，如果结果为真（1或非零值），则执行 true_statement 语句；如果条件为假（0或者不确定值x），则执行 false_statement 语句。造条件表达式中可以包含任何操作符。true_statement 和 false_statement 可以时一条语句，也可以时一组语句。如果时一组语句，则通常使用 begin、end 关键字将它们组成一个块语句。</p>
 </div>
 <div class="section" id="id21">
 <h3>多路分支语句<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
+<p>前面讲述的条件语句 if_else_if 的形式从多个选项中确定一个结果。如果选项的数目很多，那么使用起来很不方便。而使用 case 语句来描述这种情况时非常简便的。</p>
+<p>case 语句使用关键字 case、endcase、和 default 来表示。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">case</span> <span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+  <span class="n">alternative1</span> <span class="o">:</span> <span class="n">statement1</span><span class="p">;</span>
+  <span class="n">alternative2</span> <span class="o">:</span> <span class="n">statement2</span><span class="p">;</span>
+  <span class="n">alternative3</span> <span class="o">:</span> <span class="n">statement3</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+  <span class="k">default</span><span class="o">:</span> <span class="n">default_statement</span><span class="p">;</span>
+<span class="k">endcase</span>
+</pre></div>
+</div>
+<p>case 语句中的每一条分支语句都可以时一条语句或一组语句。多条语句需要使用关键字 begin_end 组合为一个块语句。在执行时，首先计算条件表达式的值，然后按顺序将它和各个候选项进行比较；如果等于第一个候选项，则执行对应的语句 statement1；如果和全部候选项都不相等，则执行 default_statement 语句。</p>
 </div>
 </div>
 <div class="section" id="id22">
 <h2>循环语句<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h2>
+<p>在 verilog 中存在着 4 种类型的循环语句，用来控制执行语句的执行次数。</p>
+<ul class="simple">
+<li><p>forever：连续的执行语句</p></li>
+<li><p>repeat 语句：连续执行一条语句n次</p></li>
+<li><p>while语句：执行一条语句直到某个条件不满足。如果一开始条件即不满足（为假），则语句一次也不能被执行</p></li>
+<li><dl class="simple">
+<dt>for语句：通过以下3个步骤来决定语句的循环执行</dt><dd><ul>
+<li><p>先给控制循环次数的变量赋初值</p></li>
+<li><p>判定控制循环的表达式的值，如为假，则跳出循环语句，如为真，则执行指定的语句后，转到第三步</p></li>
+<li><p>执行一条赋值语句来修正控制循环变量次数的变量的值，然后返回第二步</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="forever">
+<h3>forever 语句<a class="headerlink" href="#forever" title="永久链接至标题">¶</a></h3>
+<p>forever 语句的格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>forever 语句;
+// 或者
+forever begin 多条语句 end
+</pre></div>
+</div>
+<p>forever 循环语句常用于产生周期性的波形，用来作为仿真测试信号。它与always语句不同之处在于不能独立写在程序中，而必须写在 initial 块中。</p>
+</div>
+<div class="section" id="repeat">
+<h3>repeat 语句<a class="headerlink" href="#repeat" title="永久链接至标题">¶</a></h3>
+<p>repeat 语句的格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>repeat(表达式) 语句;
+// 或者
+repeat(表达式) begin 多条语句 end
+</pre></div>
+</div>
+<p>在 repeat 语句中，其表达式通常为常量表达式。</p>
+</div>
+<div class="section" id="while">
+<h3>while 语句<a class="headerlink" href="#while" title="永久链接至标题">¶</a></h3>
+<p>while 语句的格式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>while(表达式) 语句;
+// 或者
+while(表达式) begin 多条语句 end
+</pre></div>
+</div>
+</div>
+<div class="section" id="for">
+<h3>for 语句<a class="headerlink" href="#for" title="永久链接至标题">¶</a></h3>
+<p>for 语句的一般形式为：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>for(表达式1; 表达式2; 表达式3) 语句;
+</pre></div>
+</div>
+<p>它的执行过程如下：</p>
+<ul class="simple">
+<li><p>先求解表达式1</p></li>
+<li><p>求解表达式2，若其值为真（非0），则执行 for 语句中指定的内嵌语句，然后执行下面的第三步。若为假（0），则结束循环，转到第五步。</p></li>
+<li><p>若表达式为真，在执行指定的语句后，求解表达式3</p></li>
+<li><p>转回上面的第二步骤继续执行</p></li>
+<li><p>执行 for 语句下面的语句</p></li>
+</ul>
+<p>for 语句最简单的应用形式时很容易理解的，其形式如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>for(循环变量赋初值; 循环结束条件; 循环变量增值)
+  执行语句;
+</pre></div>
+</div>
+<p>for 循环语句实际上相当于采用 while 循环语句建立以下的循环结构：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>begin
+  循环变量赋初值;
+  while(循环结束条件)
+    begin
+      执行语句;
+      循环变量增值;
+    end
+end
+</pre></div>
+</div>
+<p>这样对于需要8条语句才能完成的一个循环控制，for循环语句只需要两条即可。</p>
+</div>
+</div>
+<div class="section" id="id23">
+<h2>生成块<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h2>
+<p>生成语句可以动态地生成 verilog 代码。这一声明语句方便了参数化模块的生成。当对矢量中的多个位进行重复操作时，或者当进行多个模块的实例引用的重复操作时，或者在根据参数的定义来确定程序中是否应该包括某段 verilg 代码的时候，使用生成语句能够大大简化程序的编写过程。</p>
+<p>生成语句能够控制变量的声明、任务或函数的调用，还能对实例引用进行全面的控制。编写代码时必须在模块中说明生成的实例范围，关键字 generate-endgenerate 用来指定该范围。</p>
+<p>在 verilog 中有3种创建生成语句的方法，它们是：</p>
+<ul class="simple">
+<li><p>循环语句</p></li>
+<li><p>条件语句</p></li>
+<li><p>case 生成</p></li>
+</ul>
+<div class="section" id="id24">
+<h3>循环生成语句<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h3>
+<p>循环生成语句允许使用者对下面的模块或模块项进行多次实例引用：</p>
+<ul class="simple">
+<li><p>变量声明</p></li>
+<li><p>模块</p></li>
+<li><p>用户定义原语、门级原语</p></li>
+<li><p>连续赋值语句</p></li>
+<li><p>initial 和 always 块</p></li>
+</ul>
+<p>这里用一个例子来说明如何使用生成语句对其中两个 N 位的总线用门级原语进行按位异或。在这里其目的在于说明循环生成语句的使用方法。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// 本模块生成两条 N 位总线变量进行按位异或</span>
+<span class="k">module</span> <span class="n">bitwise_xor</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">i0</span><span class="p">,</span> <span class="n">i1</span><span class="p">);</span>
+
+<span class="c1">// 参数声明语句，参数可以重新定义</span>
+<span class="k">parameter</span> <span class="no">N</span> <span class="o">=</span> <span class="mh">32</span><span class="p">;</span>
+
+<span class="c1">// 端口声明语句</span>
+<span class="k">output</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">;</span>
+<span class="k">input</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">i0</span><span class="p">,</span><span class="n">i1</span><span class="p">;</span>
+
+<span class="c1">// 声明一个临时循环变量，该变量只用于生成块的循环计算</span>
+<span class="k">genvar</span> <span class="n">j</span><span class="p">;</span>
+
+<span class="c1">// 用一个单循环生成按位异或的异或门（xor）</span>
+<span class="k">generate</span>
+  <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="no">N</span><span class="p">;</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span>
+    <span class="k">begin</span><span class="o">:</span> <span class="n">xor_loop</span> <span class="c1">//xor_loop 是赋予循环生成语句的名字，目的在于通过它对循环生成语句之中的变量进行层次化引用。</span>
+      <span class="k">xor</span> <span class="n">g1</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">i0</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">i1</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+    <span class="k">end</span> <span class="c1">// 在生成块内部结束循环</span>
+<span class="k">endgenerate</span> <span class="c1">//结束生成块</span>
+
+<span class="c1">// 另外一种编写形式</span>
+
+<span class="kt">reg</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">;</span>
+<span class="k">generate</span>
+  <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="no">N</span><span class="p">;</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span>
+    <span class="k">begin</span><span class="o">:</span> <span class="kt">bit</span>
+      <span class="k">always</span> <span class="p">@</span> <span class="p">(</span><span class="n">i0</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">or</span> <span class="n">i1</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i0</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">^</span><span class="n">i0</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+    <span class="k">end</span>
+<span class="k">endgenerate</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id25">
+<h3>条件生成语句<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h3>
+<p>条件生成语句类似于 if_else_if 的生成构造，该结构可以在设计模块中根据经过仔细推敲并确定表达式，有条件地调用（实例引用）以下这些 verilog 结构：</p>
+<ul class="simple">
+<li><p>模块</p></li>
+<li><p>用户定义原语、门级原语</p></li>
+<li><p>连续赋值语句</p></li>
+<li><p>initial 或 always 块</p></li>
+</ul>
+<p>这里用一个例子来说明如何使用条件生成语句实现参数化乘法器。如果参数 a0_width 或 a1_width 小于8（生成实例的条件），则调用（实例引用）超前进位乘法器；否则调用（实例引用）树形乘法器。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// 本模块实现一个参数化乘法器</span>
+<span class="k">module</span> <span class="n">multiplier</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">);</span>
+
+<span class="c1">// 参数声明</span>
+<span class="k">parameter</span> <span class="n">a0_width</span> <span class="o">=</span> <span class="mh">8</span><span class="p">;</span>
+<span class="k">parameter</span> <span class="n">a1_width</span> <span class="o">=</span> <span class="mh">8</span><span class="p">;</span>
+
+<span class="c1">// 本地参数声明</span>
+<span class="c1">// 本地参数不能用参数重新定义修改，也不能在实例引用时通过传递参数语句的方法修改</span>
+<span class="k">localparam</span> <span class="n">product_width</span> <span class="o">=</span> <span class="n">a0_width</span> <span class="o">+</span> <span class="n">a1_width</span><span class="p">;</span>
+
+<span class="c1">// 端口声明语句</span>
+<span class="k">output</span> <span class="p">[</span><span class="n">product_width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">product</span><span class="p">;</span>
+<span class="k">input</span> <span class="p">[</span><span class="n">a0_width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a0</span><span class="p">;</span>
+<span class="k">input</span> <span class="p">[</span><span class="n">a1_width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a1</span><span class="p">;</span>
+
+<span class="c1">// 有条件地调用（实例引用）不同类型的乘法器</span>
+<span class="c1">// 根据参数 a0_width 和 a1_width 的值，在调用时引用相对应的乘法器实例</span>
+<span class="k">generate</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">a0_width</span><span class="o">&lt;</span><span class="mh">8</span> <span class="o">||</span> <span class="n">a1_width</span><span class="o">&lt;</span><span class="mh">8</span><span class="p">)</span>
+    <span class="n">cal_multiplier</span> <span class="p">#(</span><span class="n">a0_width</span><span class="p">,</span> <span class="n">a1_width</span><span class="p">)</span> <span class="n">m0</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">tree_multiplier</span> <span class="p">#(</span><span class="n">a0_width</span><span class="p">,</span> <span class="n">a1_width</span><span class="p">)</span> <span class="n">m0</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">);</span>
+<span class="k">endgenerate</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id26">
+<h3>case 生成语句<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h3>
+<p>case 生成语句可以在设计模块中，根据仔细推敲确定多选一 case 构造，有条件地调用（实例引用）下面这些 verilog 结构：</p>
+<ul class="simple">
+<li><p>模块</p></li>
+<li><p>用户定义原语、门级原语</p></li>
+<li><p>连续赋值语句</p></li>
+<li><p>initial 或 always 块</p></li>
+</ul>
+<p>这里用一个例子来说明如何使用 case 生成语句实现 N 位加法器</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// 本模块生成 N 位的加法器</span>
+<span class="k">module</span> <span class="n">adder</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
+<span class="c1">// 参数声明</span>
+<span class="k">parameter</span> <span class="no">N</span> <span class="o">=</span> <span class="mh">4</span><span class="p">;</span>
+
+<span class="c1">// 端口声明</span>
+<span class="k">output</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sum</span><span class="p">;</span>
+<span class="k">output</span> <span class="n">co</span><span class="p">;</span>
+<span class="n">intput</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a0</span><span class="p">,</span><span class="n">a1</span><span class="p">;</span>
+<span class="k">input</span> <span class="n">ci</span><span class="p">;</span>
+
+<span class="c1">// 根据总线的位宽，调用（实例引用）相应的加法器</span>
+<span class="c1">// 参数 N 在调用（实例引用）时可以重新定义，调用（实例引用）不同位宽的加法器是根据不同的 N 来决定的</span>
+<span class="k">generate</span>
+<span class="k">case</span><span class="p">(</span><span class="no">N</span><span class="p">)</span>
+  <span class="c1">// 当N=1或2时分别选用位宽为1位或2位的加法器</span>
+  <span class="mh">1</span><span class="o">:</span> <span class="n">adder_1bit</span> <span class="n">adder1</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
+  <span class="mh">2</span><span class="o">:</span> <span class="n">adder_2bit</span> <span class="n">adder2</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
+  <span class="k">default</span><span class="o">:</span> <span class="n">adder_cla</span> <span class="p">#(</span><span class="no">N</span><span class="p">)</span> <span class="n">adder3</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
+<span class="k">endcase</span>
+<span class="k">endgenerate</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
