@@ -105,6 +105,8 @@
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MZTIO.html">MZTIO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
+<li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
 <p class="caption"><span class="caption-text">计数器</span></p>
 <ul>
@@ -285,28 +287,19 @@
 </pre></div>
 </div>
 <p><strong>verilog</strong></p>
-<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always</span>  <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span><span class="k">begin</span>
+     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="k">begin</span>
+        <span class="n">out1</span> <span class="o">&lt;=</span><span class="mh">1</span><span class="mb">&#39;b0</span>
+     <span class="k">end</span>
+     <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">state_c</span><span class="o">==</span><span class="no">S1</span><span class="p">)</span><span class="k">begin</span>
+        <span class="n">out1</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+     <span class="k">end</span>
+     <span class="k">else</span> <span class="k">begin</span>
+        <span class="n">out1</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+     <span class="k">end</span>
+<span class="k">end</span>
 </pre></div>
 </div>
-<dl>
-<dt>always  &#64;(posedge clk or negedge rst_n)begin</dt><dd><dl class="simple">
-<dt>if(!rst_n)begin</dt><dd><p>out1 &lt;=1’b0</p>
-</dd>
-</dl>
-<p>end
-else if(state_c==S1)begin</p>
-<blockquote>
-<div><p>out1 &lt;= 1’b1;</p>
-</div></blockquote>
-<p>end
-else begin</p>
-<blockquote>
-<div><p>out1 &lt;= 1’b0;</p>
-</div></blockquote>
-<p>end</p>
-</dd>
-</dl>
-<p>end</p>
 </div>
 <div class="section" id="id4">
 <h3>状态机规则2：四段式状态机第一段写法不变<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>

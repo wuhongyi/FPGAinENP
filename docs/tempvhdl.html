@@ -104,6 +104,8 @@
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MZTIO.html">MZTIO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
+<li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
 <p class="caption"><span class="caption-text">计数器</span></p>
 <ul>
@@ -125,7 +127,15 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">VHDL temp</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">VHDL temp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">信号处理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hls">HLS 生成模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">手写模块</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -192,6 +202,8 @@
             
   <div class="section" id="vhdl-temp">
 <h1>VHDL temp<a class="headerlink" href="#vhdl-temp" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>循环<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">N_HISTOGRAM_REGS</span><span class="o">-</span><span class="mi">1</span> <span class="k">loop</span>
   <span class="n">tmp_histogram</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="n">to_unsigned</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N_HISTOGRAM_BIT</span><span class="p">));</span>
 <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
@@ -210,6 +222,227 @@
   <span class="k">end</span> <span class="k">process</span><span class="p">;</span>
 <span class="k">end</span> <span class="k">generate</span><span class="p">;</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>信号处理<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="hls">
+<h3>HLS 生成模块<a class="headerlink" href="#hls" title="永久链接至标题">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">BaselineRestorer</span> <span class="k">is</span>
+  <span class="k">port</span> <span class="p">(</span>
+    <span class="n">CLK</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">TRIGGER</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--原始波形触发信号</span>
+    <span class="n">DATA_IN</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="mi">15</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--输入原始波形</span>
+    <span class="n">M_LENGTH</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">INTEGER</span><span class="p">;</span><span class="c1">--2^n 参与基线计算的时间窗长度</span>
+    <span class="n">BL_HOLD</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">INTEGER</span><span class="p">;</span><span class="c1">--触发之后禁止基线计算的点的个数</span>
+    <span class="n">FLUSH</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">BASELINE</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="mi">15</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--输出基线</span>
+    <span class="n">BASELINE_VALID</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--基线有效标记</span>
+    <span class="n">HOLD_TIME</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--不计算基线的时间</span>
+    <span class="n">RUNNING_NOT_HOLD</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="c1">--正在计算基线的标记</span>
+    <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">moving_average</span> <span class="k">is</span>
+<span class="k">port</span> <span class="p">(</span>
+    <span class="n">ap_clk</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">ap_rst</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">adc_data_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">adc_data_V_ap_vld</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">hold</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">length_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">dataout_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">dataout_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span> <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">charge_integration</span> <span class="k">is</span>
+<span class="k">port</span> <span class="p">(</span>
+    <span class="n">ap_clk</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">ap_rst</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">in1_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--输入波形</span>
+    <span class="n">in1_V_ap_vld</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">-- &#39;1&#39;</span>
+    <span class="n">base_line_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--输入基线</span>
+    <span class="n">trigger_signal</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--输入触发</span>
+    <span class="n">p_int_length_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--积分门宽</span>
+    <span class="n">p_pre_length_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--积分起始点，触发前</span>
+    <span class="n">p_gain_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--增益</span>
+    <span class="n">p_offset_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--偏置</span>
+    <span class="n">p_pileup_inib_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--堆积拒绝的事件间隔</span>
+    <span class="n">enable</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">-- &#39;1&#39;</span>
+    <span class="n">energy_out_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--输出积分结果</span>
+    <span class="n">energy_trigger</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">-- 标记输出积分有效</span>
+    <span class="n">energy_trigger_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">-- open</span>
+    <span class="n">p_integrate</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">-- 积分门</span>
+    <span class="n">p_pileup</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">-- 堆积标记</span>
+    <span class="n">p_busy</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span> <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">trapezio</span> <span class="k">is</span>
+  <span class="k">port</span> <span class="p">(</span>
+    <span class="n">ap_clk</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">ap_rst</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">adc_data_V</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span> <span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span> <span class="p">);</span>
+    <span class="n">adc_data_V_ap_vld</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">baseline_V</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span> <span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span> <span class="p">);</span>
+    <span class="n">k_V</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span> <span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span> <span class="p">);</span>
+    <span class="n">m_V</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span> <span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span> <span class="p">);</span>
+    <span class="n">M_V_r</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span> <span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span> <span class="p">);</span>
+    <span class="n">G_V</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span> <span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span> <span class="p">);</span>
+    <span class="n">dataout_V</span> <span class="o">:</span> <span class="k">out</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span> <span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span> <span class="p">);</span>
+    <span class="n">dataout_V_ap_vld</span> <span class="o">:</span> <span class="k">out</span> <span class="kt">STD_LOGIC</span>
+  <span class="p">);</span>
+  <span class="k">attribute</span> <span class="n">NotValidForBitStream</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+  <span class="k">attribute</span> <span class="n">NotValidForBitStream</span> <span class="k">of</span> <span class="n">trapezio</span> <span class="o">:</span> <span class="k">entity</span> <span class="nc">is</span> <span class="n">true</span><span class="p">;</span>
+<span class="k">end</span> <span class="nc">trapezio</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">MCAHP_512</span> <span class="k">is</span>
+<span class="k">port</span> <span class="p">(</span>
+    <span class="n">ap_clk</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">ap_rst</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">adc_data_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">positive_r</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">digital_offset_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">threshold_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">trig_k_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--快速滤波梯形上升时间</span>
+    <span class="n">trig_m_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--快速滤波梯形上升+平台时间</span>
+    <span class="n">e_k_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--梯形上升时间</span>
+    <span class="n">e_m_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--梯形上升+平台时间</span>
+    <span class="n">e_MDec_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">23</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">-- int(256/(exp(clock_sampling_time/tau)-1))</span>
+    <span class="n">e_G_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">23</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--int(gain*0x10000)  gain为浮点数</span>
+    <span class="n">e_MDec2_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">e_G2_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">e_sample_delay_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">baseline_len_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--2^n    5-&gt;32  6-&gt;64  7-&gt;128 8-&gt;256  9-&gt;512  10-&gt;1024  11-&gt;2048</span>
+    <span class="n">baseline_inib_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--触发之后抑制基线计算的时间，需要大于两倍能量梯形的上升和平台之和</span>
+    <span class="n">run_cfg</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">-- &#39;1&#39;</span>
+    <span class="n">deconv2_sig_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--open</span>
+    <span class="n">deconv2_sig_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--open</span>
+    <span class="n">trigger_delta_monitor_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--open</span>
+    <span class="n">trigger_delta_monitor_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--open</span>
+    <span class="n">trigger_trap_monitor_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--触发滤波</span>
+    <span class="n">trigger_trap_monitor_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">trap_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--梯形滤波</span>
+    <span class="n">trap_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">trap_minus_baseline_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--梯形滤波减基线滤波</span>
+    <span class="n">trap_minus_baseline_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">baseline_out_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--基线滤波</span>
+    <span class="n">baseline_out_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">energy_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--能量滤波</span>
+    <span class="n">energy_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">energy_strobe</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--能量采集标记</span>
+    <span class="n">trigger_sig</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--触发信号</span>
+    <span class="n">baseline_hold</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">GIN_SELECT_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">gin</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span> <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">gated_integrator</span> <span class="k">is</span>
+<span class="k">port</span> <span class="p">(</span>
+    <span class="n">ap_clk</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--时钟</span>
+    <span class="n">ap_rst</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--重置，高电平有效</span>
+    <span class="n">data_in_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--输入数据</span>
+    <span class="n">data_in_V_ap_vld</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--输入数据有效标记</span>
+    <span class="n">gate_len_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--积分门宽，最大到1024</span>
+    <span class="n">gain_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--增益，65536表示增益为1。算法为 gain/65536</span>
+    <span class="n">clear</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--从高电平到低电平时，重新初始化。初始化时间与积分门宽成正比。这期间 data_out_V_ap_vld/ready为低电平</span>
+    <span class="n">data_out_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--数据输出，当前时钟之前的积分门结果输出延迟4个时钟</span>
+    <span class="n">data_out_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--输出数据有效标记</span>
+    <span class="n">ready</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span> <span class="c1">--高电平表示输出有效，低电平表示在初始化</span>
+    <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- 数值导数/微分</span>
+<span class="c1">-- OUT[n] = DATA_IN[n]  - DATA_IN[n-WINDOW])</span>
+<span class="k">entity</span> <span class="nc">differenziator</span> <span class="k">is</span>
+<span class="k">port</span> <span class="p">(</span>
+    <span class="n">ap_clk</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--时钟</span>
+    <span class="n">ap_rst</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--重置，高电平有效</span>
+    <span class="n">data_in_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--输入数据</span>
+    <span class="n">data_in_V_ap_vld</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--输入数据有效标记</span>
+    <span class="n">diff_len_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--前后做差两个点的间隔，最大为999</span>
+    <span class="n">clear</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">----从高电平到低电平时，重新初始化。初始化时间最小为WINDOW。这期间 data_out_V_ap_vld/ready为低电平</span>
+    <span class="n">data_out_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--当前时钟输入数据与之前数据的差输出延迟两个时钟</span>
+    <span class="n">data_out_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--数据输出，当前时钟输入数据的输出延迟2个时钟</span>
+    <span class="n">ready</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--输出数据有效标记</span>
+    <span class="n">ready_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span> <span class="c1">--输出常为1, open</span>
+    <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">PSD_INTDUAL</span> <span class="k">is</span>
+<span class="k">port</span> <span class="p">(</span>
+    <span class="n">ap_clk</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">ap_rst</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">data_in_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">data_in_V_ap_vld</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">trigger</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">int_short_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">int_long_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">pileup_inib_V</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">psd_out_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">psd_out_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">q_long_out_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">q_long_out_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">q_short_out_V</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">q_short_out_V_ap_vld</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span> <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>手写模块<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- 1,2,4,8 个点平均</span>
+<span class="k">entity</span> <span class="nc">NoiseFilter</span> <span class="k">is</span>
+  <span class="k">Generic</span> <span class="p">(</span><span class="n">data_bit</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">16</span><span class="p">);</span>
+  <span class="k">port</span> <span class="p">(</span>
+    <span class="n">CLK</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">MODE</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span><span class="c1">-- &quot;00&quot;=&gt;1  &quot;01&quot;=&gt;2  &quot;10&quot;=&gt;4  &quot;11&quot;=&gt;8</span>
+    <span class="n">DATA_IN</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="n">data_bit</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">DATA_OUT</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="n">data_bit</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">TriggerDerivative</span> <span class="k">is</span>
+  <span class="k">Generic</span> <span class="p">(</span>
+    <span class="n">data_bit</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">16</span><span class="p">;</span><span class="c1">--输入波形位数</span>
+    <span class="n">noise_filter</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">2</span><span class="p">;</span><span class="c1">--计算两个间个为n的点的差值为滤波结果</span>
+    <span class="n">data_delay</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">3</span><span class="c1">--输入波形的延迟输出</span>
+    <span class="p">);</span>
+  <span class="k">port</span> <span class="p">(</span>
+    <span class="n">CLK</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">POLARITY</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">-- 1=&gt;pos 0=&gt;neg</span>
+    <span class="n">DATA_IN</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="n">data_bit</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">THRESHOLD</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="n">data_bit</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">DELAYED_DATA</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="n">data_bit</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">TRIGGER</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span>
+    <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">TriggerLeading</span> <span class="k">is</span>
+  <span class="k">Generic</span> <span class="p">(</span>
+    <span class="n">data_bit</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">16</span><span class="p">;</span><span class="c1">--输入波形位数</span>
+    <span class="n">data_delay</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">3</span><span class="c1">--输入波形的延迟输出</span>
+    <span class="p">);</span>
+  <span class="k">port</span> <span class="p">(</span>
+    <span class="n">CLK</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
+    <span class="n">POLARITY</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span><span class="p">;</span><span class="c1">--1=&gt;pos 0=&gt;neg</span>
+    <span class="n">DATA_IN</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="n">data_bit</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">THRESHOLD</span><span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="n">data_bit</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">DELAYED_DATA</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span><span class="p">(</span><span class="n">data_bit</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">TRIGGER</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span>
+    <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 

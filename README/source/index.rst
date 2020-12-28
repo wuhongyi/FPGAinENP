@@ -48,7 +48,9 @@ ISE/Altera/Vivado软件
    LUPO.rst
    DT5495.rst
    MZTIO.rst
-	     
+   DT5550.rst
+   R5560.rst
+      
 
 计数器
 ==================

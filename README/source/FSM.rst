@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 8月 10 21:50:39 2019 (+0800)
-.. Last-Updated: 六 5月 23 22:31:48 2020 (+0800)
+.. Last-Updated: 一 12月 28 20:17:01 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 3
+..     Update #: 4
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -132,17 +132,17 @@
 
 .. code-block:: verilog
 
-always  @(posedge clk or negedge rst_n)begin
-     if(!rst_n)begin
-        out1 <=1'b0   
-     end
-     else if(state_c==S1)begin
-        out1 <= 1'b1;
-     end
-     else begin
-        out1 <= 1'b0;
-     end
-end
+  always  @(posedge clk or negedge rst_n)begin
+       if(!rst_n)begin
+          out1 <=1'b0   
+       end
+       else if(state_c==S1)begin
+          out1 <= 1'b1;
+       end
+       else begin
+          out1 <= 1'b0;
+       end
+  end
 		
 
 

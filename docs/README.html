@@ -105,6 +105,8 @@
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MZTIO.html">MZTIO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
+<li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
 <p class="caption"><span class="caption-text">计数器</span></p>
 <ul>
@@ -193,7 +195,7 @@
             
   <div class="section" id="readme">
 <h1>README<a class="headerlink" href="#readme" title="永久链接至标题">¶</a></h1>
-<p>国际上最大的两个 FPGA 厂家为 Xilinx 和 Altrea（已被Intel收购），Xilinx 公司的软件有 ISE(已停止更新，适用于早年推出的FPGA) 和 Vivado（适用于新推出的FPGA），Altera公司的软件为 Quartus。我们已有的 LUPO/DT5495/MZTIO 刚好对应三个软件.</p>
+<p>国际上最大的两个 FPGA 厂家为 Xilinx 和 Altrea（已被Intel收购），Xilinx 公司的软件有 ISE(已停止更新，适用于早年推出的FPGA) 和 Vivado（适用于新推出的FPGA），Altera公司的软件为 Quartus。我们已有的 LUPO/DT5495/MZTIO 可编程逻辑刚好对应三个软件。对于数字信号处理模块，已有的 DT5550/R5560SE 已经在测试中。</p>
 <p>编程语言 VHDL/verilog 两种, 本质上没有多大的区别。 我已经写好两种语言的关键模块的模版， 直接套用就可以。 整个编程的核心就是熟练掌握计数器状态机以及FIFO的使用。</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -228,6 +230,8 @@
 <li><p>LUPO</p></li>
 <li><p>DT5495</p></li>
 <li><p>MZTIO</p></li>
+<li><p>DT5550</p></li>
+<li><p>R5560SE</p></li>
 </ul>
 </dd>
 </dl>
@@ -253,7 +257,7 @@
 <li><dl class="simple">
 <dt>状态机</dt><dd><ul>
 <li><p>SPI(CAEN DT5495 有个VHDL模版，需要按照我们的规范重新优化)</p></li>
-<li><p>基于PCIE的在线监视（将获取的数据直接发送到可编程PCIE板卡进行处理，可进行初步的处理后，再通过网络发送到下游的服务器存储。。。这个难度有点大）</p></li>
+<li><p>基于FPGA的在线监视（将获取的数据直接发送到可编程板卡进行处理，可进行初步的处理后，再通过网络发送到下游的服务器存储）</p></li>
 </ul>
 </dd>
 </dl>
@@ -268,12 +272,39 @@
 <li><dl class="simple">
 <dt>脉冲发生器</dt><dd><ul>
 <li><p>基本波形的脉冲产生(简单)</p></li>
-<li><p>任意波形的脉冲产生(需要借助外部输入进行控制,因此需要利用 UART/SPI/IIC 等通讯技术)</p></li>
+<li><p>任意波形的脉冲产生</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li></li>
+<li><dl class="simple">
+<dt>数字信号触发算法</dt><dd><ul>
+<li><p>XIA fast filter</p></li>
+<li><p>RC-CR2</p></li>
+<li><p>前沿甄别</p></li>
+<li></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>数字能量算法</dt><dd><ul>
+<li><p>梯形算法</p></li>
+<li><p>GS 梯形算法</p></li>
+<li><p>QDC 算法</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>数字时间算法</dt><dd><ul>
+<li><p>CFD 算法</p></li>
+<li><p>高精度时间算法</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </dd>
 </dl>
