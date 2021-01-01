@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 一 5月 25 12:11:49 2020 (+0800)
-.. Last-Updated: 一 12月 28 20:01:13 2020 (+0800)
+.. Last-Updated: 五 1月  1 13:58:35 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 2
+..     Update #: 3
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -266,7 +266,7 @@ HLS 生成模块
   entity TriggerDerivative is
     Generic (
       data_bit : integer := 16;--输入波形位数
-      noise_filter : integer := 2;--计算两个间个为n的点的差值为滤波结果
+      noise_filter : integer := 2;--计算两个间隔为n的点的差值为滤波结果
       data_delay : integer := 3--输入波形的延迟输出
       );
     port (

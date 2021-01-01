@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 五 7月 26 20:21:45 2019 (+0800)
-.. Last-Updated: 一 12月 28 20:12:35 2020 (+0800)
+.. Last-Updated: 一 12月 28 21:35:26 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 8
+..     Update #: 10
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -16,7 +16,7 @@ README
 
 国际上最大的两个 FPGA 厂家为 Xilinx 和 Altrea（已被Intel收购），Xilinx 公司的软件有 ISE(已停止更新，适用于早年推出的FPGA) 和 Vivado（适用于新推出的FPGA），Altera公司的软件为 Quartus。我们已有的 LUPO/DT5495/MZTIO 可编程逻辑刚好对应三个软件。对于数字信号处理模块，已有的 DT5550/R5560SE 已经在测试中。
 
-编程语言 VHDL/verilog 两种, 本质上没有多大的区别。 我已经写好两种语言的关键模块的模版， 直接套用就可以。 整个编程的核心就是熟练掌握计数器\状态机以及FIFO的使用。
+编程语言 VHDL/verilog 两种, 本质上没有多大的区别。 我已经写好两种语言的关键模块的模版， 直接套用就可以。 整个编程的核心就是熟练掌握计数器/状态机以及FIFO的使用。
 
 
 - ISE/Altera/Vivado 软件
@@ -66,6 +66,7 @@ README
 	- 数字能量算法
 	       - 梯形算法
 	       - GS 梯形算法
+	       - Semi-Gaussian
 	       - QDC 算法
 	- 数字时间算法
 	       - CFD 算法
