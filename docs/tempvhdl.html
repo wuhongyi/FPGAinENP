@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="LPM（library of parameterized mudules）" href="LPM.html" />
     <link rel="prev" title="verilog 临时存放" href="tempverilog.html" /> 
 </head>
 
@@ -128,14 +129,16 @@
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">VHDL temp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">循环</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">信号处理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">缩位与/缩位或运算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">信号处理</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hls">HLS 生成模块</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">手写模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">手写模块</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="LPM.html">LPM（library of parameterized mudules）</a></li>
 </ul>
 
             
@@ -203,7 +206,32 @@
   <div class="section" id="vhdl-temp">
 <h1>VHDL temp<a class="headerlink" href="#vhdl-temp" title="永久链接至标题">¶</a></h1>
 <div class="section" id="id1">
-<h2>循环<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<h2>缩位与/缩位或运算<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>缩位运算符，即 “reduction operator”。对于 VHDL 来说，很少有人知道其缩位运算符是什么。首先缩位运算的意思是把一个 vector 合并成一位，例如缩位与运算符：对于一个 std_logic_vector 名为 example 的变量，完成 examlle[0] and example[1] and … and example[22] 这样的运算的运算符。</p>
+<ul class="simple">
+<li><p>对于VHDL-2008，直接用and就可以完成：and(example);</p></li>
+<li><p>用组合逻辑自己写一个函数，按位或/与即可。</p></li>
+<li><p>or_reduce 和 and_reduce 也可以完成上面的内容。要主要包含头文件 std_logic_misc。</p></li>
+</ul>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">and_reduct</span><span class="p">(</span><span class="n">slv</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">std_logic_vector</span><span class="p">)</span> <span class="k">return</span> <span class="kt">std_logic</span> <span class="k">is</span>
+  <span class="k">variable</span> <span class="n">res_v</span> <span class="o">:</span> <span class="kt">std_logic</span> <span class="o">:=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span>  <span class="c1">-- Null slv vector will also return &#39;1&#39;</span>
+<span class="k">begin</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">slv</span><span class="na">&#39;range</span> <span class="k">loop</span>
+    <span class="n">res_v</span> <span class="o">:=</span> <span class="n">res_v</span> <span class="k">and</span> <span class="n">slv</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">res_v</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">function</span><span class="p">;</span>
+<span class="c1">-- You can then use the function both inside and outside functions with:</span>
+
+<span class="k">signal</span> <span class="n">arg</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">res</span> <span class="o">:</span> <span class="kt">std_logic</span><span class="p">;</span>
+<span class="c1">-- ...</span>
+<span class="n">res</span> <span class="o">&lt;=</span> <span class="n">and_reduct</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>循环<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">N_HISTOGRAM_REGS</span><span class="o">-</span><span class="mi">1</span> <span class="k">loop</span>
   <span class="n">tmp_histogram</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="n">to_unsigned</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N_HISTOGRAM_BIT</span><span class="p">));</span>
 <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
@@ -224,8 +252,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>信号处理<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h2>信号处理<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <div class="section" id="hls">
 <h3>HLS 生成模块<a class="headerlink" href="#hls" title="永久链接至标题">¶</a></h3>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">BaselineRestorer</span> <span class="k">is</span>
@@ -395,8 +423,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h3>手写模块<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id4">
+<h3>手写模块<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- 1,2,4,8 个点平均</span>
 <span class="k">entity</span> <span class="nc">NoiseFilter</span> <span class="k">is</span>
   <span class="k">Generic</span> <span class="p">(</span><span class="n">data_bit</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">16</span><span class="p">);</span>
@@ -442,6 +470,42 @@
 <span class="k">end</span><span class="p">;</span>
 </pre></div>
 </div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">LOGIC_ANALYZER</span> <span class="k">is</span>
+  <span class="k">Generic</span> <span class="p">(</span>
+    <span class="n">bitsize</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">32</span><span class="p">;</span><span class="c1">--通道数，最大256</span>
+    <span class="n">fifolength</span> <span class="o">:</span> <span class="kt">integer</span> <span class="o">:=</span> <span class="mi">16</span><span class="p">);</span>
+  <span class="k">port</span> <span class="p">(</span>
+    <span class="n">RESET</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">0</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--重置</span>
+    <span class="n">CLK_READ</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">0</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--时钟</span>
+    <span class="n">CLK_WRITE</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">0</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--时钟</span>
+    <span class="n">DATAIN</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="n">bitsize</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--数据输入</span>
+    <span class="n">TRIGGER</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">0</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--外部输入触发</span>
+    <span class="n">FULL</span><span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">0</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">READ_DATA</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">READ_DATAVALID</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">0</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">READ_NEXT</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">0</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">STATUS</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--[0]1表示数据可以读取  [1]1表示已经初始化，0表示重置或者等待触发中   [2]1表示已经初始化，0表示重置或者数据已经写入FIFO完成</span>
+    <span class="n">CONFIG</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--[0]1表示enable [1]1表示reset [2]1表示外部输入TRIGGER触发 [3]1表示上升沿或者下降沿触发 [4]1表示软件触发</span>
+    <span class="n">CONFIG0</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--0-31通道是否开启上升沿触发</span>
+    <span class="n">CONFIG1</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--32-63通道是否开启上升沿触发</span>
+    <span class="n">CONFIG2</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--后面以此类推</span>
+    <span class="n">CONFIG3</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIG4</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIG5</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIG6</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIG7</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIG8</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--0-31通道是否开启下降沿触发</span>
+    <span class="n">CONFIG9</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--32-63通道是否开启下降沿触发</span>
+    <span class="n">CONFIGA</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span><span class="c1">--后面以此类推</span>
+    <span class="n">CONFIGB</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIGC</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIGD</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIGE</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">CONFIGF</span> <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">31</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -453,6 +517,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="LPM.html" class="btn btn-neutral float-right" title="LPM（library of parameterized mudules）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="tempverilog.html" class="btn btn-neutral float-left" title="verilog 临时存放" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

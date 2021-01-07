@@ -4,14 +4,45 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 一 5月 25 12:11:49 2020 (+0800)
-.. Last-Updated: 五 1月  1 13:58:35 2021 (+0800)
+.. Last-Updated: 四 1月  7 22:11:22 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 3
+..     Update #: 6
 .. URL: http://wuhongyi.cn 
 
 ##################################################
 VHDL temp
 ##################################################
+
+
+============================================================
+缩位与/缩位或运算
+============================================================
+
+缩位运算符，即 "reduction operator"。对于 VHDL 来说，很少有人知道其缩位运算符是什么。首先缩位运算的意思是把一个 vector 合并成一位，例如缩位与运算符：对于一个 std_logic_vector 名为 example 的变量，完成 examlle[0] and example[1] and ... and example[22] 这样的运算的运算符。
+
+- 对于VHDL-2008，直接用and就可以完成：and(example);
+- 用组合逻辑自己写一个函数，按位或/与即可。
+- or_reduce 和 and_reduce 也可以完成上面的内容。要主要包含头文件 std_logic_misc。
+  
+.. code:: vhdl
+
+  function and_reduct(slv : in std_logic_vector) return std_logic is
+    variable res_v : std_logic := '1';  -- Null slv vector will also return '1'
+  begin
+    for i in slv'range loop
+      res_v := res_v and slv(i);
+    end loop;
+    return res_v;
+  end function;
+  -- You can then use the function both inside and outside functions with:
+   
+  signal arg : std_logic_vector(7 downto 0);
+  signal res : std_logic;
+  -- ...
+  res <= and_reduct(arg);
+
+
+	  
 
 
 ============================================================
@@ -298,6 +329,43 @@ HLS 生成模块
   end;
 
 
+.. code:: vhdl
+
+   entity LOGIC_ANALYZER is
+     Generic (	
+       bitsize : integer := 32;--通道数，最大256
+       fifolength : integer := 16);
+     port (
+       RESET : IN STD_LOGIC_VECTOR (0 DOWNTO 0);--重置
+       CLK_READ : IN STD_LOGIC_VECTOR (0 DOWNTO 0);--时钟
+       CLK_WRITE : IN STD_LOGIC_VECTOR (0 DOWNTO 0);--时钟
+       DATAIN : IN STD_LOGIC_VECTOR (bitsize-1 DOWNTO 0);--数据输入
+       TRIGGER : IN STD_LOGIC_VECTOR (0 DOWNTO 0);--外部输入触发
+       FULL: OUT STD_LOGIC_VECTOR (0 downto 0);
+       READ_DATA : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+       READ_DATAVALID : OUT STD_LOGIC_VECTOR (0 DOWNTO 0);
+       READ_NEXT : IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+       STATUS : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);--[0]1表示数据可以读取  [1]1表示已经初始化，0表示重置或者等待触发中   [2]1表示已经初始化，0表示重置或者数据已经写入FIFO完成
+       CONFIG : IN STD_LOGIC_VECTOR (31 DOWNTO 0);--[0]1表示enable [1]1表示reset [2]1表示外部输入TRIGGER触发 [3]1表示上升沿或者下降沿触发 [4]1表示软件触发
+       CONFIG0 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);--0-31通道是否开启上升沿触发
+       CONFIG1 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);--32-63通道是否开启上升沿触发
+       CONFIG2 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);--后面以此类推
+       CONFIG3 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIG4 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIG5 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIG6 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIG7 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIG8 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);--0-31通道是否开启下降沿触发
+       CONFIG9 : IN STD_LOGIC_VECTOR (31 DOWNTO 0);--32-63通道是否开启下降沿触发
+       CONFIGA : IN STD_LOGIC_VECTOR (31 DOWNTO 0);--后面以此类推
+       CONFIGB : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIGC : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIGD : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIGE : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+       CONFIGF : IN STD_LOGIC_VECTOR (31 DOWNTO 0)
+       );
+   end;
+  
 
   
    

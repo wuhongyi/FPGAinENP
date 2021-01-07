@@ -102,3 +102,4 @@ FIFO
    exp.rst
    tempverilog.rst
    tempvhdl.rst
+   LPM.rst

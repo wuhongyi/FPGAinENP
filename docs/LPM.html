@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LPM（library of parameterized mudules） &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="prev" title="VHDL temp" href="tempvhdl.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FPGA 在中低能实验核物理中的应用
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
+</ul>
+<p class="caption"><span class="caption-text">语法</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
+</ul>
+<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MZTIO.html">MZTIO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
+<li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
+</ul>
+<p class="caption"><span class="caption-text">计数器</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
+</ul>
+<p class="caption"><span class="caption-text">状态机</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">FIFO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
+</ul>
+<p class="caption"><span class="caption-text">经验总结</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tempvhdl.html">VHDL temp</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LPM（library of parameterized mudules）</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FPGA 在中低能实验核物理中的应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>LPM（library of parameterized mudules）</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/LPM.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lpm-library-of-parameterized-mudules">
+<h1>LPM（library of parameterized mudules）<a class="headerlink" href="#lpm-library-of-parameterized-mudules" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://blog.csdn.net/next_fse/article/details/73864596">https://blog.csdn.net/next_fse/article/details/73864596</a></p></li>
+<li><p><a class="reference external" href="http://blog.sina.com.cn/s/blog_6e350d8801011hfx.html">http://blog.sina.com.cn/s/blog_6e350d8801011hfx.html</a></p></li>
+</ul>
+<p>ALTERA在LPM（library of parameterized mudules）库中提供了参数可配置的单时钟FIFO（SCFIFO）和双时钟FIFO（DCFIFO）。FIFO主要应用在需要数据缓冲且数据符合先进先出规律的同步或异步场合。LPM中的FIFO包含以下几种：</p>
+<ul class="simple">
+<li><p>SCFIFO：单时钟FIFO；</p></li>
+<li><p>DCFIFO：双时钟FIFO，数据输入和输出的宽度相同；</p></li>
+<li><p>DCFIFO_MIXED_WIDTHS：双时钟FIFO，输入输出数据位宽可以不同。</p></li>
+</ul>
+<p><a class="reference external" href="https://www.cnblogs.com/rouwawa/p/7066635.html">https://www.cnblogs.com/rouwawa/p/7066635.html</a></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- 以下模块需要研究明白参数</span>
+<span class="n">in_delay</span> <span class="o">:</span> <span class="n">altshift_taps</span>
+  <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="n">intended_device_family</span> <span class="o">=&gt;</span> <span class="s">&quot;unused&quot;</span><span class="p">,</span>
+    <span class="n">number_of_taps</span> <span class="o">=&gt;</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="n">power_up_state</span> <span class="o">=&gt;</span> <span class="s">&quot;CLEARED&quot;</span><span class="p">,</span>
+    <span class="n">tap_distance</span> <span class="o">=&gt;</span> <span class="mi">63</span><span class="p">,</span>
+    <span class="n">width</span> <span class="o">=&gt;</span> <span class="n">bitsize</span><span class="p">,</span>
+    <span class="n">lpm_hint</span> <span class="o">=&gt;</span> <span class="s">&quot;UNUSED&quot;</span><span class="p">,</span>
+    <span class="n">lpm_type</span> <span class="o">=&gt;</span> <span class="s">&quot;altshift_taps&quot;</span>
+    <span class="p">)</span>
+  <span class="k">port</span> <span class="k">map</span><span class="p">(</span>
+    <span class="n">aclr</span> <span class="o">=&gt;</span> <span class="n">RESET</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">clken</span> <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">clock</span> <span class="o">=&gt;</span> <span class="n">CLK_WRITE</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">shiftin</span> <span class="o">=&gt;</span> <span class="n">DATAIN</span><span class="p">,</span>
+    <span class="n">shiftout</span> <span class="o">=&gt;</span><span class="n">DATA_DELAY</span><span class="p">,</span>
+    <span class="n">taps</span> <span class="o">=&gt;</span> <span class="k">open</span>
+    <span class="p">);</span>
+
+<span class="n">dcfifo_mixed_widths_component</span> <span class="o">:</span> <span class="n">dcfifo_mixed_widths</span>
+  <span class="k">GENERIC</span> <span class="k">MAP</span> <span class="p">(</span>
+    <span class="n">intended_device_family</span> <span class="o">=&gt;</span> <span class="s">&quot;Cyclone V&quot;</span><span class="p">,</span>
+    <span class="n">lpm_numwords</span> <span class="o">=&gt;</span> <span class="n">fifolength</span><span class="p">,</span>
+    <span class="n">lpm_showahead</span> <span class="o">=&gt;</span> <span class="s">&quot;ON&quot;</span><span class="p">,</span>
+    <span class="n">lpm_type</span> <span class="o">=&gt;</span> <span class="s">&quot;dcfifo_mixed_widths&quot;</span><span class="p">,</span>
+    <span class="n">lpm_width</span> <span class="o">=&gt;</span> <span class="n">bitsize</span><span class="p">,</span>
+    <span class="n">lpm_widthu</span> <span class="o">=&gt;</span> <span class="n">wBits</span><span class="p">,</span>
+    <span class="n">lpm_widthu_r</span> <span class="o">=&gt;</span> <span class="n">rBits</span><span class="p">,</span>
+    <span class="n">lpm_width_r</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="n">overflow_checking</span> <span class="o">=&gt;</span> <span class="s">&quot;ON&quot;</span><span class="p">,</span>
+    <span class="n">rdsync_delaypipe</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">read_aclr_synch</span> <span class="o">=&gt;</span> <span class="s">&quot;OFF&quot;</span><span class="p">,</span>
+    <span class="n">underflow_checking</span> <span class="o">=&gt;</span> <span class="s">&quot;ON&quot;</span><span class="p">,</span>
+    <span class="n">use_eab</span> <span class="o">=&gt;</span> <span class="s">&quot;ON&quot;</span><span class="p">,</span>
+    <span class="n">write_aclr_synch</span> <span class="o">=&gt;</span> <span class="s">&quot;OFF&quot;</span><span class="p">,</span>
+    <span class="n">wrsync_delaypipe</span> <span class="o">=&gt;</span> <span class="mi">4</span>
+    <span class="p">)</span>
+  <span class="k">PORT</span> <span class="k">MAP</span> <span class="p">(</span>
+    <span class="n">aclr</span> <span class="o">=&gt;</span> <span class="n">FifoClear</span><span class="p">,</span>
+    <span class="n">data</span> <span class="o">=&gt;</span> <span class="n">DATA_DELAY</span><span class="p">,</span>
+    <span class="n">rdclk</span> <span class="o">=&gt;</span> <span class="n">CLK_READ</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">rdreq</span> <span class="o">=&gt;</span> <span class="n">iREAD_NEXT</span><span class="p">,</span>
+    <span class="n">wrclk</span> <span class="o">=&gt;</span> <span class="n">CLK_WRITE</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">wrreq</span> <span class="o">=&gt;</span> <span class="n">EnableWrite</span><span class="p">,</span>
+    <span class="n">q</span> <span class="o">=&gt;</span> <span class="n">READ_DATA</span><span class="p">,</span>
+    <span class="n">rdempty</span> <span class="o">=&gt;</span> <span class="n">iEMPTY</span><span class="p">,</span>
+    <span class="n">wrfull</span> <span class="o">=&gt;</span> <span class="n">iFULL</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">GEN_INPUT_FIFO</span><span class="o">:</span>
+<span class="k">for</span> <span class="n">I</span> <span class="k">in</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">InputCount</span><span class="o">-</span><span class="mi">1</span> <span class="k">generate</span>
+     <span class="n">xpm_fifo_async_inst</span> <span class="o">:</span> <span class="n">xpm_fifo_async</span>
+     <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+             <span class="n">FIFO_MEMORY_TYPE</span> <span class="o">=&gt;</span> <span class="s">&quot;auto&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;auto&quot;, &quot;block&quot;, or &quot;distributed&quot;;</span>
+             <span class="n">ECC_MODE</span> <span class="o">=&gt;</span> <span class="s">&quot;no_ecc&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;no_ecc&quot; or &quot;en_ecc&quot;;</span>
+             <span class="n">RELATED_CLOCKS</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">--positive integer; 0 or 1</span>
+             <span class="n">FIFO_WRITE_DEPTH</span> <span class="o">=&gt;</span> <span class="n">InputFifoSize</span><span class="p">,</span> <span class="c1">--positive integer</span>
+             <span class="n">WRITE_DATA_WIDTH</span> <span class="o">=&gt;</span> <span class="n">InputWordSize</span><span class="p">,</span> <span class="c1">--positive integer</span>
+             <span class="n">WR_DATA_COUNT_WIDTH</span> <span class="o">=&gt;</span> <span class="n">wBits</span><span class="p">,</span> <span class="c1">--positive integer</span>
+             <span class="n">PROG_FULL_THRESH</span> <span class="o">=&gt;</span> <span class="n">InputFifoSize</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="c1">--positive integer</span>
+             <span class="n">FULL_RESET_VALUE</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">--positive integer; 0 or 1;</span>
+             <span class="n">READ_MODE</span> <span class="o">=&gt;</span> <span class="s">&quot;fwft&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;std&quot; or &quot;fwft&quot;;</span>
+             <span class="n">FIFO_READ_LATENCY</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">--positive integer;</span>
+             <span class="n">READ_DATA_WIDTH</span> <span class="o">=&gt;</span> <span class="n">InputWordSize</span><span class="p">,</span> <span class="c1">--positive integer</span>
+             <span class="n">RD_DATA_COUNT_WIDTH</span> <span class="o">=&gt;</span> <span class="n">rBits</span><span class="p">,</span> <span class="c1">--positive integer</span>
+             <span class="n">PROG_EMPTY_THRESH</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="c1">--positive integer</span>
+             <span class="n">DOUT_RESET_VALUE</span> <span class="o">=&gt;</span> <span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="c1">--string</span>
+             <span class="n">CDC_SYNC_STAGES</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="c1">--positive integer</span>
+             <span class="n">WAKEUP_TIME</span> <span class="o">=&gt;</span> <span class="mi">0</span> <span class="c1">--positive integer; 0 or 2;</span>
+     <span class="p">)</span>
+     <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+             <span class="n">sleep</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+             <span class="n">rst</span> <span class="o">=&gt;</span> <span class="n">reset</span><span class="p">,</span>
+             <span class="n">wr_clk</span> <span class="o">=&gt;</span> <span class="n">clk</span><span class="p">,</span>
+             <span class="n">wr_en</span> <span class="o">=&gt;</span> <span class="n">DV_IN</span><span class="p">(</span><span class="n">I</span><span class="p">),</span>
+             <span class="n">din</span> <span class="o">=&gt;</span>  <span class="n">DATA_IN</span><span class="p">(((</span><span class="n">I</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">InputWordSize</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="n">InputWordSize</span><span class="p">)),</span>
+             <span class="n">full</span> <span class="o">=&gt;</span> <span class="n">BUSY_IN</span><span class="p">(</span><span class="n">I</span><span class="p">),</span>
+             <span class="n">overflow</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">wr_rst_busy</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">rd_clk</span> <span class="o">=&gt;</span> <span class="n">clk</span><span class="p">,</span>
+             <span class="n">rd_en</span> <span class="o">=&gt;</span> <span class="n">RDEN_FIFO</span><span class="p">(</span><span class="n">I</span><span class="p">),</span>
+             <span class="n">dout</span> <span class="o">=&gt;</span> <span class="n">DATA_IN_FIFO</span><span class="p">(((</span><span class="n">I</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">InputWordSize</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="p">(</span><span class="n">I</span><span class="o">*</span><span class="n">InputWordSize</span><span class="p">)),</span>
+             <span class="n">empty</span> <span class="o">=&gt;</span> <span class="n">EMPTY_FIFO</span><span class="p">(</span><span class="n">I</span><span class="p">),</span>
+             <span class="n">underflow</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">rd_rst_busy</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">prog_full</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">wr_data_count</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">prog_empty</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">rd_data_count</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">injectsbiterr</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+             <span class="n">injectdbiterr</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+             <span class="n">sbiterr</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+             <span class="n">dbiterr</span> <span class="o">=&gt;</span> <span class="k">open</span>
+     <span class="p">);</span>
+<span class="n">RDEN_FIFO</span><span class="p">(</span><span class="n">I</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">not</span> <span class="n">EMPTY_FIFO</span><span class="p">(</span><span class="n">I</span><span class="p">))</span> <span class="k">and</span> <span class="p">(</span><span class="k">not</span> <span class="n">BUSY_IN_FIFO</span><span class="p">(</span><span class="n">I</span><span class="p">));</span>
+<span class="n">DV_IN_FIFO</span><span class="p">(</span><span class="n">I</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">RDEN_FIFO</span><span class="p">(</span><span class="n">I</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">generate</span> <span class="nc">GEN_INPUT_FIFO</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">COMPONENT</span> <span class="nc">dcfifo_mixed_widths</span>
+<span class="k">GENERIC</span> <span class="p">(</span>
+      <span class="n">intended_device_family</span>          <span class="o">:</span> <span class="kt">STRING</span><span class="p">;</span>
+      <span class="n">lpm_numwords</span>            <span class="o">:</span> <span class="kt">NATURAL</span><span class="p">;</span>
+      <span class="n">lpm_showahead</span>           <span class="o">:</span> <span class="kt">STRING</span><span class="p">;</span>
+      <span class="n">lpm_type</span>                <span class="o">:</span> <span class="kt">STRING</span><span class="p">;</span>
+      <span class="n">lpm_width</span>               <span class="o">:</span> <span class="kt">NATURAL</span><span class="p">;</span>
+      <span class="n">lpm_widthu</span>              <span class="o">:</span> <span class="kt">NATURAL</span><span class="p">;</span>
+      <span class="n">lpm_widthu_r</span>            <span class="o">:</span> <span class="kt">NATURAL</span><span class="p">;</span>
+      <span class="n">lpm_width_r</span>             <span class="o">:</span> <span class="kt">NATURAL</span><span class="p">;</span>
+      <span class="n">overflow_checking</span>               <span class="o">:</span> <span class="kt">STRING</span><span class="p">;</span>
+      <span class="n">rdsync_delaypipe</span>                <span class="o">:</span> <span class="kt">NATURAL</span><span class="p">;</span>
+      <span class="n">read_aclr_synch</span>         <span class="o">:</span> <span class="kt">STRING</span><span class="p">;</span>
+      <span class="n">underflow_checking</span>              <span class="o">:</span> <span class="kt">STRING</span><span class="p">;</span>
+      <span class="n">use_eab</span>         <span class="o">:</span> <span class="kt">STRING</span><span class="p">;</span>
+      <span class="n">write_aclr_synch</span>                <span class="o">:</span> <span class="kt">STRING</span><span class="p">;</span>
+      <span class="n">wrsync_delaypipe</span>                <span class="o">:</span> <span class="kt">NATURAL</span>
+<span class="p">);</span>
+<span class="k">PORT</span> <span class="p">(</span>
+              <span class="n">aclr</span>    <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span> <span class="p">;</span>
+              <span class="n">data</span>    <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="n">bitsize</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+              <span class="n">rdclk</span>   <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span> <span class="p">;</span>
+              <span class="n">rdreq</span>   <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span> <span class="p">;</span>
+              <span class="n">wrclk</span>   <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span> <span class="p">;</span>
+              <span class="n">wrreq</span>   <span class="o">:</span> <span class="k">IN</span> <span class="kt">STD_LOGIC</span> <span class="p">;</span>
+              <span class="n">q</span>       <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">32</span><span class="o">-</span><span class="mi">1</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+              <span class="n">rdempty</span> <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span> <span class="p">;</span>
+              <span class="n">wrfull</span>  <span class="o">:</span> <span class="k">OUT</span> <span class="kt">STD_LOGIC</span>
+<span class="p">);</span>
+<span class="k">END</span> <span class="k">COMPONENT</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">xpm_fifo_async_inst</span> <span class="o">:</span> <span class="n">xpm_fifo_async</span>
+<span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+<span class="n">FIFO_MEMORY_TYPE</span> <span class="o">=&gt;</span> <span class="s">&quot;auto&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;auto&quot;, &quot;block&quot;, or &quot;distributed&quot;;</span>
+<span class="n">ECC_MODE</span> <span class="o">=&gt;</span> <span class="s">&quot;no_ecc&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;no_ecc&quot; or &quot;en_ecc&quot;;</span>
+<span class="n">RELATED_CLOCKS</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">--positive integer; 0 or 1</span>
+<span class="n">FIFO_WRITE_DEPTH</span> <span class="o">=&gt;</span> <span class="n">fifolength</span><span class="p">,</span> <span class="c1">--positive integer</span>
+<span class="n">WRITE_DATA_WIDTH</span> <span class="o">=&gt;</span> <span class="n">bitsize</span><span class="p">,</span> <span class="c1">--positive integer</span>
+<span class="n">WR_DATA_COUNT_WIDTH</span> <span class="o">=&gt;</span> <span class="n">wBits</span><span class="p">,</span> <span class="c1">--positive integer</span>
+<span class="n">PROG_FULL_THRESH</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="c1">--positive integer</span>
+<span class="n">FULL_RESET_VALUE</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">--positive integer; 0 or 1;</span>
+<span class="n">READ_MODE</span> <span class="o">=&gt;</span> <span class="s">&quot;std&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;std&quot; or &quot;fwft&quot;;</span>
+<span class="n">FIFO_READ_LATENCY</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">--positive integer;</span>
+<span class="n">READ_DATA_WIDTH</span> <span class="o">=&gt;</span> <span class="mi">32</span><span class="p">,</span> <span class="c1">--positive integer</span>
+<span class="n">RD_DATA_COUNT_WIDTH</span> <span class="o">=&gt;</span> <span class="n">rBits</span><span class="p">,</span> <span class="c1">--positive integer</span>
+<span class="n">PROG_EMPTY_THRESH</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="c1">--positive integer</span>
+<span class="n">DOUT_RESET_VALUE</span> <span class="o">=&gt;</span> <span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="c1">--string</span>
+<span class="n">CDC_SYNC_STAGES</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="c1">--positive integer</span>
+<span class="n">WAKEUP_TIME</span> <span class="o">=&gt;</span> <span class="mi">0</span> <span class="c1">--positive integer; 0 or 2;</span>
+<span class="p">)</span>
+<span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+     <span class="n">sleep</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+     <span class="n">rst</span> <span class="o">=&gt;</span> <span class="n">RESET</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+     <span class="n">wr_clk</span> <span class="o">=&gt;</span> <span class="n">CLK_WRITE</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+     <span class="n">wr_en</span> <span class="o">=&gt;</span> <span class="n">iWRITE</span><span class="p">,</span>
+     <span class="n">din</span> <span class="o">=&gt;</span>  <span class="n">DATAIN</span><span class="p">,</span>
+     <span class="n">full</span> <span class="o">=&gt;</span> <span class="n">iFULL</span><span class="p">,</span>
+     <span class="n">overflow</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">wr_rst_busy</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">rd_clk</span> <span class="o">=&gt;</span> <span class="n">CLK_READ</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+     <span class="n">rd_en</span> <span class="o">=&gt;</span> <span class="n">iREAD_NEXT</span><span class="p">,</span>
+     <span class="n">dout</span> <span class="o">=&gt;</span> <span class="n">READ_DATA</span><span class="p">,</span>
+     <span class="n">empty</span> <span class="o">=&gt;</span> <span class="n">iEMPTY</span><span class="p">,</span>
+     <span class="n">underflow</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">rd_rst_busy</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">prog_full</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">wr_data_count</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">prog_empty</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">rd_data_count</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">injectsbiterr</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+     <span class="n">injectdbiterr</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+     <span class="n">sbiterr</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span>
+     <span class="n">dbiterr</span> <span class="o">=&gt;</span> <span class="k">open</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>  <span class="n">xpm_memory_sdpram_inst</span> <span class="o">:</span> <span class="n">xpm_memory_sdpram</span>
+    <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+      <span class="c1">-- Common module generics</span>
+      <span class="n">MEMORY_SIZE</span> <span class="o">=&gt;</span> <span class="n">maxDelay</span><span class="p">,</span> <span class="c1">--positive integer</span>
+      <span class="n">MEMORY_PRIMITIVE</span> <span class="o">=&gt;</span> <span class="s">&quot;auto&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;auto&quot;, &quot;distributed&quot;, &quot;block&quot; or &quot;ultra&quot; ;</span>
+      <span class="n">CLOCKING_MODE</span> <span class="o">=&gt;</span> <span class="s">&quot;common_clock&quot;</span><span class="p">,</span><span class="c1">--string; &quot;common_clock&quot;, &quot;independent_clock&quot;</span>
+      <span class="n">MEMORY_INIT_FILE</span> <span class="o">=&gt;</span> <span class="s">&quot;none&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;none&quot; or &quot;&lt;filename&gt;.mem&quot;</span>
+      <span class="n">MEMORY_INIT_PARAM</span> <span class="o">=&gt;</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="c1">--string;</span>
+      <span class="n">USE_MEM_INIT</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">--integer; 0,1</span>
+      <span class="n">WAKEUP_TIME</span> <span class="o">=&gt;</span> <span class="s">&quot;disable_sleep&quot;</span><span class="p">,</span><span class="c1">--string; &quot;disable_sleep&quot; or &quot;use_sleep_pin&quot;</span>
+      <span class="n">MESSAGE_CONTROL</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">--integer; 0,1</span>
+      <span class="c1">-- Port A module generics</span>
+      <span class="n">WRITE_DATA_WIDTH_A</span> <span class="o">=&gt;</span> <span class="n">busWidth</span><span class="p">,</span> <span class="c1">--positive integer</span>
+      <span class="n">BYTE_WRITE_WIDTH_A</span> <span class="o">=&gt;</span> <span class="n">busWidth</span><span class="p">,</span> <span class="c1">--integer; 8, 9, or WRITE_DATA_WIDTH_A value</span>
+      <span class="n">ADDR_WIDTH_A</span> <span class="o">=&gt;</span> <span class="n">maxDelayBits</span><span class="p">,</span> <span class="c1">--positive integer</span>
+      <span class="c1">-- Port B module generics</span>
+      <span class="n">READ_DATA_WIDTH_B</span> <span class="o">=&gt;</span> <span class="n">busWidth</span><span class="p">,</span> <span class="c1">--positive integer</span>
+      <span class="n">ADDR_WIDTH_B</span> <span class="o">=&gt;</span> <span class="n">maxDelayBits</span><span class="p">,</span> <span class="c1">--positive integer</span>
+      <span class="n">READ_RESET_VALUE_B</span> <span class="o">=&gt;</span> <span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="c1">--string</span>
+      <span class="n">READ_LATENCY_B</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="c1">--non-negative integer</span>
+      <span class="n">WRITE_MODE_B</span> <span class="o">=&gt;</span> <span class="s">&quot;no_change&quot;</span> <span class="c1">--string; &quot;write_first&quot;, &quot;read_first&quot;, &quot;no_change&quot;</span>
+      <span class="p">)</span>
+    <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+      <span class="c1">-- Common module ports</span>
+      <span class="n">sleep</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+      <span class="c1">-- Port A module ports</span>
+      <span class="n">clka</span> <span class="o">=&gt;</span> <span class="n">CLK</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+      <span class="n">ena</span> <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+      <span class="n">wea</span> <span class="o">=&gt;</span> <span class="s">&quot;1&quot;</span><span class="p">,</span>
+      <span class="n">addra</span> <span class="o">=&gt;</span> <span class="n">WP</span><span class="p">,</span>
+      <span class="n">dina</span> <span class="o">=&gt;</span> <span class="n">iIN</span><span class="p">,</span>
+      <span class="n">injectsbiterra</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">--do not change</span>
+      <span class="n">injectdbiterra</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">--do not change</span>
+      <span class="c1">-- Port B module ports</span>
+      <span class="n">clkb</span> <span class="o">=&gt;</span> <span class="n">CLK</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+      <span class="n">rstb</span> <span class="o">=&gt;</span> <span class="n">RESET</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+      <span class="n">enb</span> <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+      <span class="n">regceb</span> <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+      <span class="n">addrb</span> <span class="o">=&gt;</span> <span class="n">RP</span><span class="p">,</span>
+      <span class="n">doutb</span> <span class="o">=&gt;</span> <span class="n">memOut</span><span class="p">,</span>
+      <span class="n">sbiterrb</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span> <span class="c1">--do not change</span>
+      <span class="n">dbiterrb</span> <span class="o">=&gt;</span> <span class="k">open</span> <span class="c1">--do not change</span>
+      <span class="p">);</span>
+<span class="k">end</span> <span class="k">generate</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">xpm_memory_tdpram_inst</span> <span class="o">:</span> <span class="n">xpm_memory_tdpram</span>
+  <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="c1">-- Common module generics</span>
+    <span class="n">MEMORY_SIZE</span> <span class="o">=&gt;</span> <span class="n">memLength</span><span class="o">*</span><span class="n">wordWidth</span><span class="p">,</span> <span class="c1">--positive integer</span>
+    <span class="n">MEMORY_PRIMITIVE</span> <span class="o">=&gt;</span> <span class="s">&quot;auto&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;auto&quot;, &quot;distributed&quot;, &quot;block&quot; or &quot;ultra&quot; ;</span>
+    <span class="n">CLOCKING_MODE</span> <span class="o">=&gt;</span> <span class="s">&quot;independent_clock&quot;</span><span class="p">,</span><span class="c1">--string; &quot;common_clock&quot;, &quot;independent_clock&quot;</span>
+    <span class="n">MEMORY_INIT_FILE</span> <span class="o">=&gt;</span> <span class="s">&quot;none&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;none&quot; or &quot;&lt;filename&gt;.mem&quot;</span>
+    <span class="n">MEMORY_INIT_PARAM</span> <span class="o">=&gt;</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="c1">--string;</span>
+    <span class="n">USE_MEM_INIT</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">--integer; 0,1</span>
+    <span class="n">WAKEUP_TIME</span> <span class="o">=&gt;</span> <span class="s">&quot;disable_sleep&quot;</span><span class="p">,</span><span class="c1">--string; &quot;disable_sleep&quot; or &quot;use_sleep_pin&quot;</span>
+    <span class="n">MESSAGE_CONTROL</span>         <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>               <span class="c1">--integer;</span>
+    <span class="n">ECC_MODE</span>                <span class="o">=&gt;</span> <span class="s">&quot;no_ecc&quot;</span><span class="p">,</span>        <span class="c1">--string; &quot;no_ecc&quot;, &quot;encode_only&quot;, &quot;decode_only&quot; or &quot;both_encode_and_decode&quot;</span>
+    <span class="n">AUTO_SLEEP_TIME</span>         <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>               <span class="c1">--Do not Change</span>
+    <span class="c1">-- USE_EMBEDDED_CONSTRAINT =&gt; 0,               --integer: 0,1</span>
+    <span class="c1">-- MEMORY_OPTIMIZATION     =&gt; &quot;true&quot;,          --string; &quot;true&quot;, &quot;false&quot;</span>
+
+    <span class="c1">-- Port A module generics</span>
+    <span class="n">WRITE_DATA_WIDTH_A</span> <span class="o">=&gt;</span> <span class="n">wordWidth</span><span class="p">,</span> <span class="c1">--positive integer</span>
+    <span class="n">READ_DATA_WIDTH_A</span> <span class="o">=&gt;</span> <span class="n">wordWidth</span><span class="p">,</span> <span class="c1">--positive integer</span>
+    <span class="n">BYTE_WRITE_WIDTH_A</span> <span class="o">=&gt;</span> <span class="n">wordWidth</span><span class="p">,</span> <span class="c1">--integer; 8, 9, or WRITE_DATA_WIDTH_A value</span>
+    <span class="n">ADDR_WIDTH_A</span> <span class="o">=&gt;</span> <span class="n">addressBits</span><span class="p">,</span> <span class="c1">--positive integer</span>
+    <span class="n">READ_RESET_VALUE_A</span> <span class="o">=&gt;</span> <span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="c1">--string</span>
+    <span class="n">READ_LATENCY_A</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">--non-negative integer</span>
+    <span class="n">WRITE_MODE_A</span> <span class="o">=&gt;</span> <span class="s">&quot;no_change&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;write_first&quot;, &quot;read_first&quot;, &quot;no_change&quot;</span>
+    <span class="c1">-- Port B module generics</span>
+    <span class="n">WRITE_DATA_WIDTH_B</span> <span class="o">=&gt;</span> <span class="n">wordWidth</span><span class="p">,</span> <span class="c1">--positive integer</span>
+    <span class="n">READ_DATA_WIDTH_B</span> <span class="o">=&gt;</span> <span class="n">wordWidth</span><span class="p">,</span> <span class="c1">--positive integer</span>
+    <span class="n">BYTE_WRITE_WIDTH_B</span> <span class="o">=&gt;</span> <span class="n">wordWidth</span><span class="p">,</span> <span class="c1">--integer; 8, 9, or WRITE_DATA_WIDTH_B value</span>
+    <span class="n">ADDR_WIDTH_B</span> <span class="o">=&gt;</span> <span class="n">addressBits</span><span class="p">,</span> <span class="c1">--positive integer</span>
+    <span class="n">READ_RESET_VALUE_B</span> <span class="o">=&gt;</span> <span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="c1">--string</span>
+    <span class="n">READ_LATENCY_B</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">--non-negative integer</span>
+    <span class="n">WRITE_MODE_B</span> <span class="o">=&gt;</span> <span class="s">&quot;read_first&quot;</span> <span class="c1">--string; &quot;write_first&quot;, &quot;read_first&quot;, &quot;no_change&quot;</span>
+    <span class="p">)</span>
+  <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+    <span class="c1">-- Common module ports</span>
+    <span class="n">sleep</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+    <span class="c1">-- Port A module ports</span>
+    <span class="n">clka</span> <span class="o">=&gt;</span> <span class="n">CLK_WRITE</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">rsta</span> <span class="o">=&gt;</span> <span class="n">RESET</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">ena</span> <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">regcea</span> <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">wea</span> <span class="o">=&gt;</span> <span class="n">wea</span><span class="p">,</span>
+    <span class="n">addra</span> <span class="o">=&gt;</span> <span class="n">addra</span><span class="p">,</span>
+    <span class="n">dina</span> <span class="o">=&gt;</span> <span class="n">dina</span><span class="p">,</span>
+    <span class="n">injectsbiterra</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">--do not change</span>
+    <span class="n">injectdbiterra</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">--do not change</span>
+    <span class="n">douta</span> <span class="o">=&gt;</span> <span class="n">douta</span><span class="p">,</span>
+    <span class="n">sbiterra</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span> <span class="c1">--do not change</span>
+    <span class="n">dbiterra</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span> <span class="c1">--do not change</span>
+    <span class="c1">-- Port B module ports</span>
+    <span class="n">clkb</span> <span class="o">=&gt;</span> <span class="n">CLK_READ</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">rstb</span> <span class="o">=&gt;</span> <span class="n">RESET</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">enb</span> <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">regceb</span> <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">web</span> <span class="o">=&gt;</span> <span class="n">web</span><span class="p">,</span>
+    <span class="n">addrb</span> <span class="o">=&gt;</span> <span class="n">READ_ADDRESS</span><span class="p">(</span><span class="n">addressBits</span><span class="o">-</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">dinb</span> <span class="o">=&gt;</span> <span class="n">dinb</span><span class="p">,</span>
+    <span class="n">injectsbiterrb</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">--do not change</span>
+    <span class="n">injectdbiterrb</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="c1">--do not change</span>
+    <span class="n">doutb</span> <span class="o">=&gt;</span> <span class="n">doutb</span><span class="p">,</span>
+    <span class="n">sbiterrb</span> <span class="o">=&gt;</span> <span class="k">open</span><span class="p">,</span> <span class="c1">--do not change</span>
+    <span class="n">dbiterrb</span> <span class="o">=&gt;</span> <span class="k">open</span> <span class="c1">--do not change</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="tempvhdl.html" class="btn btn-neutral float-left" title="VHDL temp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
