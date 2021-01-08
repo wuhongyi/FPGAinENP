@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 五 7月 26 20:21:45 2019 (+0800)
-.. Last-Updated: 一 12月 28 21:35:26 2020 (+0800)
+.. Last-Updated: 五 1月  8 22:28:32 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 10
+..     Update #: 11
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -64,8 +64,8 @@ README
 	       - 前沿甄别
 	       - ......
 	- 数字能量算法
-	       - 梯形算法
-	       - GS 梯形算法
+	       - XIA 梯形算法
+	       - GAMMASPHERE 梯形算法
 	       - Semi-Gaussian
 	       - QDC 算法
 	- 数字时间算法
