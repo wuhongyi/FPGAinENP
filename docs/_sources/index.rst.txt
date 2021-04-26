@@ -103,3 +103,4 @@ FIFO
    tempverilog.rst
    tempvhdl.rst
    LPM.rst
+   attribute.rst
