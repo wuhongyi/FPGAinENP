@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 8月 10 22:02:10 2019 (+0800)
-.. Last-Updated: 一 6月  7 21:00:42 2021 (+0800)
+.. Last-Updated: 二 6月  8 20:45:33 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 7
+..     Update #: 9
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -188,7 +188,161 @@ D触发器有数据、时钟、和 RST# 输入端以及 Q 和 ！Q 两个输出�
 
 
 
+**同步技术**
 
-     
+数据同步和在不同时钟域之间进行数据传输会经常出现。为避免任何差错、系统故障和数据破坏，正确的同步和数据传输就显得格外重要。这些问题的出现往往比较隐蔽，不易被发现，因此正确进行跨时钟域处理就显得极为重要。实现数据同步有许多种方式，在不同的情况下进行恰当的同步方式选择非常重要。这里简单介绍目前常用的两种同步技术。
+
+**使用FIFO进行的数据同步**
+
+当存在两个异步时钟域并且二者之间进行数据包传输时，双端口FIFO最为合适。FIFO有两个端口，一个端口写入输入数据，另一个端口读出数据。两个端口工作在相互独立的时钟域内，通过各自的指针（地址）来读写数据。由于每个端口工作在相互独立的时钟域内，因此读写操作可以独立实现并且不会出现任何差错。当FIFO变满时，应停止写操作，直到FIFO中出现空闲空间，同样，当FIFO为空时，应停止读操作，直到有新的数据被写入FIFO中。FIFO有满标记和空标记，有关FIFO操作的详细描述在相应章节给出。
+
+**握手同步方式**
+
+FIFO可用于在不同的时钟域之间进行数据包的传输，但是在一些应用中需要在不同时钟域之间进行少量数据传输。FIFO占用的硬件资源较大，此时可以考虑使用握手同步机制。
+
+以下是握手同步机制的工作步骤：
+
+- 用后缀 _t 表示发送端，用后缀 _r 表示接收端。发送时钟用 tclk 表示，接收时钟用 rclk 表示。数据从 tclk 域向 rclk 域传输；
+- 当需要发送的数据准备好后，发送端将 t_rdy 信号置为有效，该信号必须在 tclk 下降沿时采样输出；
+- 在 t_rdy 有效期间，t_data 必须保持稳定；
+- 接收端在 rclk 域中采用双同步器同步 t_rdy 控制信号，并把同步后的信号命名为 t_rdy_rclk；
+- 接收端在发现 t_rdy_rclk 信号有效时，t_data 已经安全地进入了 rclk 域，使用 rclk 对其进行采样，可以得到 t_data_rclk。由于数据已经在 rclk 域进行了正确采样，所以此后在 rclk 域使用该数据是安全的；
+- 接收端将 r_ack 信号置为 1，信号必须在 rclk 下降沿输出；
+- 发送端通过双同步器在 tclk 域内同步 r_ack 信号，同步后的信号称为 r_ack_tclk；
+- 以上所有步骤称为“半握手”。这是因为发送端在输出下一数据之前，不会等到 r_ack_rclk 被置为 0；
+- 半握手机制工作速度快，但是，使用半握手机制时需要谨慎，一旦使用不当，会导致操作错误；
+- 从低频时钟域向高频时钟域传数据时，半握手机制较为适用，这是由于接收端可以更快地完成操作。然而，如果从高频时钟域向低频时钟域传输数据，则需要采用全握手机制；
+- 当 r_ack_tclk 为高电平时，发送端将 t_rdy 置为 0；
+- 当 t_rdy_rclk 为低电平时，接收端将 r_ack 置为 0；
+- 当发送端发现 r_ack_tclk 为低电平后，全握手过程结束，传输端可以发送新的数据；  
+- 显然，权握手过程耗时较长，数据传输速度较慢。然而，全握手机制稳定可靠，可以在两个任意频率的时钟域内安全地进行数据传输。
+
+全握手机制代码如下：
+
+.. code:: verilog
+
+   // Verilog RTL for Full Handshake -Transmit
+   module handshake_tclk								   
+     (										   
+      tclk,									   
+      resetb_tclk,									   
+      t_rdy,									   
+      data_avail,									   
+      transmit_data,								   
+      t_data,									   
+      r_ack									   
+      );										   
+										   
+      input tclk;									   
+      input resetb_tclk;								   
+										   
+      input r_ack;									   
+      input data_avail;								   
+      input [31:0] transmit_data;							   
+      output	t_rdy;								   
+      output [31:0] t_data;							   
+										   
+      localparam IDLE_T = 2'd0, ASSERT_TRDY = 2'd1, DEASSERT_TRDY = 2'd2;	   
+										   
+      reg [1:0]		 t_hndshk_state, t_hndshk_state_nxt;				   
+      reg		 t_rdy, t_rdy_nxt;						   
+      reg [31:0]	 t_data, t_data_nxt;						   
+      reg		 r_ack_d1, r_ack_tclk;						   
+										   
+										   
+      always @(*)									   
+	begin									   
+	t_hndshk_state_nxt = t_hndshk_state;					   
+	t_rdy_nxt = 1'b0;							   
+	t_data_nxt = t_data;							   
+										   
+	case(t_hndshk_state)							   
+	  IDLE_T:								   
+	    begin								   
+	       if(data_avail) // if the data is available in transmit s ide	   
+		 begin								   
+		    t_hndshk_state_nxt = ASSERT_TRDY;				   
+		    t_rdy_nxt = 1'b1;						   
+		    t_data_nxt = transmit_data;// data to be transferre d	   
+		 end								   
+	    end									   
+	  ASSERT_TRDY:								   
+	    begin								   
+	       if(r_ack_tclk)							   
+		 begin								   
+		    t_rdy_nxt = 1'b0;						   
+		    t_hndshk_state_nxt = DEASSERT_TRDY;				   
+		    t_data_nxt = 'd0;						   
+		 end								   
+	       else								   
+		 begin								   
+		    t_rdy_nxt = 1'b1;// keep driving until r_ack_tclk=1		   
+		    t_data_nxt = t_data;// keep supplying data			   
+		 end								   
+	    end									   
+	  DEASSERT_TRDY:							   
+	    begin								   
+	       if(!r_ack_tclk)							   
+		 begin								   
+		    if(data_avail)						   
+		      begin							   
+			 t_hndshk_state_nxt = ASSERT_TRDY;			   
+			 t_rdy_nxt = 1'b1;					   
+			 t_data_nxt = transmit_data;				   
+		      end							   
+		    else							   
+		      t_hndshk_state_nxt = IDLE_T;				   
+		 end								   
+	    end									   
+	  default:								   
+	    begin								   
+	    end									   
+	endcase									   
+	end									   
+										   
+      always @(posedge tclk or negedge resetb_tclk)				   
+	begin									   
+	if(!resetb_tclk)							   
+	  begin									   
+	     t_hndshk_state <= IDLE_T;						   
+	     t_rdy <= 1'b0;							   
+	     t_data <= 'd0;							   
+	     r_ack_d1 <= 1'b0;							   
+	     r_ack_tclk <= 1'b0;						   
+	  end									   
+	else									   
+	  begin									   
+	     t_hndshk_state <= t_hndshk_state_nxt;				   
+	     t_rdy <= t_rdy_nxt;						   
+	     t_data <= t_data_nxt;						   
+	     r_ack_d1 <= r_ack;							   
+	     r_ack_tclk <= r_ack_d1;						   
+	  end									   
+	end									   
+										   
+   endmodule									   
+
+
+
+.. code:: verilog 
+
+   // Verilog RTL for Full Handshake - Receive
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  
 .. 
 .. exp.rst ends here
