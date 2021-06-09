@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 6月  7 20:22:45 2021 (+0800)
-// Last-Updated: 二 6月  8 20:57:19 2021 (+0800)
+// Last-Updated: 三 6月  9 12:50:38 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 4
+//     Update #: 6
 // URL: http://wuhongyi.cn 
 
 input sig_a;
@@ -201,10 +201,63 @@ module handshake_rclk
    input [31:0] t_data;
    output 	r_ack;
 
-
+   localparam IDLE_R = 1'b0, ASSERT_ACK = 1'b1;
+   reg 		r_hndshk_state, r_hndshk_state_nxt;
+   reg 		r_ack, r_ack_nxt;
+   reg [31:0] 	t_data_rclk, t_data_rclk_nxt;
+   reg 		t_rdy_d1, t_rdy_rclk;
    
+   always @(*)
+     begin
+	r_hndshk_state_nxt = r_hndshk_state;
+	r_ack_nxt = 1'b0;
+	t_data_rclk_nxt = t_data_rclk;
 
+	case(r_hndshk_state)
+	  IDLE_R:
+	    begin
+	       if(t_rdy_rclk)
+		 begin
+		    r_hndshk_state_nxt = ASSERT_ACK;
+		    r_ack_nxt = 1'b1;
+		    t_data_rclk_nxt = t_data;
+		 end
+	    end
+	  ASSERT_ACK:
+	    begin
+	       if(!t_rdy_rclk)
+		 begin
+		    r_ack_nxt = 1'b0;
+		    r_hndshk_state_nxt = IDLE_R;
+		 end
+	       else
+		 r_ack_nxt = 1'b1;
+	    end
+	  default:
+	    begin
+	    end
+	endcase
+     end
 
+   always @(posedge rclk or negedge resetb_rclk)
+     begin
+	if(!resetb_rclk)
+	  begin
+	     r_hndshk_state <= IDLE_R;
+	     r_ack <= 1'b0;
+	     t_data_rclk <= 'd0;
+	     t_rdy_d1 <= 1'b0;
+	     t_rdy_rclk <= 1'b0;
+	  end
+	else
+	  begin
+	     r_hndshk_state <= r_hndshk_state_nxt;
+	     r_ack <= r_ack_nxt;
+	     t_data_rclk <= t_data_rclk_nxt;
+	     t_rdy_d1 <= t_rdy;
+	     t_rdy_rclk <= t_rdy_d1;
+	  end
+     end
 
 endmodule   
 
@@ -213,10 +266,34 @@ endmodule
 
 
 
+module reset_synchronizer
+  (
+   clkb,
+   rstb_in,
+   rstb_sync
+   );
+   
+   input clkb;
+   input rstb_in;
+   output rstb_sync;
 
+   reg 	  rstb_in_pre, rstb_sync;
 
-
-
+   always @(posedge clkb or negedge rstb_in)
+     begin
+	if(!rstb_in)
+	  begin
+	     rstb_in_pre <= 1'b0;
+	     rstb_sync <= 1'b0;
+	  end
+	else
+	  begin
+	     rstb_in_pre <= 1'b1;
+	     rstb_sync <= rstb_in_pre;
+	  end
+     end
+   
+endmodule
 
 
 

@@ -483,8 +483,123 @@
 </pre></div>
 </div>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Verilog RTL for Full Handshake - Receive</span>
+<span class="k">module</span> <span class="n">handshake_rclk</span>
+  <span class="p">(</span>
+   <span class="n">rclk</span><span class="p">,</span>
+   <span class="n">resetb_rclk</span><span class="p">,</span>
+   <span class="n">t_rdy</span><span class="p">,</span>
+   <span class="n">t_data</span><span class="p">,</span>
+   <span class="n">r_ack</span>
+   <span class="p">);</span>
+
+   <span class="k">input</span> <span class="n">rclk</span><span class="p">;</span>
+   <span class="k">input</span> <span class="n">resetb_rclk</span><span class="p">;</span>
+   <span class="k">input</span> <span class="n">t_rdy</span><span class="p">;</span>
+   <span class="k">input</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">t_data</span><span class="p">;</span>
+   <span class="k">output</span>    <span class="n">r_ack</span><span class="p">;</span>
+
+   <span class="k">localparam</span> <span class="no">IDLE_R</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span> <span class="no">ASSERT_ACK</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="kt">reg</span>               <span class="n">r_hndshk_state</span><span class="p">,</span> <span class="n">r_hndshk_state_nxt</span><span class="p">;</span>
+   <span class="kt">reg</span>               <span class="n">r_ack</span><span class="p">,</span> <span class="n">r_ack_nxt</span><span class="p">;</span>
+   <span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>        <span class="n">t_data_rclk</span><span class="p">,</span> <span class="n">t_data_rclk_nxt</span><span class="p">;</span>
+   <span class="kt">reg</span>               <span class="n">t_rdy_d1</span><span class="p">,</span> <span class="n">t_rdy_rclk</span><span class="p">;</span>
+
+   <span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span>
+     <span class="k">begin</span>
+     <span class="n">r_hndshk_state_nxt</span> <span class="o">=</span> <span class="n">r_hndshk_state</span><span class="p">;</span>
+     <span class="n">r_ack_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+     <span class="n">t_data_rclk_nxt</span> <span class="o">=</span> <span class="n">t_data_rclk</span><span class="p">;</span>
+
+     <span class="k">case</span><span class="p">(</span><span class="n">r_hndshk_state</span><span class="p">)</span>
+       <span class="nl">IDLE_R:</span>
+         <span class="k">begin</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">t_rdy_rclk</span><span class="p">)</span>
+              <span class="k">begin</span>
+                 <span class="n">r_hndshk_state_nxt</span> <span class="o">=</span> <span class="no">ASSERT_ACK</span><span class="p">;</span>
+                 <span class="n">r_ack_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+                 <span class="n">t_data_rclk_nxt</span> <span class="o">=</span> <span class="n">t_data</span><span class="p">;</span>
+              <span class="k">end</span>
+         <span class="k">end</span>
+       <span class="nl">ASSERT_ACK:</span>
+         <span class="k">begin</span>
+            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">t_rdy_rclk</span><span class="p">)</span>
+              <span class="k">begin</span>
+                 <span class="n">r_ack_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+                 <span class="n">r_hndshk_state_nxt</span> <span class="o">=</span> <span class="no">IDLE_R</span><span class="p">;</span>
+              <span class="k">end</span>
+            <span class="k">else</span>
+              <span class="n">r_ack_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+         <span class="k">end</span>
+       <span class="k">default</span><span class="o">:</span>
+         <span class="k">begin</span>
+         <span class="k">end</span>
+     <span class="k">endcase</span>
+     <span class="k">end</span>
+
+   <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">rclk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">resetb_rclk</span><span class="p">)</span>
+     <span class="k">begin</span>
+     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">resetb_rclk</span><span class="p">)</span>
+       <span class="k">begin</span>
+          <span class="n">r_hndshk_state</span> <span class="o">&lt;=</span> <span class="no">IDLE_R</span><span class="p">;</span>
+          <span class="n">r_ack</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+          <span class="n">t_data_rclk</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
+          <span class="n">t_rdy_d1</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+          <span class="n">t_rdy_rclk</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+       <span class="k">end</span>
+     <span class="k">else</span>
+       <span class="k">begin</span>
+          <span class="n">r_hndshk_state</span> <span class="o">&lt;=</span> <span class="n">r_hndshk_state_nxt</span><span class="p">;</span>
+          <span class="n">r_ack</span> <span class="o">&lt;=</span> <span class="n">r_ack_nxt</span><span class="p">;</span>
+          <span class="n">t_data_rclk</span> <span class="o">&lt;=</span> <span class="n">t_data_rclk_nxt</span><span class="p">;</span>
+          <span class="n">t_rdy_d1</span> <span class="o">&lt;=</span> <span class="n">t_rdy</span><span class="p">;</span>
+          <span class="n">t_rdy_rclk</span> <span class="o">&lt;=</span> <span class="n">t_rdy_d1</span><span class="p">;</span>
+       <span class="k">end</span>
+     <span class="k">end</span>
+
+<span class="k">endmodule</span>
 </pre></div>
 </div>
+<p><strong>复位方法</strong></p>
+<p>复位被用来将数字电路中的触发器强制设置到一个确定的初始值上，从而使状态机和其它的控制电路可以从一个已知的初始状态开始工作。带有复位引脚的触发器所占用的芯片面积比没有复位引脚的触发器略微大一些。在某些情况下，处于数据处理路径上的触发器的初始值无关紧要，此时可以使用不带复位引脚的触发器，以将低芯片的总面积。电路中有两种典型的复位方法，非同步复位和同步复位。</p>
+<p><strong>非同步复位（异步复位）</strong></p>
+<p>采用异步复位时，触发器中存在一个复位端。一般情况下，复位时低电平有效的，通常用 reset# 来表示。当 reset# 为低电平时，触发器输出立刻变成 0 或 1。 reset# 可以在任何时刻被置为低电平，它与时钟边沿之间可以没有任何关系，因此这种复位方式被称为异步复位。</p>
+<p>需要注意的是，当 reset# 被置为高电平时，它必须与时钟的上升沿同步。 reset# 从 0 到 1 翻转时，不能离时钟的上升沿太近，不然会产生与违反建立时间/保持时间类似的输出不稳定问题，此时它被称为复位恢复错误。有时候一个复位信号会经过不同的时钟域，此时不能直接使用该复位信号。此时它的上升沿必须与新时钟域进行同步以免产生复位恢复错误。针对跨时钟域的同步，可以使用专门设计的复位同步电路。</p>
+<p><strong>复位同步电路</strong></p>
+<p>这里给出一种复位同步电路的代码：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">reset_synchronizer</span>
+  <span class="p">(</span>
+   <span class="n">clkb</span><span class="p">,</span>
+   <span class="n">rstb_in</span><span class="p">,</span>
+   <span class="n">rstb_sync</span>
+   <span class="p">);</span>
+
+   <span class="k">input</span> <span class="n">clkb</span><span class="p">;</span>
+   <span class="k">input</span> <span class="n">rstb_in</span><span class="p">;</span>
+   <span class="k">output</span> <span class="n">rstb_sync</span><span class="p">;</span>
+
+   <span class="kt">reg</span>         <span class="n">rstb_in_pre</span><span class="p">,</span> <span class="n">rstb_sync</span><span class="p">;</span>
+
+   <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clkb</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rstb_in</span><span class="p">)</span>
+     <span class="k">begin</span>
+     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">rstb_in</span><span class="p">)</span>
+       <span class="k">begin</span>
+          <span class="n">rstb_in_pre</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+          <span class="n">rstb_sync</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+       <span class="k">end</span>
+     <span class="k">else</span>
+       <span class="k">begin</span>
+          <span class="n">rstb_in_pre</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+          <span class="n">rstb_sync</span> <span class="o">&lt;=</span> <span class="n">rstb_in_pre</span><span class="p">;</span>
+       <span class="k">end</span>
+     <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+<p><strong>同步复位</strong></p>
+<p>采用同步复位时，没有专用的复位端。复位信号时决定触发器输入信号值的变量之一。由于复位信号被当成输入信号的一部分，因此它必须满足和一般数据输入一样的建立时间和保持时间要求。</p>
+<p><strong>异步复位和同步复位的选择</strong></p>
+<p>异步复位和同步复位都可以用于数字系统设计之中。异步复位信号必须直接来自触发器，并且复位信号中不能有毛刺。对于同步复位来说，复位信号可以容忍毛刺，前提是毛刺不能不现在建立时间和保持时间窗口内。由于异步复位不依赖于时钟，因此在时钟没有运行根本没有时钟的情况下可以使用。对于同步复位方法，必须在有时钟的情况下才能进行复位。另外，同步复位信号会出现在数据延迟路径中，可能会带来路径延迟的增加，对于告诉设计来说需要仔细考虑，可能会产生不良影响。</p>
 </div>
 </div>
 
