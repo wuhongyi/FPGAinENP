@@ -600,6 +600,123 @@
 <p>采用同步复位时，没有专用的复位端。复位信号时决定触发器输入信号值的变量之一。由于复位信号被当成输入信号的一部分，因此它必须满足和一般数据输入一样的建立时间和保持时间要求。</p>
 <p><strong>异步复位和同步复位的选择</strong></p>
 <p>异步复位和同步复位都可以用于数字系统设计之中。异步复位信号必须直接来自触发器，并且复位信号中不能有毛刺。对于同步复位来说，复位信号可以容忍毛刺，前提是毛刺不能不现在建立时间和保持时间窗口内。由于异步复位不依赖于时钟，因此在时钟没有运行根本没有时钟的情况下可以使用。对于同步复位方法，必须在有时钟的情况下才能进行复位。另外，同步复位信号会出现在数据延迟路径中，可能会带来路径延迟的增加，对于告诉设计来说需要仔细考虑，可能会产生不良影响。</p>
+<p><strong>仲裁</strong></p>
+<p><strong>关于仲裁</strong></p>
+<p>当多个源和用户需要共享同一资源时，需要某种仲裁形式，使得所有用户基于一定的规则或算法得到获取或访问资源的机会。例如，共享总线上可以连接多个总线用户。另一个例子司交换中的端口仲裁，当多个入口希望通过某一个出口输出数据时，需要使用一定的端口仲裁机制来选择某一时刻允许哪一个入口发送数据。最简单的仲裁方案是公平轮询方案，此时，仲裁器公平地对待所有的用户请求，不同用户具有均等的机会。然而，如果某些设备的速度快于其它设备，它需要更多的对共享资源的访问机会，或者某些用户具有更高的处理优先级，那么简单的循环方案是不够的。</p>
+<p>在此情形下，使用严格优先级轮询或者权重轮询方案更为合适。也有一些方案将多种轮询方案结合起来使用。无论采用哪一种方案，都应该保证让某些用户始终得到资源。</p>
+<p><strong>常规仲裁方案</strong></p>
+<p>根据需要，设计者可以选择和设计自己所需要的仲裁（轮询）方案。下面讨论经常使用的经典方案。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>严格优先级轮询</dt><dd><ul>
+<li><p>根据优先级的差异，用户访问共享资源的机会也不同</p></li>
+<li><p>低优先级的用户可能始终无法得到资源</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>公平轮询</dt><dd><ul>
+<li><p>公平地对待所有请求</p></li>
+<li><p>所有用户获得均等的访问机会，不会有用户始终无法得到资源</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>权重轮询</dt><dd><ul>
+<li><p>兼顾了公平和差异性</p></li>
+<li><p>在一个轮询周期内，不同权重的用户会得到不同的访问次数</p></li>
+<li><p>在一个轮询周期内，不同权重的用户会得到不同的访问时间片</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>混合优先级（高优先级组和低优先级组）</dt><dd><ul>
+<li><p>组间按照优先级轮询，组内采用公平轮询</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>严格优先级轮询</strong></p>
+<p>在严格优先级轮询方案中，发出请求的用户有固定的优先级。我们假设有8个用户（agent），agent0 具有最高优先级，agent7 具有最低优先级。在本方案中，优先级高的用户只要保持请求，就会持续得到授权。随着优先级不断降低，用户得到授权的机会也随之下降。该方案可以根据用户的重要性提供不同的服务，但低优先级用户可能长时间得不到服务。此时可以通过对高优先级用户增加一些请求约束的方法来避免低优先级用户被“饿死”。</p>
+<p>严格优先级轮询代码如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">arbiter_strict_priority</span>
+  <span class="p">(</span>
+   <span class="n">clk</span><span class="p">,</span>
+   <span class="n">resetb</span><span class="p">,</span>
+   <span class="n">req_vector</span><span class="p">,</span>
+   <span class="n">end_access_vector</span><span class="p">,</span>
+   <span class="n">gnt_vector</span>
+   <span class="p">);</span>
+
+   <span class="k">input</span> <span class="n">clk</span><span class="p">;</span>
+   <span class="k">input</span> <span class="n">resetb</span><span class="p">;</span>
+   <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">req_vector</span><span class="p">;</span>
+   <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">end_access_vector</span><span class="p">;</span>
+   <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">gnt_vector</span><span class="p">;</span>
+
+   <span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">arbiter_state</span><span class="p">,</span> <span class="n">arbiter_state_nxt</span><span class="p">;</span>
+   <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">gnt_vector</span><span class="p">,</span> <span class="n">gnt_vector_nxt</span><span class="p">;</span>
+   <span class="kt">wire</span>      <span class="n">any_request</span><span class="p">;</span>
+
+   <span class="k">parameter</span> <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">,</span> <span class="no">END_ACCESS</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="no">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="no">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+
+
+   <span class="k">assign</span> <span class="n">any_request</span> <span class="o">=</span> <span class="p">(</span><span class="n">req_vector</span><span class="o">!=</span><span class="mi">&#39;d0</span><span class="p">);</span>
+
+   <span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span>
+     <span class="k">begin</span>
+     <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">arbiter_state</span><span class="p">;</span>
+     <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="n">gnt_vector</span><span class="p">;</span>
+     <span class="k">case</span><span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
+         <span class="k">begin</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">any_request</span><span class="p">)</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">2</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">3</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+         <span class="k">end</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
+         <span class="k">begin</span>
+            <span class="k">if</span><span class="p">((</span><span class="n">end_access_vector</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vector</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vector</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vector</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vector</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vector</span><span class="p">[</span><span class="mh">2</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vector</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vector</span><span class="p">[</span><span class="mh">3</span><span class="p">]))</span>
+              <span class="k">begin</span>
+                 <span class="k">if</span><span class="p">(</span><span class="n">any_request</span><span class="p">)</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+                 <span class="k">else</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+
+                 <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+                 <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+                 <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">2</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+                 <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">3</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+                 <span class="k">else</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+              <span class="k">end</span>
+         <span class="k">end</span>
+     <span class="k">endcase</span>
+     <span class="k">end</span>
+
+   <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">resetb</span><span class="p">)</span>
+     <span class="k">begin</span>
+     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">resetb</span><span class="p">)</span>
+       <span class="k">begin</span>
+          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+          <span class="n">gnt_vector</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
+       <span class="k">end</span>
+     <span class="k">else</span>
+       <span class="k">begin</span>
+          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="n">arbiter_state_nxt</span><span class="p">;</span>
+          <span class="n">gnt_vector</span> <span class="o">&lt;=</span> <span class="n">gnt_vector_nxt</span><span class="p">;</span>
+       <span class="k">end</span>
+     <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+<p><strong>公平轮询</strong></p>
+<p>在公平轮询方案中，所有用户优先级相等，每个用户依次获得授权。一开始，选择用户的顺序可以是任意的，但在一个轮询周期内，所有发出请求的用户都有公平得到授权的机会。以具有个用户的总线为例，它们全部将请求信号置为有效（高电平）。request0 将首先被授权，紧跟着 request1、request2，最后是 request3。当循环完成后，request0 才会被重新授权。仲裁器每次仲裁时，依次查看每个用户的请求信号是否有效，如果一个用户的请求无效，那么将按序查看下一个用户。仲裁器会记住上一次被授权的用户，当该用户的操作完成后，仲裁器会按序轮询其它用户是否有请求。</p>
 </div>
 </div>
 

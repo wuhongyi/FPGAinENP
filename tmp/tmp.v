@@ -4,21 +4,21 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 6月  7 20:22:45 2021 (+0800)
-// Last-Updated: 三 6月  9 12:50:38 2021 (+0800)
+// Last-Updated: 五 6月 11 20:56:57 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 input sig_a;
 reg sig_a_d1;
 wire sig_a_risedge;
-
+ 
 always @(posedge clk or negedge rstb)
   begin
      if(!rstb) sig_a_d1 <= 1'b0;
      else sig_a_d1 <= sig_a;
   end
-
+ 
 assign sig_a_risedge = sig_a & !sig_a_d1;
    
 
@@ -294,6 +294,94 @@ module reset_synchronizer
      end
    
 endmodule
+
+
+
+
+
+
+
+module arbiter_strict_priority
+  (
+   clk,
+   resetb,
+   req_vector,
+   end_access_vector,
+   gnt_vector
+   );
+   
+   input clk;
+   input resetb;
+   input [3:0] req_vector;
+   input [3:0] end_access_vector;
+   output [3:0] gnt_vector;
+   
+   reg [1:0] 	arbiter_state, arbiter_state_nxt;
+   reg [3:0] 	gnt_vector, gnt_vector_nxt;
+   wire 	any_request;
+   
+   parameter IDLE = 2'b01, END_ACCESS = 2'b10;
+   parameter IDLE_ID = 0, END_ACCESS_ID = 1;
+   
+   
+   assign any_request = (req_vector!='d0);
+   
+   always @(*)
+     begin
+  	arbiter_state_nxt = arbiter_state;
+  	gnt_vector_nxt = gnt_vector;
+  	case(1'b1)
+  	  arbiter_state[IDLE_ID]:
+  	    begin
+  	       if(any_request) arbiter_state_nxt = END_ACCESS;
+  	       if(req_vector[0]) gnt_vector_nxt = 4'b0001;
+  	       else if(req_vector[1]) gnt_vector_nxt = 4'b0010;
+  	       else if(req_vector[2]) gnt_vector_nxt = 4'b0100;
+  	       else if(req_vector[3]) gnt_vector_nxt = 4'b1000;
+  	    end
+  	  arbiter_state[END_ACCESS_ID]:
+  	    begin
+  	       if((end_access_vector[0]&gnt_vector[0])||(end_access_vector[1]&gnt_vector[1])||(end_access_vector[2]&gnt_vector[2])||(end_access_vector[3]&gnt_vector[3]))
+  		 begin
+  		    if(any_request) arbiter_state_nxt = END_ACCESS;
+  		    else arbiter_state_nxt = IDLE;
+		    
+  		    if(req_vector[0]) gnt_vector_nxt = 4'b0001;
+  		    else if(req_vector[1]) gnt_vector_nxt = 4'b0010;
+  		    else if(req_vector[2]) gnt_vector_nxt = 4'b0100;
+  		    else if(req_vector[3]) gnt_vector_nxt = 4'b1000;
+  		    else gnt_vector_nxt = 4'b0000;
+  		 end
+  	    end
+  	endcase
+     end
+   
+   always @(posedge clk or negedge resetb)
+     begin
+  	if(!resetb)
+  	  begin
+  	     arbiter_state <= IDLE;
+  	     gnt_vector <= 'd0;
+  	  end
+  	else
+  	  begin
+  	     arbiter_state <= arbiter_state_nxt;
+  	     gnt_vector <= gnt_vector_nxt;
+  	  end
+     end
+   
+endmodule
+
+
+  
+
+
+
+
+
+
+
+
 
 
 

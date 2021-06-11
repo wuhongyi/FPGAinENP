@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 8月 10 22:02:10 2019 (+0800)
-.. Last-Updated: 三 6月  9 13:13:20 2021 (+0800)
+.. Last-Updated: 五 6月 11 21:16:58 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 15
+..     Update #: 18
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -465,13 +465,115 @@ FIFO可用于在不同的时钟域之间进行数据包的传输，但是在一�
 
 
 
+**仲裁**
+
+**关于仲裁**
+
+当多个源和用户需要共享同一资源时，需要某种仲裁形式，使得所有用户基于一定的规则或算法得到获取或访问资源的机会。例如，共享总线上可以连接多个总线用户。另一个例子司交换中的端口仲裁，当多个入口希望通过某一个出口输出数据时，需要使用一定的端口仲裁机制来选择某一时刻允许哪一个入口发送数据。最简单的仲裁方案是公平轮询方案，此时，仲裁器公平地对待所有的用户请求，不同用户具有均等的机会。然而，如果某些设备的速度快于其它设备，它需要更多的对共享资源的访问机会，或者某些用户具有更高的处理优先级，那么简单的循环方案是不够的。
+
+在此情形下，使用严格优先级轮询或者权重轮询方案更为合适。也有一些方案将多种轮询方案结合起来使用。无论采用哪一种方案，都应该保证让某些用户始终得到资源。
+
+**常规仲裁方案**
+
+根据需要，设计者可以选择和设计自己所需要的仲裁（轮询）方案。下面讨论经常使用的经典方案。
+
+- 严格优先级轮询
+   - 根据优先级的差异，用户访问共享资源的机会也不同
+   - 低优先级的用户可能始终无法得到资源
+- 公平轮询
+   - 公平地对待所有请求
+   - 所有用户获得均等的访问机会，不会有用户始终无法得到资源
+- 权重轮询
+   - 兼顾了公平和差异性
+   - 在一个轮询周期内，不同权重的用户会得到不同的访问次数
+   - 在一个轮询周期内，不同权重的用户会得到不同的访问时间片
+- 混合优先级（高优先级组和低优先级组）
+   - 组间按照优先级轮询，组内采用公平轮询
+
+**严格优先级轮询**
+
+在严格优先级轮询方案中，发出请求的用户有固定的优先级。我们假设有8个用户（agent），agent0 具有最高优先级，agent7 具有最低优先级。在本方案中，优先级高的用户只要保持请求，就会持续得到授权。随着优先级不断降低，用户得到授权的机会也随之下降。该方案可以根据用户的重要性提供不同的服务，但低优先级用户可能长时间得不到服务。此时可以通过对高优先级用户增加一些请求约束的方法来避免低优先级用户被“饿死”。
 
 
+严格优先级轮询代码如下：
+
+.. code:: verilog 
+
+   module arbiter_strict_priority
+     (
+      clk,
+      resetb,
+      req_vector,
+      end_access_vector,
+      gnt_vector
+      );
+    
+      input clk;
+      input resetb;
+      input [3:0] req_vector;
+      input [3:0] end_access_vector;
+      output [3:0] gnt_vector;
+    
+      reg [1:0]		arbiter_state, arbiter_state_nxt;
+      reg [3:0]		gnt_vector, gnt_vector_nxt;
+      wire	any_request;
+    
+      parameter IDLE = 2'b01, END_ACCESS = 2'b10;
+      parameter IDLE_ID = 0, END_ACCESS_ID = 1;
+    
+    
+      assign any_request = (req_vector!='d0);
+    
+      always @(*)
+	begin
+	arbiter_state_nxt = arbiter_state;
+	gnt_vector_nxt = gnt_vector;
+	case(1'b1)
+	  arbiter_state[IDLE_ID]:
+	    begin
+	       if(any_request) arbiter_state_nxt = END_ACCESS;
+	       if(req_vector[0]) gnt_vector_nxt = 4'b0001;
+	       else if(req_vector[1]) gnt_vector_nxt = 4'b0010;
+	       else if(req_vector[2]) gnt_vector_nxt = 4'b0100;
+	       else if(req_vector[3]) gnt_vector_nxt = 4'b1000;
+	    end
+	  arbiter_state[END_ACCESS_ID]:
+	    begin
+	       if((end_access_vector[0]&gnt_vector[0])||(end_access_vector[1]&gnt_vector[1])||(end_access_vector[2]&gnt_vector[2])||(end_access_vector[3]&gnt_vector[3]))
+		 begin
+		    if(any_request) arbiter_state_nxt = END_ACCESS;
+		    else arbiter_state_nxt = IDLE;
+    
+		    if(req_vector[0]) gnt_vector_nxt = 4'b0001;
+		    else if(req_vector[1]) gnt_vector_nxt = 4'b0010;
+		    else if(req_vector[2]) gnt_vector_nxt = 4'b0100;
+		    else if(req_vector[3]) gnt_vector_nxt = 4'b1000;
+		    else gnt_vector_nxt = 4'b0000;
+		 end
+	    end
+	endcase
+	end
+    
+      always @(posedge clk or negedge resetb)
+	begin
+	if(!resetb)
+	  begin
+	     arbiter_state <= IDLE;
+	     gnt_vector <= 'd0;
+	  end
+	else
+	  begin
+	     arbiter_state <= arbiter_state_nxt;
+	     gnt_vector <= gnt_vector_nxt;
+	  end
+	end
+    
+   endmodule
 
 
+**公平轮询**
 
-
-
+在公平轮询方案中，所有用户优先级相等，每个用户依次获得授权。一开始，选择用户的顺序可以是任意的，但在一个轮询周期内，所有发出请求的用户都有公平得到授权的机会。以具有个用户的总线为例，它们全部将请求信号置为有效（高电平）。request0 将首先被授权，紧跟着 request1、request2，最后是 request3。当循环完成后，request0 才会被重新授权。仲裁器每次仲裁时，依次查看每个用户的请求信号是否有效，如果一个用户的请求无效，那么将按序查看下一个用户。仲裁器会记住上一次被授权的用户，当该用户的操作完成后，仲裁器会按序轮询其它用户是否有请求。
 
 
 
