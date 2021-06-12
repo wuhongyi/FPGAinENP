@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 6月  7 20:22:45 2021 (+0800)
-// Last-Updated: 五 6月 11 20:56:57 2021 (+0800)
+// Last-Updated: 六 6月 12 21:47:59 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 9
 // URL: http://wuhongyi.cn 
 
 input sig_a;
@@ -375,12 +375,186 @@ endmodule
 
   
 
+module arbiter_roundrobin
+  (
+   clk,
+   resetb,
+   req_vec,
+   end_access_vec,
+   gnt_vec
+   );
+   
+   input clk;
+   input resetb;
+   input [2:0] req_vec;
+   input [2:0] end_access_vec;
+   output [2:0] gnt_vec;
+
+   reg [1:0] 	arbiter_state, arbiter_state_nxt;
+   reg [2:0] 	gnt_vec, gnt_vec_nxt;
+   reg [2:0] 	relative_req_vec;
+   wire 	any_req_asserted;
+   reg [1:0] 	grant_posn, grant_posn_nxt;
 
 
+   parameter IDLE = 2'b01, END_ACCESS = 2'b10;
+   parameter IDLE_ID = 0, END_ACCESS_ID = 1;
 
+   assign any_req_asserted = (req_vec!='d0);
 
+   always @(*)
+     begin
+	relative_req_vec = req_vec;
+	case(grant_posn)
+	  2'd0: relative_req_vec = {req_vec[0], req_vec[2:1]};
+	  2'd1: relative_req_vec = {req_vec[1:0], req_vec[2]};
+	  2'd2: relative_req_vec = {req_vec[2:0]};
+	  default: begin end
+	endcase
+     end
+   
+   always @(*)
+     begin
+	arbiter_state_nxt = arbiter_state;
+	grant_posn_nxt = grant_posn;
+	gnt_vec_nxt = gnt_vec;
 
+	case(1'b1)
+	  arbiter_state[IDLE_ID]:
+	    begin
+	       if((gnt_vec=='d0)||(end_access_vec[0]&gnt_vec[0])||(end_access_vec[1]&gnt_vec[1])||(end_access_vec[2]&gnt_vec[2]))
+		 begin
+		    if(any_req_asserted) arbiter_state_nxt = END_ACCESS;
+		    if(relative_req_vec[0])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b010;
+			   2'd1: gnt_vec_nxt = 3'b100;
+			   2'd2: gnt_vec_nxt = 3'b001;
+			   default: begin end
+			 endcase
 
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd1;
+			   2'd1: gnt_pos_nxt = 'd2;
+			   2'd2: gnt_pos_nxt = 'd0;
+			   default: begin end
+			 endcase
+		      end
+		    else if(relative_req_vec[1])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b100;
+			   2'd1: gnt_vec_nxt = 3'b001;
+			   2'd2: gnt_vec_nxt = 3'b010;
+			   default: begin end
+			 endcase
+
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd2;
+			   2'd1: gnt_pos_nxt = 'd0;
+			   2'd2: gnt_pos_nxt = 'd1;
+			   default: begin end
+			 endcase			 
+		      end
+		    else if(relative_req_vec[2])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b001;
+			   2'd1: gnt_vec_nxt = 3'b010;
+			   2'd2: gnt_vec_nxt = 3'b100;
+			   default: begin end
+			 endcase
+
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd0;
+			   2'd1: gnt_pos_nxt = 'd1;
+			   2'd2: gnt_pos_nxt = 'd2;
+			   default: begin end
+			 endcase
+		      end
+		    else
+		      gnt_vec_nxt = 3'b000;
+		 end
+	    end
+	  arbiter_state[END_ACCESS_ID]:
+	    begin
+	       if((end_access_vec[0]&gnt_vec[0])||(end_access_vec[1]&gnt_vec[1])||(end_access_vec[2]&gnt_vec[2]))
+		 begin
+		    arbiter_state_nxt = IDLE;
+
+		    if(relative_req_vec[0])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b010;
+			   2'd1: gnt_vec_nxt = 3'b100;
+			   2'd2: gnt_vec_nxt = 3'b001;
+			   default: begin end
+			 endcase
+
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd1;
+			   2'd1: gnt_pos_nxt = 'd2;
+			   2'd2: gnt_pos_nxt = 'd0;
+			   default: begin end
+			 endcase
+		      end
+		    else if(relative_req_vec[1])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b100;
+			   2'd1: gnt_vec_nxt = 3'b001;
+			   2'd2: gnt_vec_nxt = 3'b010;
+			   default: begin end
+			 endcase
+
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd2;
+			   2'd1: gnt_pos_nxt = 'd0;
+			   2'd2: gnt_pos_nxt = 'd1;
+			   default: begin end
+			 endcase			 
+		      end
+		    else if(relative_req_vec[2])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b001;
+			   2'd1: gnt_vec_nxt = 3'b010;
+			   2'd2: gnt_vec_nxt = 3'b100;
+			   default: begin end
+			 endcase
+
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd0;
+			   2'd1: gnt_pos_nxt = 'd1;
+			   2'd2: gnt_pos_nxt = 'd2;
+			   default: begin end
+			 endcase
+		      end
+		    else
+		      gnt_vec_nxt = 3'b000;
+		 end
+	    end
+	endcase
+     end
+
+   always @(posedge clk or negedge resetb)
+     begin
+	if(!resetb)
+	  begin
+	     arbiter_state <= IDLE;
+	     gnt_vec <= 'd0;
+	     grant_posn <= 'd2;
+	  end
+	else
+	  begin
+	     arbiter_state <= arbiter_state_nxt;
+	     gnt_vec <= gnt_vector_nxt;
+	     grant_posn <= grant_posn_nxt;
+	  end
+     end
+
+endmodule
 
 
 

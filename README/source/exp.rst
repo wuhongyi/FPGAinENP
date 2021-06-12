@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 8月 10 22:02:10 2019 (+0800)
-.. Last-Updated: 五 6月 11 21:16:58 2021 (+0800)
+.. Last-Updated: 六 6月 12 21:51:56 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 18
+..     Update #: 21
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -575,11 +575,199 @@ FIFO可用于在不同的时钟域之间进行数据包的传输，但是在一�
 
 在公平轮询方案中，所有用户优先级相等，每个用户依次获得授权。一开始，选择用户的顺序可以是任意的，但在一个轮询周期内，所有发出请求的用户都有公平得到授权的机会。以具有个用户的总线为例，它们全部将请求信号置为有效（高电平）。request0 将首先被授权，紧跟着 request1、request2，最后是 request3。当循环完成后，request0 才会被重新授权。仲裁器每次仲裁时，依次查看每个用户的请求信号是否有效，如果一个用户的请求无效，那么将按序查看下一个用户。仲裁器会记住上一次被授权的用户，当该用户的操作完成后，仲裁器会按序轮询其它用户是否有请求。
 
+一旦某个用户得到了授权，它可以长时间使用总线或占用资源，直到当前数据包传送结束或一个访问过程结束后，仲裁器才会授权其它用户进行操作。这种方案的一个特点是仲裁器没有对用户获得授权后使用总线或访问资源的时间进行约束。该方案适用于基于数据包的协议，例如，以太网交换或 PCIe 交换机，当多个入口的包希望从一个端口输出时，可以采用这种机制。此外还有一种机制，每个用户获得授权后，可以占用资源的时间片长度是受约束的，每个用户可以占用资源的时间不能超过规定的长度。如果一个用户在所分配的时间结束之前完成了操作，仲裁器将轮询后续的用户。如果在分配的时间内用户没有完成操作，则仲裁器收回授权并轮询后续用户。此方案适用于突发操作，每次处理一个突发（一个数据块），此时没有数据包的概念。传统的 PCI 总线或 AMBA 、AHB 总线采用的就是这种方案。在 PCI 中，仲裁器会给当前获得授权的主机留出一个或多个时钟周期的时间供主机保存当前操作信息，下一次再获得授权时，该主机可以接着传输数据。
+
+公平轮询的代码如下：
+
+.. code:: verilog 
+
+   module arbiter_roundrobin
+     (
+      clk,
+      resetb,
+      req_vec,
+      end_access_vec,
+      gnt_vec
+      );
+      
+      input clk;
+      input resetb;
+      input [2:0] req_vec;
+      input [2:0] end_access_vec;
+      output [2:0] gnt_vec;
+    
+      reg [1:0]		arbiter_state, arbiter_state_nxt;
+      reg [2:0]		gnt_vec, gnt_vec_nxt;
+      reg [2:0]		relative_req_vec;
+      wire	any_req_asserted;
+      reg [1:0]		grant_posn, grant_posn_nxt;
+    
+    
+      parameter IDLE = 2'b01, END_ACCESS = 2'b10;
+      parameter IDLE_ID = 0, END_ACCESS_ID = 1;
+    
+      assign any_req_asserted = (req_vec!='d0);
+    
+      always @(*)
+	begin
+	relative_req_vec = req_vec;
+	case(grant_posn)
+	  2'd0: relative_req_vec = {req_vec[0], req_vec[2:1]};
+	  2'd1: relative_req_vec = {req_vec[1:0], req_vec[2]};
+	  2'd2: relative_req_vec = {req_vec[2:0]};
+	  default: begin end
+	endcase
+	end
+      
+      always @(*)
+	begin
+	arbiter_state_nxt = arbiter_state;
+	grant_posn_nxt = grant_posn;
+	gnt_vec_nxt = gnt_vec;
+    
+	case(1'b1)
+	  arbiter_state[IDLE_ID]:
+	    begin
+	       if((gnt_vec=='d0)||(end_access_vec[0]&gnt_vec[0])||(end_access_vec[1]&gnt_vec[1])||(end_access_vec[2]&gnt_vec[2]))
+		 begin
+		    if(any_req_asserted) arbiter_state_nxt = END_ACCESS;
+		    if(relative_req_vec[0])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b010;
+			   2'd1: gnt_vec_nxt = 3'b100;
+			   2'd2: gnt_vec_nxt = 3'b001;
+			   default: begin end
+			 endcase
+    
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd1;
+			   2'd1: gnt_pos_nxt = 'd2;
+			   2'd2: gnt_pos_nxt = 'd0;
+			   default: begin end
+			 endcase
+		      end
+		    else if(relative_req_vec[1])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b100;
+			   2'd1: gnt_vec_nxt = 3'b001;
+			   2'd2: gnt_vec_nxt = 3'b010;
+			   default: begin end
+			 endcase
+    
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd2;
+			   2'd1: gnt_pos_nxt = 'd0;
+			   2'd2: gnt_pos_nxt = 'd1;
+			   default: begin end
+			 endcase			 
+		      end
+		    else if(relative_req_vec[2])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b001;
+			   2'd1: gnt_vec_nxt = 3'b010;
+			   2'd2: gnt_vec_nxt = 3'b100;
+			   default: begin end
+			 endcase
+    
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd0;
+			   2'd1: gnt_pos_nxt = 'd1;
+			   2'd2: gnt_pos_nxt = 'd2;
+			   default: begin end
+			 endcase
+		      end
+		    else
+		      gnt_vec_nxt = 3'b000;
+		 end
+	    end
+	  arbiter_state[END_ACCESS_ID]:
+	    begin
+	       if((end_access_vec[0]&gnt_vec[0])||(end_access_vec[1]&gnt_vec[1])||(end_access_vec[2]&gnt_vec[2]))
+		 begin
+		    arbiter_state_nxt = IDLE;
+    
+		    if(relative_req_vec[0])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b010;
+			   2'd1: gnt_vec_nxt = 3'b100;
+			   2'd2: gnt_vec_nxt = 3'b001;
+			   default: begin end
+			 endcase
+    
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd1;
+			   2'd1: gnt_pos_nxt = 'd2;
+			   2'd2: gnt_pos_nxt = 'd0;
+			   default: begin end
+			 endcase
+		      end
+		    else if(relative_req_vec[1])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b100;
+			   2'd1: gnt_vec_nxt = 3'b001;
+			   2'd2: gnt_vec_nxt = 3'b010;
+			   default: begin end
+			 endcase
+    
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd2;
+			   2'd1: gnt_pos_nxt = 'd0;
+			   2'd2: gnt_pos_nxt = 'd1;
+			   default: begin end
+			 endcase			 
+		      end
+		    else if(relative_req_vec[2])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b001;
+			   2'd1: gnt_vec_nxt = 3'b010;
+			   2'd2: gnt_vec_nxt = 3'b100;
+			   default: begin end
+			 endcase
+    
+			 case(grant_posn)
+			   2'd0: gnt_pos_nxt = 'd0;
+			   2'd1: gnt_pos_nxt = 'd1;
+			   2'd2: gnt_pos_nxt = 'd2;
+			   default: begin end
+			 endcase
+		      end
+		    else
+		      gnt_vec_nxt = 3'b000;
+		 end
+	    end
+	endcase
+	end
+    
+      always @(posedge clk or negedge resetb)
+	begin
+	if(!resetb)
+	  begin
+	     arbiter_state <= IDLE;
+	     gnt_vec <= 'd0;
+	     grant_posn <= 'd2;
+	  end
+	else
+	  begin
+	     arbiter_state <= arbiter_state_nxt;
+	     gnt_vec <= gnt_vector_nxt;
+	     grant_posn <= grant_posn_nxt;
+	  end
+	end
+    
+   endmodule
 
 
+**公平轮询（仲裁w/o死周期）**
+
+再前面公平轮询仲裁器的 verilog 代码中，每个用户有三个信号：request（请求）、grant（授权）和 end_access（结束访问）。为了满足定时要求，
 
 
-	  
 	  
 .. 
 .. exp.rst ends here
