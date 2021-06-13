@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  7 19:57:40 2020 (+0800)
-.. Last-Updated: 五 1月  1 17:24:12 2021 (+0800)
+.. Last-Updated: 日 6月 13 21:13:00 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 6
+..     Update #: 7
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -185,6 +185,57 @@ HLS 项目的第一步是确认 C 代码是正确的。这个过程称为 C 验�
 - 展开 Export RTL 命令创建的 impl 文件夹。  
 - 展开文件夹，找到打包成 zip 文件的 IP，准备添加到 Vivado IP 目录
 
+
+============================================================
+Tcl Shell
+============================================================
+
+我们知道用vivado的hls工具将C++代码实现成电路时，可以加"展开"啊、"流水线"啊、"内联"啊、"串联变并联"啊等等不同效果的directive(实现方式)。同一段代码能选择的directive很多，有时候我们不好直接判断一段代码选什么directive才会达到最好的效果，那就只能一个个directive地加，然后比较效果。
+
+为了从繁琐的操作中将自己解放出来，我们可以用tcl来完成加directive的操作。
+
+运行当前目录下的 tcl 脚本
+
+.. code:: bash
+
+   vivado_hls -f proj.tcl
+
+打开当前目录下的工程
+
+.. code:: bash
+
+   vivado_hls -p projname
+
+脚本示例：
+
+.. code:: tcl
+
+   open_project projname
+   set_top foo
+   add_files foo.cpp
+   add_files -tb main.cpp
+    
+   set all_solution [list no_directive pipeline unroll unroll_2 unroll_4 unroll_5 unroll_10 ]
+   set all_directive [list no_directive pipeline unroll unroll_2 unroll_4 unroll_5 unroll_10 ]
+   foreach solution $all_solution directive $all_directive {
+   open_solution -reset $solution
+   set_part {xc7z020clg400-1}
+   create_clock -period 10 -name default
+   source "$directive.tcl"
+   csim_design
+   csynth_design
+   cosim_design
+   export_design -format ip_catalog
+   }
+   exit
+
+里面用了 foreach 循环来把整个新建 solution 的流程套起来，在每个循环里面用 source 来调用同一个文件夹下事先写好的装 directive 的 tcl 文件。
+
+
+   
+   
+https://china.xilinx.com/video/hardware/using-the-vivado-hls-tcl-interface.html
+https://blog.csdn.net/weixin_42683394/article/details/112312283
 
 
   

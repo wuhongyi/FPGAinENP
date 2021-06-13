@@ -125,6 +125,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">高层次综合</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">创建一个高级合成项目</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">综合创建的端口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tcl-shell">Tcl Shell</a></li>
 </ul>
 </li>
 </ul>
@@ -339,6 +340,43 @@
 <li><p>展开 Export RTL 命令创建的 impl 文件夹。</p></li>
 <li><p>展开文件夹，找到打包成 zip 文件的 IP，准备添加到 Vivado IP 目录</p></li>
 </ul>
+</div>
+<div class="section" id="tcl-shell">
+<h2>Tcl Shell<a class="headerlink" href="#tcl-shell" title="永久链接至标题">¶</a></h2>
+<p>我们知道用vivado的hls工具将C++代码实现成电路时，可以加”展开”啊、”流水线”啊、”内联”啊、”串联变并联”啊等等不同效果的directive(实现方式)。同一段代码能选择的directive很多，有时候我们不好直接判断一段代码选什么directive才会达到最好的效果，那就只能一个个directive地加，然后比较效果。</p>
+<p>为了从繁琐的操作中将自己解放出来，我们可以用tcl来完成加directive的操作。</p>
+<p>运行当前目录下的 tcl 脚本</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vivado_hls -f proj.tcl
+</pre></div>
+</div>
+<p>打开当前目录下的工程</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vivado_hls -p projname
+</pre></div>
+</div>
+<p>脚本示例：</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">open_project</span> projname
+<span class="nv">set_top</span> foo
+<span class="nv">add_files</span> foo.cpp
+<span class="nv">add_files</span> <span class="o">-</span>tb main.cpp
+
+<span class="k">set</span> all_solution <span class="k">[</span><span class="nb">list</span> no_directive pipeline unroll unroll_2 unroll_4 unroll_5 unroll_10 <span class="k">]</span>
+<span class="k">set</span> all_directive <span class="k">[</span><span class="nb">list</span> no_directive pipeline unroll unroll_2 unroll_4 unroll_5 unroll_10 <span class="k">]</span>
+<span class="k">foreach</span> solution <span class="nv">$all_solution</span> directive <span class="nv">$all_directive</span> <span class="k">{</span>
+<span class="nv">open_solution</span> <span class="o">-</span>reset <span class="nv">$solution</span>
+<span class="nv">set_part</span> <span class="k">{</span><span class="nv">xc7z020clg400-1</span><span class="k">}</span>
+<span class="nv">create_clock</span> <span class="o">-</span>period <span class="mi">10</span> <span class="o">-</span>name default
+<span class="nb">source</span> <span class="s2">&quot;$directive.tcl&quot;</span>
+<span class="nv">csim_design</span>
+<span class="nv">csynth_design</span>
+<span class="nv">cosim_design</span>
+<span class="nv">export_design</span> <span class="o">-</span>format ip_catalog
+<span class="k">}</span>
+<span class="nb">exit</span>
+</pre></div>
+</div>
+<p>里面用了 foreach 循环来把整个新建 solution 的流程套起来，在每个循环里面用 source 来调用同一个文件夹下事先写好的装 directive 的 tcl 文件。</p>
+<p><a class="reference external" href="https://china.xilinx.com/video/hardware/using-the-vivado-hls-tcl-interface.html">https://china.xilinx.com/video/hardware/using-the-vivado-hls-tcl-interface.html</a>
+<a class="reference external" href="https://blog.csdn.net/weixin_42683394/article/details/112312283">https://blog.csdn.net/weixin_42683394/article/details/112312283</a></p>
 </div>
 </div>
 

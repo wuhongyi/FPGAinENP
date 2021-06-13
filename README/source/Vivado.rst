@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 5月 23 22:04:29 2020 (+0800)
-.. Last-Updated: 三 6月  9 21:14:39 2021 (+0800)
+.. Last-Updated: 日 6月 13 21:13:01 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 5
+..     Update #: 6
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -45,6 +45,16 @@ DCP 文件不能直接用于仿真，需要转成可仿真的文件
    write_vhdl -mode funcsim XXX.vhd
    write_verilog -mode funcsim XXX.v
 
+
+============================================================
+Tcl Shell
+============================================================
+
+
+https://blog.csdn.net/long_fly/article/details/78897158
+
+
+   
 ============================================================
 Verilog hdl 与 VHDL 混用
 ============================================================
