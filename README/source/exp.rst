@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 8月 10 22:02:10 2019 (+0800)
-.. Last-Updated: 六 6月 12 21:51:56 2021 (+0800)
+.. Last-Updated: 日 6月 13 19:09:02 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 21
+..     Update #: 27
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -765,9 +765,514 @@ FIFO可用于在不同的时钟域之间进行数据包的传输，但是在一�
 
 **公平轮询（仲裁w/o死周期）**
 
-再前面公平轮询仲裁器的 verilog 代码中，每个用户有三个信号：request（请求）、grant（授权）和 end_access（结束访问）。为了满足定时要求，
+再前面公平轮询仲裁器的 verilog 代码中，每个用户有三个信号：request（请求）、grant（授权）和 end_access（结束访问）。为了满足定时要求，我们希望 grant 为寄存器输出的，同时用户的输出数据也是寄存器输出而不是通过组合逻辑输出的。再总线使用时，我们能观察到总线上存在不能进行数据传输的死周期。当传输的数据包较长或每个突发比较长时，其对传输效率影响不大。然而，当数据包很短时，死周期会影响到总线的使用效率。下面给出了一些方法，用于减少甚至消除死周期。
+
+- 当 grant 信号有效时，该用户的第一个数据已经准备好并且有效输出。原来的方案中，再用户的 grant 有效后，它在下一个周期输出数据，现在改为当 grant 采样为高时，在同一个周期就开始输出数据。此时需要用户提前从内部电路中读出第一个数据。采用这种方案，仲裁器的设计不变，用户部分需要进行修改。
+- 第二种方案时增加额外的信号 start_access，它和 end_access 一起使用。一个用户获得总线使用权并开始操作后，仲裁器通过将 start_access 置为有效表示开始新的仲裁过程，而不是等待 end_access 信号变高来开始新的仲裁过程，这样就减少了转换期间的死周期。当下一个用户被授权时，当前用户仍在使用总线，此时新用户不能立即使用总线。仲裁器在当前哦嗯核完成操作时会给出 end_access_out 信号，新的授权用户此后就可以开始操作了。仲裁器在没有用户使用公共资源时，将 resource_idle 置为1。当 resource_idle 为 1 时，获得授权的用户不需要查看 end_access_out 信号就可以开始数据操作。
+
+**带权重的轮询**
+
+带权重的轮询方案与常规的轮询方案类似，所不同的时不同的用户得到的许可的机会存在差异，也就说，不同的用户权重不同，权重高的用户得到许可的机会更多。权重的分配存在多种方式，这里介绍两种。第一种方法是为每个用户分配一个变量，该变量决定了在一个轮询周期内该用户能够得到许可（被授权）的次数。该变量是可以通过软件编程进行修改的，因此器轮询权重也可以相应调整。例如，有三个用户， agent0 权重为 3、agent1 权重为 2、agent2 权重为 1.在一个轮询周期中，agent0 最大可以得到 3 次许可， agent1 可以得到 2 次许可， agent2 可以得到 1 次许可。在一个轮询周期开始时，变量 N_agent0、N_agent1 和 N_agent2 分别被预置为 3、2和1。每次轮询后对应的变量值减1，一个轮询周期结束后，这些变量会被重新设置为预置的初值。如果所有的用户同时请求，仲裁器将按照下面两种方式给与许可：
+
+- 一个用户可以连续地获得许可，获得许可的次数由预置的权重值决定。当所有用户同时发出请求时，许可序列依次为：（A，A，A），（B，B），C；（A，A，A），（B，B），C；......
+- 在所有存在许可机会的用户之间进行公平轮询，一个轮询周期内，不同用户得到的总许可机会由预置的权重值决定。当所有请求同时发生时，许可序列为：A，B，C，A，B，A；B，C，A，B，A，A；......
+
+在另一种方案中，可软件编程的定时器被用于分配权重。一个仲裁周期开始，定时器数值被加载到本地变量中。当一个用户获得许可后，本地变量减1，直到减至0为止。如果被轮询的用户没有完成操作，仲裁器停止对当前用户的许可并根据优先级轮询下一个用户。
+
+下面给出采用带权重轮询方案的 verilog 代码，它采用的时第一种许可方式，序列为 A，A，A，B，B，C...。
+
+.. code:: verilog 
+
+   module arbiter_wrr
+     (
+      clk,
+      resetb,
+      req_vec,
+      // req_vec_wt,
+      req_vec_wt_0,
+      req_vec_wt_1,
+      req_vec_wt_2,
+      req_n_valid,
+      end_access_vec,
+      gnt_vec
+      );
+    
+      input clk;
+      input resetb;
+      input [2:0] req_vec;
+      // input [3:0] [2:0] req_vec_wt; //from software writable registers
+      input [3:0] req_vec_wt_0;
+      input [3:0] req_vec_wt_1;
+      input [3:0] req_vec_wt_2;
+      input	  req_n_valid;// when 1,req_vec_wt_X are valid
+      input [2:0] end_access_vec;
+      output [2:0] gnt_vec;
+    
+    
+      reg [2:0]		arbiter_state, arbiter_state_nxt;
+      reg [2:0]		gnt_vec, gnt_vec_nxt;
+      reg [3:0]		count_req_vec [2:0];
+      reg [3:0]		count_req_vec_nxt [2:0];
+      wire [3:0]	req_vec_wt [2:0];
+      reg [3:0]		req_vec_wt_stored [2:0];
+      reg [3:0]		req_vec_wt_stored_nxt [2:0];
+      wire [2:0]	cnt_reqdone_vec;
+    
+      parameter IDLE = 3'b001, ARM_VALUE = 3'b010, END_ACCESS = 3'b100;
+      parameter IDLE_ID = 0, ARM_VALUE_ID = 1, END_ACCESS_ID = 2;
+      
+      assign  req_vec_wt[0] = req_vec_wt_0;
+      assign  req_vec_wt[1] = req_vec_wt_1;
+      assign  req_vec_wt[2] = req_vec_wt_2;
+      
+      always @(*)
+	begin
+	arbiter_state_nxt = arbiter_state;
+	gnt_vec_nxt = gnt_vec;
+	count_req_vec_nxt[0] = count_req_vec[0];
+	count_req_vec_nxt[1] = count_req_vec[1];
+	count_req_vec_nxt[2] = count_req_vec[2];
+    
+	case(1'b1)
+	  arbiter_state[IDLE_ID]:
+	    begin
+	       if(req_n_valid)
+		 begin
+		    arbiter_state_nxt = ARM_VALUE;
+		    count_req_vec_nxt[0] = req_vec_wt[0];
+		    count_req_vec_nxt[1] = req_vec_wt[1];
+		    count_req_vec_nxt[2] = req_vec_wt[2];
+		    req_vec_wt_stored_nxt[0] = req_vec_wt[0];
+		    req_vec_wt_stored_nxt[1] = req_vec_wt[1];
+		    req_vec_wt_stored_nxt[2] = req_vec_wt[2];
+		    gnt_vec_nxt = 3'b000;
+		 end
+	    end
+	  arbiter_state[ARM_VALUE_ID]:
+	    begin
+	       if((gnt_vec=='d0)||(end_access_vec[0]&gnt_vec[0])||(end_access_vec[1]&gnt_vec[1])||(end_access_vec[2]&gnt_vec[2]))
+		 begin
+		    if(req_vec[0]&!cnt_reqdone_vec[0])
+		      begin
+			 arbiter_state_nxt = END_ACCESS;
+			 gnt_vec_nxt = 3'b001;
+			 count_req_vec_nxt[0] = count_req_vec[0]-1'b1;
+		      end
+		    else if(req_vec[1]&!cnt_reqdone_vec[1])
+		      begin
+			 arbiter_state_nxt = END_ACCESS;
+			 gnt_vec_nxt = 3'b010;
+			 count_req_vec_nxt[1] = count_req_vec[1]-1'b1;			 
+		      end
+		    else if(req_vec[2]&!cnt_reqdone_vec[2])
+		      begin
+			 arbiter_state_nxt = END_ACCESS;
+			 gnt_vec_nxt = 3'b100;
+			 count_req_vec_nxt[2] = count_req_vec[2]-1'b1;
+		      end
+		    else
+		      begin
+			 count_req_vec_nxt[0] = req_vec_wt_stored[0];
+			 count_req_vec_nxt[1] = req_vec_wt_stored[1];
+			 count_req_vec_nxt[2] = req_vec_wt_stored[2];
+			 gnt_vec_nxt = 3'b000;
+		      end
+		 end
+	    end
+	  arbiter_state[END_ACCESS_ID]:
+	    begin
+	       if((end_access_vec[0]&gnt_vec[0])||(end_access_vec[1]&gnt_vec[1])||(end_access_vec[2]&gnt_vec[2]))
+		 begin
+		    arbiter_state_nxt = ARM_VALUE;
+    
+		    if(req_vec[0]&!cnt_reqdone_vec[0])
+		      begin
+			 gnt_vec_nxt = 3'b001;
+			 count_req_vec_nxt[0] = count_req_vec[0]-1'b1;
+		      end
+		    else if(req_vec[1]&!cnt_reqdone_vec[1])
+		      begin
+			 gnt_vec_nxt = 3'b010;
+			 count_req_vec_nxt[1] = count_req_vec[1]-1'b1;
+		      end
+		    else if(req_vec[2]&!cnt_reqdone_vec[2])
+		      begin
+			 gnt_vec_nxt = 3'b100;
+			 count_req_vec_nxt[2] = count_req_vec[2]-1'b1;
+		      end
+		    else
+		      begin
+			 count_req_vec_nxt[0] = req_vec_wt_stored[0];
+			 count_req_vec_nxt[1] = req_vec_wt_stored[1];
+			 count_req_vec_nxt[2] = req_vec_wt_stored[2];
+			 gnt_vector_nxt = 3'b000;
+		      end
+		 end
+	    end
+	endcase
+	end
+    
+      assign cnt_reqdone_vec[0] = (count_req_vec[0]='d0);
+      assign cnt_reqdone_vec[1] = (count_req_vec[1]='d0);
+      assign cnt_reqdone_vec[2] = (count_req_vec[2]='d0);
+    
+    
+      always @(posedge clk or negedge resetb)
+	begin
+	if(!resetb)
+	  begin
+	     arbiter_state <= IDLE;
+	     gnt_vec <= 'd0;
+	     count_req_vec[0] <= 'd0;
+	     count_req_vec[1] <= 'd0;
+	     count_req_vec[2] <= 'd0;
+	     req_vec_wt_stored[0] <= 'd0;
+	     req_vec_wt_stored[1] <= 'd0;
+	     req_vec_wt_stored[2] <= 'd0;
+	  end
+	else
+	  begin
+	     arbiter_state <= arbiter_state_nxt;
+	     gnt_vec <= gnt_vec_nxt;
+	     count_req_vec[0] <= count_req_vec_nxt[0];
+	     count_req_vec[1] <= count_req_vec_nxt[1];
+	     count_req_vec[2] <= count_req_vec_nxt[2];
+	     req_vec_wt_stored[0] <= req_vec_wt_stored_nxt[0];
+	     req_vec_wt_stored[1] <= req_vec_wt_stored_nxt[1];
+	     req_vec_wt_stored[2] <= req_vec_wt_stored_nxt[2];
+	  end
+	end
+     
+   endmodule
+  
+下面是采用第二种权重轮询方式的 verilog 代码，当所有用户都同时发出请求时，轮询序列为：A，B，C，A，B，A；B，C，A，B，A，A；...
+
+.. code:: verilog 
+
+   module arbiter_wrr
+     (
+      clk,
+      resetb,
+      req_vec,
+      // req_vec_wt,
+      req_vec_wt_0,
+      req_vec_wt_1,
+      req_vec_wt_2,
+      req_n_valid,
+      end_access_vec,
+      gnt_vec
+      );
+    
+      input clk;
+      input resetb;
+      input [2:0] req_vec;
+      // input [3:0] [2:0] req_vec_wt; //from software writable registers
+      input [3:0] req_vec_wt_0;
+      input [3:0] req_vec_wt_1;
+      input [3:0] req_vec_wt_2;
+      input	  req_n_valid;// when 1,req_vec_wt_X are valid
+      input [2:0] end_access_vec;
+      output [2:0] gnt_vec;
+    
+    
+      reg [2:0]		arbiter_state, arbiter_state_nxt;
+      reg [2:0]		gnt_vec, gnt_vec_nxt;
+      reg [3:0]		count_req_vec [2:0];
+      reg [3:0]		count_req_vec_nxt [2:0];
+      wire [2:0]	cnt_reqdone_vec;
+      reg [2:0]		relative_req_vec;
+      reg [1:0]		grant_posn, grant_posn_nxt;
+      reg [2:0]		relative_cntdone_vec;
+      reg [3:0]		req_vec_wt_stored [2:0];
+      reg [3:0]		req_vec_wt_stored_nxt [2:0];
+      wire [3:0]	req_vec_wt [2:0];
+      
+      parameter IDLE = 3'b001, ARM_VALUE = 3'b010, END_ACCESS = 3'b100;
+      parameter IDLE_ID = 0, ARM_VALUE_ID = 1, END_ACCESS_ID = 2;
+    
+      assign  req_vec_wt[0] = req_vec_wt_0;
+      assign  req_vec_wt[1] = req_vec_wt_1;
+      assign  req_vec_wt[2] = req_vec_wt_2;
+    
+      always @(*)
+	begin
+	relative_req_vec = req_vec;
+	case(grant_posn)
+	  2'd0: relative_req_vec = {req_vec[0], req_vec[2:1]};
+	  2'd1: relative_req_vec = {req_vec[1:0], req_vec[2]};
+	  2'd2: relative_req_vec = {req_vec[2:0]};
+	  default : begin end
+	endcase
+	end
+    
+      always @(*)
+	begin
+	relative_cntdone_vec = cnt_reqdone_vec;
+	case(grant_posn)
+	  2'd0: relative_cntdone_vec = {cnt_reqdone_vec[0], cnt_reqdone_vec[2:1]};
+	  2'd1: relative_cntdone_vec = {cnt_reqdone_vec[1:0], cnt_reqdone_vec[2]};
+	  2'd2: relative_cntdone_vec = {cnt_reqdone_vec[2:0]};
+	  default: begin end
+	endcase
+	end
+      
+      always @(*)
+	begin
+	arbiter_state_nxt = arbiter_state;
+	gnt_vec_nxt = gnt_vec;
+	count_req_vec_nxt[0] = count_req_vec[0];
+	count_req_vec_nxt[1] = count_req_vec[1];
+	count_req_vec_nxt[2] = count_req_vec[2];
+	grant_posn_nxt = grant_posn;
+    
+	case(1'b1)
+	  arbiter_state[IDLE_ID]:
+	    begin
+	       if(req_n_valid)
+		 begin
+		    arbiter_state_nxt = ARM_VALUE;
+		    count_req_vec_nxt[0] = req_vec_wt[0];
+		    count_req_vec_nxt[1] = req_vec_wt[1];
+		    count_req_vec_nxt[2] = req_vec_wt[2];
+		    req_vec_wt_stored_nxt[0] = req_vec_wt[0];
+		    req_vec_wt_stored_nxt[1] = req_vec_wt[1];
+		    req_vec_wt_stored_nxt[2] = req_vec_wt[2];
+		    gnt_vec_nxt = 3'b000;
+		 end
+	    end	
+	  arbiter_state[ARM_VALUE_ID]:
+	    begin
+	       if((gnt_vec=='d0)||(end_access_vec[0]&gnt_vec[0])||(end_access_vec[1]&gnt_vec[1])||(end_access_vec[2]&gnt_vec[2]))
+		 begin
+		    if(relative_req_vec[0]&!relative_cntdone_vec[0])
+		      begin
+			 arbiter_state_nxt = END_ACCESS;
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b010;
+			   2'd1: gnt_vec_nxt = 3'b100;
+			   2'd2: gnt_vec_nxt = 3'b001;
+			   default: begin end
+			 endcase 
+			 case(grant_posn)
+			   2'd0: count_req_vec_nxt[1] = count_req_vec[1]-1'b1;
+			   2'd1: count_req_vec_nxt[2] = count_req_vec[2]-1'b1;
+			   2'd2: count_req_vec_nxt[0] = count_req_vec[0]-1'b1;
+			   default: begin end
+			 endcase
+			 case(grant_posn)
+			   2'd0: grant_posn_nxt = 'd1;
+			   2'd1: grant_posn_nxt = 'd2;
+			   2'd2: grant_posn_nxt = 'd0;
+			   default: begin end
+			 endcase			   
+		      end
+		    else if(relative_req_vec[1]&!relative_cntdone_vec[1])
+		      begin
+			 arbiter_state_nxt = END_ACCESS;
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b100;
+			   2'd1: gnt_vec_nxt = 3'b001;
+			   2'd2: gnt_vec_nxt = 3'b010;
+			   default: begin end
+			 endcase 
+			 case(grant_posn)
+			   2'd0: count_req_vec_nxt[2] = count_req_vec[2]-1'b1;
+			   2'd1: count_req_vec_nxt[0] = count_req_vec[0]-1'b1;
+			   2'd2: count_req_vec_nxt[1] = count_req_vec[1]-1'b1;
+			   default: begin end
+			 endcase
+			 case(grant_posn)
+			   2'd0: grant_posn_nxt = 'd2;
+			   2'd1: grant_posn_nxt = 'd0;
+			   2'd2: grant_posn_nxt = 'd1;
+			   default: begin end
+			 endcase 
+		      end
+		    else if(relative_req_vec[2]&!relative_cntdone_vec[2])
+		      begin
+			 arbiter_state_nxt = END_ACCESS;
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b001;
+			   2'd1: gnt_vec_nxt = 3'b010;
+			   2'd2: gnt_vec_nxt = 3'b100;
+			   default: begin end
+			 endcase 
+			 case(grant_posn)
+			   2'd0: count_req_vec_nxt[0] = count_req_vec[0]-1'b1;
+			   2'd1: count_req_vec_nxt[1] = count_req_vec[1]-1'b1;
+			   2'd2: count_req_vec_nxt[2] = count_req_vec[2]-1'b1;
+			   default: begin end
+			 endcase
+			 case(grant_posn)
+			   2'd0: grant_posn_nxt = 'd0;
+			   2'd1: grant_posn_nxt = 'd1;
+			   2'd2: grant_posn_nxt = 'd2;
+			   default: begin end
+			 endcase 
+		      end
+		    else
+		      begin
+			 gnt_vec_nxt = 3'b000;
+			 count_req_vec_nxt[0] = req_vec_wt_stored[0];
+			 count_req_vec_nxt[1] = req_vec_wt_stored[1];
+			 count_req_vec_nxt[2] = req_vec_wt_stored[2];
+		      end
+		 end
+	    end	  
+	  arbiter_state[END_ACCESS_ID]:
+	    begin
+	       if((end_access_vec[0]&gnt_vec[0])||(end_access_vec[1]&gnt_vec[1])||(end_access_vec[2]&gnt_vec[2]))
+		 begin
+		    arbiter_state_nxt = ARM_VALUE;
+		    if(relative_req_vec[0]&!relative_cntdone_vec[0])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b010;
+			   2'd1: gnt_vec_nxt = 3'b100;
+			   2'd2: gnt_vec_nxt = 3'b001;
+			   default: begin end			   
+			 endcase
+			 case(grant_posn)
+			   2'd0: count_req_vec_nxt[1] = count_req_vec[1]-1'b1;
+			   2'd1: count_req_vec_nxt[2] = count_req_vec[2]-1'b1;
+			   2'd2: count_req_vec_nxt[0] = count_req_vec[0]-1'b1;
+			   default: begin end
+			 endcase
+			 case(grant_posn)
+			   2'd0: grant_posn_nxt = 'd1;
+			   2'd1: grant_posn_nxt = 'd2;
+			   2'd2: grant_posn_nxt = 'd0;
+			   default: begin end
+			 endcase			 
+		      end
+		    else if(relative_req_vec[1]&!relative_cntdone_vec[1])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b100;
+			   2'd1: gnt_vec_nxt = 3'b001;
+			   2'd2: gnt_vec_nxt = 3'b010;
+			   default: begin end			   
+			 endcase
+			 case(grant_posn)
+			   2'd0: count_req_vec_nxt[2] = count_req_vec[2]-1'b1;
+			   2'd1: count_req_vec_nxt[0] = count_req_vec[0]-1'b1;
+			   2'd2: count_req_vec_nxt[1] = count_req_vec[1]-1'b1;
+			   default: begin end
+			 endcase
+			 case(grant_posn)
+			   2'd0: grant_posn_nxt = 'd2;
+			   2'd1: grant_posn_nxt = 'd0;
+			   2'd2: grant_posn_nxt = 'd1;
+			   default: begin end
+			 endcase
+		      end
+		    else if(relative_req_vec[2]&!relative_cntdone_vec[2])
+		      begin
+			 case(grant_posn)
+			   2'd0: gnt_vec_nxt = 3'b001;
+			   2'd1: gnt_vec_nxt = 3'b010;
+			   2'd2: gnt_vec_nxt = 3'b100;
+			   default: begin end			   
+			 endcase
+			 case(grant_posn)
+			   2'd0: count_req_vec_nxt[0] = count_req_vec[0]-1'b1;
+			   2'd1: count_req_vec_nxt[1] = count_req_vec[1]-1'b1;
+			   2'd2: count_req_vec_nxt[2] = count_req_vec[2]-1'b1;
+			   default: begin end
+			 endcase
+			 case(grant_posn)
+			   2'd0: grant_posn_nxt = 'd0;
+			   2'd1: grant_posn_nxt = 'd1;
+			   2'd2: grant_posn_nxt = 'd2;
+			   default: begin end
+			 endcase
+		      end
+		    else
+		      begin
+			 gnt_vec_nxt = 3'b000;
+			 count_req_vec_nxt[0] = req_vec_wt_stored[0];
+			 count_req_vec_nxt[1] = req_vec_wt_stored[1];
+			 count_req_vec_nxt[2] = req_vec_wt_stored[2];
+		      end
+		 end
+	    end
+	endcase
+	end
+    
+      assign cnt_reqdone_vec[0] = (count_req_vec[0]='d0);
+      assign cnt_reqdone_vec[1] = (count_req_vec[1]='d0);
+      assign cnt_reqdone_vec[2] = (count_req_vec[2]='d0);
+    
+      always @(posedge clk or negedge resetb)
+	begin
+	if(!resetb)
+	  begin
+	     arbiter_state <= IDLE;
+	     gnt_vec <= 'd0;
+	     count_req_vec[0] <= 'd0;
+	     count_req_vec[1] <= 'd0;
+	     count_req_vec[2] <= 'd0;
+	     req_vec_wt_stored[0] <= 'd0;
+	     req_vec_wt_stored[1] <= 'd0;
+	     req_vec_wt_stored[2] <= 'd0;
+	     grant_posn <= 'd2;
+	  end
+	else
+	  begin
+	     arbiter_state <= arbiter_state_nxt;
+	     gnt_vec <= gnt_vec_nxt;
+	     count_req_vec[0] <= count_req_vec_nxt[0];
+	     count_req_vec[1] <= count_req_vec_nxt[1];
+	     count_req_vec[2] <= count_req_vec_nxt[2];
+	     req_vec_wt_stored[0] <= req_vec_wt_stored_nxt[0];
+	     req_vec_wt_stored[1] <= req_vec_wt_stored_nxt[1];
+	     req_vec_wt_stored[2] <= req_vec_wt_stored_nxt[2];
+	     grant_posn <= grant_posn_nxt;
+	  end
+	end
+      
+   endmodule
 
 
+**两组轮询**
+
+在一些应用中，用户被分成两组：快组和慢组。快组内的用户具有相同的优先级，内部采用公平轮询方式。类似的，慢组内的用户也具有相同的优先级，慢组内部也采用公平轮询方式。快组、慢组之间采用权重轮询方式。例如，快组有两个用户（A、B），慢组也有两个用户（C、D）。如果所有用户都发出请求，那么轮询序列为：A、B、C、A、B、D、A、B、C、A、B、D......
+
+.. 这里的代码没有放
+
+**总线接口**
+
+当多个（两个或两个以上）用户需要共享资源或相互之间传送数据时，可以使用总线进行互联。PCI 总线就是一种典型的并行总线，不同的用户可以通过它进行数据收发。典型的总线具有三组信号：地址线、数据线和控制信号。此外还需要一定的总线仲裁机制，使每个用户可以获得总线的使用许可，从而可以使用总线传送数据和命令。
+
+在获取许可之后，用户可以开始向总线上发送命令、数据和地址。有的总线中地址线和数据线是复用的。获得许可后，用户首先输出地址，随后输出一个或多个数据。需要注意的是，获得许可后，用户可能不会立刻输出地址或数据。获得许可意味着它被选为下一个可以使用总线的用户，它需要等待（通过特定的信号）最后一个用户完成总线操作后才能开始自己的总线操作。为了提高总线效率，在选择下一个用户之前仲裁已经进行，但只有在当前用户完成总线操作后，该用户才能访问总线。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  
 	  
 .. 
 .. exp.rst ends here
