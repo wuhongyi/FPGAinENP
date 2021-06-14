@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  7 19:57:40 2020 (+0800)
-.. Last-Updated: 日 6月 13 21:13:00 2021 (+0800)
+.. Last-Updated: 一 6月 14 15:52:54 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 7
+..     Update #: 8
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -237,6 +237,9 @@ Tcl Shell
 https://china.xilinx.com/video/hardware/using-the-vivado-hls-tcl-interface.html
 https://blog.csdn.net/weixin_42683394/article/details/112312283
 
+Vivado HLS数据类型及数据类型转换
+
+https://blog.csdn.net/qq_40230112/article/details/106340144?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&spm=1001.2101.3001.4242
 
   
 .. 
