@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 5月 23 22:04:29 2020 (+0800)
-.. Last-Updated: 日 6月 13 21:13:01 2021 (+0800)
+.. Last-Updated: 日 6月 20 20:56:15 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 6
+..     Update #: 7
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -63,7 +63,7 @@ Verilog hdl 与 VHDL 混用
 
 Verilog hdl调用VHDL很简单，只需要把VHDL的实体（entity）当成一个verilog模块（module）即可按verilog的格式调用。
 
-  VHDL调用verilog hdl相对比较麻烦，需要先将verilog的模块（module）做成VHDL的元件（component），再进行调用。
+VHDL调用verilog hdl相对比较麻烦，需要先将verilog的模块（module）做成VHDL的元件（component），再进行调用。
 
 总的来说，verilog与VHDL的混用也就是相互调用的方式，就是将对方当成自己的模块，然后按自己本身的语法来调用即可。即：
 
@@ -72,7 +72,7 @@ Verilog hdl调用VHDL很简单，只需要把VHDL的实体（entity）当成一�
 
 https://blog.csdn.net/u014586651/article/details/85076276
 
-
+https://www.cnblogs.com/kuvon/p/3625282.html
 
    
 .. 

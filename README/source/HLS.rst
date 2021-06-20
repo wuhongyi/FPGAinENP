@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  7 19:57:40 2020 (+0800)
-.. Last-Updated: 一 6月 14 15:52:54 2021 (+0800)
+.. Last-Updated: 一 6月 14 21:42:03 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 8
+..     Update #: 9
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -241,6 +241,7 @@ Vivado HLS数据类型及数据类型转换
 
 https://blog.csdn.net/qq_40230112/article/details/106340144?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&spm=1001.2101.3001.4242
 
+https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/gnq1597858079367.html
   
 .. 
 .. HLS.rst ends here

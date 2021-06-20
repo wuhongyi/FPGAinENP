@@ -227,15 +227,14 @@ write_verilog -mode funcsim XXX.v
 <h2>Verilog hdl 与 VHDL 混用<a class="headerlink" href="#verilog-hdl-vhdl" title="永久链接至标题">¶</a></h2>
 <p>由于在FPGA开发过程中，多人合作时可能遇到有人使用verilog hdl，有人使用VHDL的情况，这就涉及到了verilog hdl与VHDL的相互调用。</p>
 <p>Verilog hdl调用VHDL很简单，只需要把VHDL的实体（entity）当成一个verilog模块（module）即可按verilog的格式调用。</p>
-<blockquote>
-<div><p>VHDL调用verilog hdl相对比较麻烦，需要先将verilog的模块（module）做成VHDL的元件（component），再进行调用。</p>
-</div></blockquote>
+<p>VHDL调用verilog hdl相对比较麻烦，需要先将verilog的模块（module）做成VHDL的元件（component），再进行调用。</p>
 <p>总的来说，verilog与VHDL的混用也就是相互调用的方式，就是将对方当成自己的模块，然后按自己本身的语法来调用即可。即：</p>
 <ul class="simple">
 <li><p>Verilog调用VHDL是将VHDL的实体（entity）当成verilog中的模块（module）来调用；</p></li>
 <li><p>VHDL调用verilog是将verilog的模块(module)当成VHDL中的实体（entity）来调用，先元件化，再例化。</p></li>
 </ul>
 <p><a class="reference external" href="https://blog.csdn.net/u014586651/article/details/85076276">https://blog.csdn.net/u014586651/article/details/85076276</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/kuvon/p/3625282.html">https://www.cnblogs.com/kuvon/p/3625282.html</a></p>
 </div>
 </div>
 
