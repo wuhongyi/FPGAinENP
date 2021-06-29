@@ -4,10 +4,22 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 6月  7 20:22:45 2021 (+0800)
-// Last-Updated: 日 6月 13 17:48:52 2021 (+0800)
+// Last-Updated: 二 6月 29 22:03:05 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 12
+//     Update #: 13
 // URL: http://wuhongyi.cn 
+
+xpm_cdc_single #(2, 0, 0, 1)
+xpm_cdc_single_inst
+  (
+   .src_clk(src_clk),
+   .src_in(src_in),
+   .dest_clk(dest_clk),
+   .dest_out(dest_out)
+   );
+
+
+
 
 input sig_a;
 reg sig_a_d1;

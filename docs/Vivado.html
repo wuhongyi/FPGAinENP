@@ -96,6 +96,18 @@
 <li class="toctree-l2"><a class="reference internal" href="#id1">仿真</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tcl-shell">Tcl Shell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verilog-hdl-vhdl">Verilog hdl 与 VHDL 混用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">综合属性</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#async-reg">ASYNC_REG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keep">KEEP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keep-hierarchy">KEEP_HIERARCHY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dont-touch">DONT_TOUCH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#black-box">BLACK_BOX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ram-style">RAM_STYLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ram-decomp">RAM_DECOMP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rom-style">ROM_STYLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ram">RAM内容的初始化方式</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -235,6 +247,263 @@ write_verilog -mode funcsim XXX.v
 </ul>
 <p><a class="reference external" href="https://blog.csdn.net/u014586651/article/details/85076276">https://blog.csdn.net/u014586651/article/details/85076276</a></p>
 <p><a class="reference external" href="https://www.cnblogs.com/kuvon/p/3625282.html">https://www.cnblogs.com/kuvon/p/3625282.html</a></p>
+</div>
+<div class="section" id="id2">
+<h2>综合属性<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>这里介绍 Viado 开发工具支持的综合属性。</p>
+<div class="section" id="async-reg">
+<h3>ASYNC_REG<a class="headerlink" href="#async-reg" title="永久链接至标题">¶</a></h3>
+<p>在异步跨时钟域场合，对于控制信号（通常位宽为1-bit）常使用双触发器方法完成跨时钟域操作，如下图所示。此时对于图中标记的1号和2号触发器需要使用综合属性 ASYNC_REG，有两个目的：</p>
+<img alt="_images/xpm_cdc_single.jpeg" src="_images/xpm_cdc_single.jpeg" />
+<ul class="simple">
+<li><p>表明1号触发器接收的数据是来自于与接收时钟异步的时钟域</p></li>
+<li><p>表明2号触发器是同步链路上的触发器</p></li>
+</ul>
+<p>从而，保证1号、2号触发器在布局时会被放置在同一个SLICE内，减少线延迟对时序的影响。</p>
+<p>当遇到此属性的时候，Vivado综合器就会将其视为DONT_TOUCH属性，并在网表中向前推送ASYNC_REG属性。后续的流程中，布局布线的工具也会收到该属性正确处理， 在后面布局的时候就能保证1号和2号触发器被放置到同一个SLICE中，可以减少线延时对时序的影响。假如没有这个属性，综合器很可能就把它们给优化掉，并且在后续的流程中也无法正确处理了。</p>
+<blockquote>
+<div><p>这个属性可以用在RTL和XDC文件中。</p>
+</div></blockquote>
+<p>HDL示例：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">//Verilog 用法</span>
+<span class="p">(</span><span class="o">*</span><span class="no">ASYNC_REG</span> <span class="o">=</span> <span class="s">&quot;TRUE&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sync_regs</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">--VHDL用法</span>
+<span class="k">attribute</span> <span class="n">ASYNC_REG</span><span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">ASYNC_REG</span> <span class="k">of</span> <span class="n">synv_regs</span> <span class="o">:</span> <span class="n">siganl</span> <span class="k">is</span> <span class="s">&quot;TRUE&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>实际工程中，1号和2号触发器往往被设计者忘记标记 ASYNC_REG，一个好的方法是使用 Xilinx 提供的 XPM_CDC 模板，相应的代码如下图所示。可以看到这里只需要实例化 xpm_cdc_single 即可，无需标记 ASYNC_REG（该属性已被标记）。上图显示的电路图即为该代码综合后的结果。</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">xpm_cdc_single_inst</span> <span class="o">:</span> <span class="n">xpm_cdc_single</span>
+  <span class="k">generic</span> <span class="k">map</span>
+  <span class="p">(</span>
+    <span class="n">DEST_SYNC_FF</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">INIT_SYNC_FF</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">SIM_ASSERT_CHK</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">SRC_INPUT_REG</span> <span class="o">=&gt;</span> <span class="mi">1</span>
+    <span class="p">)</span>
+  <span class="k">port</span> <span class="k">map</span>
+  <span class="p">(</span>
+    <span class="n">src_clk</span> <span class="o">=&gt;</span> <span class="n">src_clk</span><span class="p">,</span>
+    <span class="n">src_in</span> <span class="o">=&gt;</span> <span class="n">src_in</span><span class="p">,</span>
+    <span class="n">dest_clk</span> <span class="o">=&gt;</span> <span class="n">dest_clk</span><span class="p">,</span>
+    <span class="n">dest_clk</span> <span class="o">=&gt;</span> <span class="n">dest_out</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">xpm_cdc_single</span> <span class="p">#(</span><span class="mh">2</span><span class="p">,</span> <span class="mh">0</span><span class="p">,</span> <span class="mh">0</span><span class="p">,</span> <span class="mh">1</span><span class="p">)</span>
+<span class="n">xpm_cdc_single_inst</span>
+  <span class="p">(</span>
+   <span class="p">.</span><span class="n">src_clk</span><span class="p">(</span><span class="n">src_clk</span><span class="p">),</span>
+   <span class="p">.</span><span class="n">src_in</span><span class="p">(</span><span class="n">src_in</span><span class="p">),</span>
+   <span class="p">.</span><span class="n">dest_clk</span><span class="p">(</span><span class="n">dest_clk</span><span class="p">),</span>
+   <span class="p">.</span><span class="n">dest_out</span><span class="p">(</span><span class="n">dest_out</span><span class="p">)</span>
+   <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="keep">
+<h3>KEEP<a class="headerlink" href="#keep" title="永久链接至标题">¶</a></h3>
+<p>该属性用于阻止优化，即：信号被优化或者被吸收进逻辑块中。该属性告诉 Vivado 综合工具保持所放置的信号，则该信号将出现在网表中。其取值为 true 或者 false。该属性可以放置在信号、寄存器或者 wire  上。Xilinx 推荐在 RTL 中设置该属性。</p>
+<p>该属性不强迫布局和布线工具保持该信号。在这种情况下，使用 DONT_TOUCH 属性。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">//Verilog示例</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">keep</span> <span class="o">=</span> <span class="s">&quot;true&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="kt">wire</span> <span class="n">sig1</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">sig1</span> <span class="o">=</span> <span class="n">in1</span> <span class="o">&amp;</span> <span class="n">in2</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">out1</span> <span class="o">=</span> <span class="n">sig1</span> <span class="o">&amp;</span> <span class="n">in2</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">--VHDL示例</span>
+<span class="k">signal</span> <span class="n">sig1</span> <span class="o">:</span> <span class="kt">std_logic</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">keep</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="n">sttribute</span> <span class="n">keep</span> <span class="k">of</span> <span class="n">sig1</span> <span class="o">:</span> <span class="k">signal</span> <span class="k">is</span> <span class="s">&quot;true&quot;</span><span class="p">;</span>
+<span class="c1">--...</span>
+<span class="c1">--...</span>
+<span class="n">sig1</span> <span class="o">&lt;=</span> <span class="n">in1</span> <span class="k">and</span> <span class="n">in2</span><span class="p">;</span>
+<span class="n">out1</span> <span class="o">&lt;=</span> <span class="n">sig1</span> <span class="k">and</span> <span class="n">in3</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="keep-hierarchy">
+<h3>KEEP_HIERARCHY<a class="headerlink" href="#keep-hierarchy" title="永久链接至标题">¶</a></h3>
+<p>该属性用于阻止在层次边界的优化，Vivado 综合工具尝试保持在 RTL 级所定义的层次，但是由于 QoR 的原因，它会展开它们。如果在实例上放置了该属性，综合工具将保持静态级的逻辑层次。它不能用于那些描述控制三态输出和 I/O 缓冲区的模块。该属性可以放置在实例的模块或者结构级上。只能在 RTL 级使用该属性。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="k">module</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">keep_hirearchy</span> <span class="o">=</span> <span class="s">&quot;true&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="k">module</span> <span class="n">bottom</span> <span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">out1</span><span class="p">);</span>
+
+<span class="o">--</span><span class="n">instance</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">keep_hirearchy</span> <span class="o">=</span> <span class="s">&quot;true&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="n">u0</span> <span class="p">(.</span><span class="n">in1</span><span class="p">(</span><span class="n">in1</span><span class="p">),</span> <span class="p">.</span><span class="n">in2</span><span class="p">(</span><span class="n">in2</span><span class="p">),</span> <span class="p">.</span><span class="n">out1</span><span class="p">(</span><span class="n">temp1</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dont-touch">
+<h3>DONT_TOUCH<a class="headerlink" href="#dont-touch" title="永久链接至标题">¶</a></h3>
+<p>使用该属性，用于替换 KEEP 或者 KEEP_HIERARCHY 属性。器原理和这两个属性一样。然而，不像这两个属性，DONT_TOUCH 属性是向前注解到布局和布线，以阻止逻辑优化。其取值为 TRUE/FALSE 或者 yes/no。该属性可以放置在信号、模块、实体或者元件上。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">//Verilog示例</span>
+
+<span class="c1">//wire例子</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">dont_touch</span> <span class="o">=</span> <span class="s">&quot;true&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="kt">wire</span> <span class="n">sig1</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">sig1</span> <span class="o">=</span> <span class="n">in1</span> <span class="o">&amp;</span> <span class="n">in2</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">out1</span> <span class="o">=</span> <span class="n">sig1</span> <span class="o">&amp;</span> <span class="n">in2</span><span class="p">;</span>
+
+<span class="c1">//module 例子</span>
+<span class="p">(</span><span class="o">*</span> <span class="no">DONT_TOUCH</span> <span class="o">=</span> <span class="s">&quot;true|yes&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="k">module</span> <span class="n">example_dt_ver</span><span class="p">(</span><span class="n">clk</span><span class="p">,</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">out1</span><span class="p">);</span>
+
+<span class="c1">//instance 例子</span>
+<span class="p">(</span><span class="o">*</span> <span class="no">DONT_TOUCH</span> <span class="o">=</span> <span class="s">&quot;true|yes&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="k">module</span> <span class="n">example_dt_ver</span> <span class="no">U0</span> <span class="p">(.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span> <span class="p">.</span><span class="n">in1</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="p">.</span><span class="n">in2</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="n">out1</span><span class="p">(</span><span class="n">c</span><span class="p">));</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">--VHDL示例</span>
+
+<span class="c1">--signal例子</span>
+<span class="k">signal</span> <span class="n">sig1</span> <span class="o">:</span> <span class="kt">std_logic</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">dont_touch</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="n">sttribute</span> <span class="n">dont_touch</span> <span class="k">of</span> <span class="n">sig1</span> <span class="o">:</span> <span class="k">signal</span> <span class="k">is</span> <span class="s">&quot;true&quot;</span><span class="p">;</span>
+<span class="c1">--...</span>
+<span class="c1">--...</span>
+<span class="n">sig1</span> <span class="o">&lt;=</span> <span class="n">in1</span> <span class="k">and</span> <span class="n">in2</span><span class="p">;</span>
+<span class="n">out1</span> <span class="o">&lt;=</span> <span class="n">sig1</span> <span class="k">and</span> <span class="n">in3</span><span class="p">;</span>
+
+<span class="c1">--entity 例子</span>
+<span class="k">entity</span> <span class="nc">example_dt_vhd</span> <span class="k">is</span>
+<span class="k">port</span> <span class="p">(</span>
+   <span class="n">clk</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">std_logic</span><span class="p">;</span>
+   <span class="n">in1</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">std_logic</span><span class="p">;</span>
+   <span class="n">in2</span> <span class="o">:</span> <span class="k">in</span> <span class="kt">std_logic</span><span class="p">;</span>
+   <span class="n">out1</span> <span class="o">:</span> <span class="k">out</span> <span class="kt">std_logic</span>
+   <span class="p">);</span>
+<span class="k">attribute</span> <span class="n">dont_touch</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">dont_touch</span> <span class="k">of</span> <span class="n">example_dt_chd</span> <span class="o">:</span> <span class="k">entity</span> <span class="nc">is</span> <span class="s">&quot;true|yes&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="nc">example_dt_vhd</span><span class="p">;</span>
+<span class="k">architecture</span> <span class="n">rtl</span> <span class="n">od</span> <span class="n">top</span> <span class="k">is</span>
+<span class="k">attribute</span> <span class="n">sont_touch</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">dont_touch</span> <span class="k">of</span> <span class="n">rtl</span> <span class="o">:</span> <span class="k">architecture</span> <span class="k">is</span> <span class="s">&quot;true|yes&quot;</span><span class="p">;</span>
+<span class="k">begin</span>
+<span class="c1">--...</span>
+<span class="c1">--...</span>
+<span class="c1">--...</span>
+<span class="k">end</span> <span class="nc">rtl</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="black-box">
+<h3>BLACK_BOX<a class="headerlink" href="#black-box" title="永久链接至标题">¶</a></h3>
+<p>该属性是一个非常有用的调试属性，它用于关闭层次上某一级，使综合工具可以为该模块或者实体创建黑盒。该属性可以放置再一个模块、实体或者元件上。由于该属性影响综合编译器，所以只能在 RTL 级上设置属性。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">//Verilog示例</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">black_box</span> <span class="o">*</span><span class="p">)</span> <span class="k">module</span> <span class="n">test</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">clk</span><span class="p">,</span> <span class="n">out1</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">--VHDL示例</span>
+<span class="k">attribute</span> <span class="n">black_box</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">black_box</span> <span class="k">of</span> <span class="n">beh</span> <span class="o">:</span> <span class="k">architecture</span> <span class="k">is</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ram-style">
+<h3>RAM_STYLE<a class="headerlink" href="#ram-style" title="永久链接至标题">¶</a></h3>
+<p>示综合工具如何实现一个RAM存储器，可设置为:</p>
+<ul class="simple">
+<li><p>block（使用BRAM即块RAM来实现）；</p></li>
+<li><p>distributed（使用LUT搭建分布式RAM）；</p></li>
+<li><p>registers（使用寄存器组来替代RAM）或ultra（使用UltraScale中的URAM）。</p></li>
+</ul>
+<p>默认情况下工具会为了得到最好的设计效果而自动选择。如果该属性在定义RAM的信号处申明，则仅作用于该信号；如果在某一层次结构处申明，将作用于该层次中的所有RAM（但不会影响到该层次的子层次）。可以在 RTL 或 XDC 中设置，示例如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>//Verilog示例
+(* ram_style = “distributed” *) reg [size-1:0] myram [2**addr-1:0];
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">--VHDL示例</span>
+<span class="k">attribute</span> <span class="n">ram_style</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">ram_style</span> <span class="k">of</span> <span class="n">myram</span> <span class="o">:</span> <span class="k">signal</span> <span class="k">is</span> <span class="s">&quot;distributed&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ram-decomp">
+<h3>RAM_DECOMP<a class="headerlink" href="#ram-decomp" title="永久链接至标题">¶</a></h3>
+<p>该属性用于指示综合工具如何用块 RAM(BRAM) 来实现一个较大的 RAM。比如需要一个 2K*36 的 RAM，通常会用两个 2K18 的 BRAM 组合实现（为了提高设计速度）。</p>
+<p>如果将该属性设置为 power，则会用两个 1K36 的 BRAM 来组合实现，这样在读写过程中，使用地址使只需要一个 BRAM 处于活跃状态，因此可以降低功耗。</p>
+<p>该属性只有一个可配置值即 power，虽然可以降低功耗，但是会增加地址解码的时间。可以在RTL或XDC中设置，示例如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>//Verilog示例
+(* ram_decomp = “power” *) reg [size-1:0] myram [2**addr-1:0];
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c">#XDC示例</span>
+<span class="nv">set_property</span> ram_decomp power <span class="k">[</span><span class="nv">get_cells</span> myram<span class="k">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rom-style">
+<h3>ROM_STYLE<a class="headerlink" href="#rom-style" title="永久链接至标题">¶</a></h3>
+<p>指示综合工具如何推断一个 ROM 存储器，可设置为 block（使用 BRAM 即块 RAM 来实现）或 distributed（使用 LUT 搭建分布式 ROM），默认情况下工具会为了得到最好的设计效果而自动选择。可以在 RTL 或 XDC 中设置，示例如下：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>//Verilog示例
+(* rom_style = “distributed” *) reg [data_size-1:0] myrom [2**addr-1:0];
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>--VHDL 示例
+attribute rom_style : string;
+attribute rom_style of myrom : signal is “distributed”;
+</pre></div>
+</div>
+</div>
+<div class="section" id="ram">
+<h3>RAM内容的初始化方式<a class="headerlink" href="#ram" title="永久链接至标题">¶</a></h3>
+<p>有以下两种对RAM进行初始化的方式：</p>
+<ul class="simple">
+<li><p>在 HDL 代码中指定 RAM 的初始值；</p></li>
+<li><p>靠外部数据文件来指定 RAM 的初始值。</p></li>
+</ul>
+<p><strong>HDL中指定</strong></p>
+<p>依靠信号的默认值机制直接在HDL源代码中描述初始RAM内容。</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>type ram_type is array (0 to 31) of std_logic_vector(19 downto 0);
+signal RAM : ram_type :=
+(
+X”0200A”, X”00300”, X”08101”, X”04000”, X”08601”, X”0233A”,
+X”00300”, X”08602”, X”02310”, X”0203B”, X”08300”, X”04002”,
+X”08201”, X”00500”, X”04001”, X”02500”, X”00340”, X”00241”,
+X”04002”, X”08300”, X”08201”, X”00500”, X”08101”, X”00602”,
+X”04003”, X”0241E”, X”00301”, X”00102”, X”02122”, X”02021”, X”0030D”, X&quot;08201&quot;
+);
+</pre></div>
+</div>
+<p>也可将RAM中所有bit位置都初始化为同一个值：</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">ram_type</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">127</span><span class="p">)</span> <span class="k">of</span> <span class="kt">std_logic_vector</span> <span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">RAM</span> <span class="o">:</span> <span class="n">ram_type</span> <span class="o">:=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;0&#39;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>所有可寻址的字都被初始化为相同值：</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span><span class="no">DATA_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">ram</span> <span class="p">[</span><span class="no">DEPTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span> <span class="k">integer</span> <span class="n">i</span><span class="p">;</span>
+<span class="k">initial</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="no">DEPTH</span><span class="p">;</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span> <span class="n">ram</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="k">end</span>
+</pre></div>
+</div>
+<p><strong>外部数据文件指定RAM初始值</strong></p>
+<p>使用HDL原码中的文件读写功能来从外部文件中下载数据到RAM中。</p>
+<ul class="simple">
+<li><p>外部数据文件可以是任何名称的ASCII文本文件。</p></li>
+<li><p>外部数据文件中的每一行描述RAM中地址位置的初始内容。</p></li>
+<li><p>外部数据文件中的行必须与RAM阵列中的行一样多。 标记的行数不足。</p></li>
+<li><p>与给定行相关的可寻址位置由建模RAM的信号的主要范围的方向定义。</p></li>
+<li><p>您可以用二进制或十六进制表示RAM内容。 你不能混合两者。</p></li>
+<li><p>外部数据文件不能包含任何其他内容，例如注释。</p></li>
+<li><p>以下外部数据文件使用二进制值初始化8 x 32位RAM：</p></li>
+</ul>
+<p>Verilog 使用系统任务 $readmemb 或 $readmemh 来分别下载二进制和16进制格式的数据。</p>
+<p>使用格式共有6种</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>$readmemb(&quot;&lt;数据文件名&gt;&quot;,&lt;存储器名&gt;);
+$readmemb(&quot;&lt;数据文件名&gt;&quot;,&lt;存储器名&gt;,&lt;起始地址&gt;);
+$readmemb(&quot;&lt;数据文件名&gt;&quot;,&lt;存储器名&gt;,&lt;起始地址&gt;,&lt;结束地址&gt;);
+$readmemh(&quot;&lt;数据文件名&gt;&quot;,&lt;存储器名&gt;);
+$readmemh(&quot;&lt;数据文件名&gt;&quot;,&lt;存储器名&gt;,&lt;起始地址&gt;);
+$readmemh(&quot;&lt;数据文件名&gt;&quot;,&lt;存储器名&gt;,&lt;起始地址&gt;,&lt;结束地址&gt;);
+</pre></div>
+</div>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>reg [31:0] ram [0:63];
+initial begin
+$readmemb(“rams_20c.data”, ram, 0, 63); end
+</pre></div>
+</div>
+<p><a class="reference external" href="https://cloud.tencent.com/developer/article/1530601">https://cloud.tencent.com/developer/article/1530601</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/qq_26652069/article/details/90486732">https://blog.csdn.net/qq_26652069/article/details/90486732</a></p>
+<p>Vivado使用：综合篇（二）综合选项设置 <a class="reference external" href="https://blog.csdn.net/qq_26652069/article/details/90473878">https://blog.csdn.net/qq_26652069/article/details/90473878</a></p>
+</div>
 </div>
 </div>
 
