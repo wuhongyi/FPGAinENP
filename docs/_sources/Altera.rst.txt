@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 5月 23 22:02:25 2020 (+0800)
-.. Last-Updated: 日 5月 24 14:18:36 2020 (+0800)
+.. Last-Updated: 三 6月 30 18:24:18 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 6
+..     Update #: 8
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -147,9 +147,57 @@ SignalTapII
 .. image:: /_static/img/SignalTapII_use0.png
 
 
+============================================================
+综合属性
+============================================================
 
-	   
-	   
+在一些应用中，有些特定的信号我们需要保留，用于进行采集检测，而综合器会自动优化把它综合掉，因此需要告诉综合器，不让它优化掉需要保留的信号。
+
+**需要保留的信号是引线**
+
+verilog HDL 定义的时候在后面增加
+
+.. code:: verilog
+
+   /* synthesis keep */
+
+   // 例如
+   wire keep_wire /* synthesis keep */;
+
+VHDL 需要麻烦些，多写几行定义约束
+
+.. code:: vhdl   
+
+   signal keep_wire : std_logic;
+   attribute keep : boolean;
+   attribute keep of keep_wire : signal is true;
+
+**需要保留的是寄存器**
+
+verilog HDL 定义的时候在后面增加
+
+.. code:: verilog
+
+   /* synthesis noprune */  避免优化掉没output的reg
+   /* synthesis preserve */ 避免將reg优化为常数，或者合并重复的reg。
+
+   // 例如
+   reg reg1 /* synthesis preserve */;
+
+VHDL 同样需要麻烦些，多写几行定义约束
+   
+.. code:: vhdl  
+
+   signal reg1 : std_logic;
+   attribute preserve : boolean;
+   attribute preserve of reg1 : signal is true;
+
+
+
+
+
+   
+	  
 	   
 .. 
 .. Altera.rst ends here

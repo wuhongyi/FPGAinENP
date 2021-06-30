@@ -106,6 +106,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#ram-decomp">RAM_DECOMP</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rom-style">ROM_STYLE</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ram">RAM内容的初始化方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#max-fanout">MAX_FANOUT</a></li>
 </ul>
 </li>
 </ul>
@@ -260,7 +261,7 @@ write_verilog -mode funcsim XXX.v
 <li><p>表明2号触发器是同步链路上的触发器</p></li>
 </ul>
 <p>从而，保证1号、2号触发器在布局时会被放置在同一个SLICE内，减少线延迟对时序的影响。</p>
-<p>当遇到此属性的时候，Vivado综合器就会将其视为DONT_TOUCH属性，并在网表中向前推送ASYNC_REG属性。后续的流程中，布局布线的工具也会收到该属性正确处理， 在后面布局的时候就能保证1号和2号触发器被放置到同一个SLICE中，可以减少线延时对时序的影响。假如没有这个属性，综合器很可能就把它们给优化掉，并且在后续的流程中也无法正确处理了。</p>
+<p>当遇到此属性的时候，Vivado综合器就会将其视为 DONT_TOUCH 属性，并在网表中向前推送ASYNC_REG属性。后续的流程中，布局布线的工具也会收到该属性正确处理， 在后面布局的时候就能保证1号和2号触发器被放置到同一个SLICE中，可以减少线延时对时序的影响。假如没有这个属性，综合器很可能就把它们给优化掉，并且在后续的流程中也无法正确处理了。</p>
 <blockquote>
 <div><p>这个属性可以用在RTL和XDC文件中。</p>
 </div></blockquote>
@@ -332,6 +333,15 @@ write_verilog -mode funcsim XXX.v
 
 <span class="o">--</span><span class="n">instance</span>
 <span class="p">(</span><span class="o">*</span> <span class="n">keep_hirearchy</span> <span class="o">=</span> <span class="s">&quot;true&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="n">u0</span> <span class="p">(.</span><span class="n">in1</span><span class="p">(</span><span class="n">in1</span><span class="p">),</span> <span class="p">.</span><span class="n">in2</span><span class="p">(</span><span class="n">in2</span><span class="p">),</span> <span class="p">.</span><span class="n">out1</span><span class="p">(</span><span class="n">temp1</span><span class="p">));</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">--module</span>
+<span class="k">attribute</span> <span class="n">keep_hirearchy</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="n">sttribute</span> <span class="n">keep_hirearchy</span> <span class="k">of</span> <span class="n">beh</span> <span class="o">:</span> <span class="k">architecture</span> <span class="k">is</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span>
+
+<span class="c1">--instance</span>
+<span class="k">attribute</span> <span class="n">keep_hirearchy</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="n">sttribute</span> <span class="n">keep_hirearchy</span> <span class="k">of</span> <span class="n">u0</span> <span class="o">:</span> <span class="k">label</span> <span class="k">is</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -407,8 +417,8 @@ write_verilog -mode funcsim XXX.v
 <li><p>registers（使用寄存器组来替代RAM）或ultra（使用UltraScale中的URAM）。</p></li>
 </ul>
 <p>默认情况下工具会为了得到最好的设计效果而自动选择。如果该属性在定义RAM的信号处申明，则仅作用于该信号；如果在某一层次结构处申明，将作用于该层次中的所有RAM（但不会影响到该层次的子层次）。可以在 RTL 或 XDC 中设置，示例如下：</p>
-<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>//Verilog示例
-(* ram_style = “distributed” *) reg [size-1:0] myram [2**addr-1:0];
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">//Verilog示例</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">ram_style</span> <span class="o">=</span> <span class="s">&quot;distributed&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">size</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">myram</span> <span class="p">[</span><span class="mh">2</span><span class="o">**</span><span class="n">addr</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">--VHDL示例</span>
@@ -422,8 +432,8 @@ write_verilog -mode funcsim XXX.v
 <p>该属性用于指示综合工具如何用块 RAM(BRAM) 来实现一个较大的 RAM。比如需要一个 2K*36 的 RAM，通常会用两个 2K18 的 BRAM 组合实现（为了提高设计速度）。</p>
 <p>如果将该属性设置为 power，则会用两个 1K36 的 BRAM 来组合实现，这样在读写过程中，使用地址使只需要一个 BRAM 处于活跃状态，因此可以降低功耗。</p>
 <p>该属性只有一个可配置值即 power，虽然可以降低功耗，但是会增加地址解码的时间。可以在RTL或XDC中设置，示例如下：</p>
-<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>//Verilog示例
-(* ram_decomp = “power” *) reg [size-1:0] myram [2**addr-1:0];
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">//Verilog示例</span>
+<span class="p">(</span><span class="o">*</span> <span class="n">ram_decomp</span> <span class="o">=</span> <span class="s">&quot;power&quot;</span> <span class="o">*</span><span class="p">)</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">size</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">myram</span> <span class="p">[</span><span class="mh">2</span><span class="o">**</span><span class="n">addr</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c">#XDC示例</span>
@@ -438,9 +448,9 @@ write_verilog -mode funcsim XXX.v
 (* rom_style = “distributed” *) reg [data_size-1:0] myrom [2**addr-1:0];
 </pre></div>
 </div>
-<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>--VHDL 示例
-attribute rom_style : string;
-attribute rom_style of myrom : signal is “distributed”;
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">--VHDL 示例</span>
+<span class="k">attribute</span> <span class="n">rom_style</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">rom_style</span> <span class="k">of</span> <span class="n">myrom</span> <span class="o">:</span> <span class="k">signal</span> <span class="k">is</span> <span class="s">&quot;distributed&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -453,15 +463,15 @@ attribute rom_style of myrom : signal is “distributed”;
 </ul>
 <p><strong>HDL中指定</strong></p>
 <p>依靠信号的默认值机制直接在HDL源代码中描述初始RAM内容。</p>
-<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>type ram_type is array (0 to 31) of std_logic_vector(19 downto 0);
-signal RAM : ram_type :=
-(
-X”0200A”, X”00300”, X”08101”, X”04000”, X”08601”, X”0233A”,
-X”00300”, X”08602”, X”02310”, X”0203B”, X”08300”, X”04002”,
-X”08201”, X”00500”, X”04001”, X”02500”, X”00340”, X”00241”,
-X”04002”, X”08300”, X”08201”, X”00500”, X”08101”, X”00602”,
-X”04003”, X”0241E”, X”00301”, X”00102”, X”02122”, X”02021”, X”0030D”, X&quot;08201&quot;
-);
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">ram_type</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">31</span><span class="p">)</span> <span class="k">of</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">19</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">RAM</span> <span class="o">:</span> <span class="n">ram_type</span> <span class="o">:=</span>
+<span class="p">(</span>
+<span class="mh">X&quot;0200A&quot;</span><span class="p">,</span> <span class="mh">X&quot;00300&quot;</span><span class="p">,</span> <span class="mh">X&quot;08101&quot;</span><span class="p">,</span> <span class="mh">X&quot;04000&quot;</span><span class="p">,</span> <span class="mh">X&quot;08601&quot;</span><span class="p">,</span> <span class="mh">X&quot;0233A&quot;</span><span class="p">,</span>
+<span class="mh">X&quot;00300&quot;</span><span class="p">,</span> <span class="mh">X&quot;08602&quot;</span><span class="p">,</span> <span class="mh">X&quot;02310&quot;</span><span class="p">,</span> <span class="mh">X&quot;0203B&quot;</span><span class="p">,</span> <span class="mh">X&quot;08300&quot;</span><span class="p">,</span> <span class="mh">X&quot;04002&quot;</span><span class="p">,</span>
+<span class="mh">X&quot;08201&quot;</span><span class="p">,</span> <span class="mh">X&quot;00500&quot;</span><span class="p">,</span> <span class="mh">X&quot;04001&quot;</span><span class="p">,</span> <span class="mh">X&quot;02500&quot;</span><span class="p">,</span> <span class="mh">X&quot;00340&quot;</span><span class="p">,</span> <span class="mh">X&quot;00241&quot;</span><span class="p">,</span>
+<span class="mh">X&quot;04002&quot;</span><span class="p">,</span> <span class="mh">X&quot;08300&quot;</span><span class="p">,</span> <span class="mh">X&quot;08201&quot;</span><span class="p">,</span> <span class="mh">X&quot;00500&quot;</span><span class="p">,</span> <span class="mh">X&quot;08101&quot;</span><span class="p">,</span> <span class="mh">X&quot;00602&quot;</span><span class="p">,</span>
+<span class="mh">X&quot;04003&quot;</span><span class="p">,</span> <span class="mh">X&quot;0241E&quot;</span><span class="p">,</span> <span class="mh">X&quot;00301&quot;</span><span class="p">,</span> <span class="mh">X&quot;00102&quot;</span><span class="p">,</span> <span class="mh">X&quot;02122&quot;</span><span class="p">,</span> <span class="mh">X&quot;02021&quot;</span><span class="p">,</span> <span class="mh">X&quot;0030D&quot;</span><span class="p">,</span> <span class="mh">X&quot;08201&quot;</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 <p>也可将RAM中所有bit位置都初始化为同一个值：</p>
@@ -495,9 +505,21 @@ $readmemh(&quot;&lt;数据文件名&gt;&quot;,&lt;存储器名&gt;,&lt;起始地
 $readmemh(&quot;&lt;数据文件名&gt;&quot;,&lt;存储器名&gt;,&lt;起始地址&gt;,&lt;结束地址&gt;);
 </pre></div>
 </div>
-<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>reg [31:0] ram [0:63];
-initial begin
-$readmemb(“rams_20c.data”, ram, 0, 63); end
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">ram</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">63</span><span class="p">];</span>
+<span class="k">initial</span> <span class="k">begin</span>
+<span class="nb">$readmemb</span><span class="p">(</span><span class="s">&quot;rams_20c.data&quot;</span><span class="p">,</span> <span class="n">ram</span><span class="p">,</span> <span class="mh">0</span><span class="p">,</span> <span class="mh">63</span><span class="p">);</span> <span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="max-fanout">
+<h3>MAX_FANOUT<a class="headerlink" href="#max-fanout" title="永久链接至标题">¶</a></h3>
+<p>该属性告诉综合工具，限制寄存器和信号的扇出。可以在 RTL 中指定该属性，将其作为工程的一部分，其值为整数。该属性只能用于寄存器和组合信号。可以在 RTL 或 XDC 中设置该属性。该属性可以覆盖在综合属性设置中 -fanout_limit 的值。</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">*</span> <span class="n">max_fanout</span> <span class="o">=</span> <span class="mh">50</span> <span class="o">*</span><span class="p">)</span> <span class="kt">reg</span> <span class="n">sig1</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">sig1</span> <span class="o">:</span> <span class="kt">std_logic</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">max_fanout</span> <span class="o">:</span> <span class="kt">integer</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">max_fanout</span> <span class="o">:</span> <span class="k">signal</span> <span class="k">is</span> <span class="mi">50</span><span class="p">;</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="https://cloud.tencent.com/developer/article/1530601">https://cloud.tencent.com/developer/article/1530601</a></p>

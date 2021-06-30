@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 六 5月 23 22:04:29 2020 (+0800)
-.. Last-Updated: 二 6月 29 22:02:56 2021 (+0800)
+.. Last-Updated: 三 6月 30 18:20:32 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 13
+..     Update #: 16
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -95,7 +95,7 @@ ASYNC_REG
 
 从而，保证1号、2号触发器在布局时会被放置在同一个SLICE内，减少线延迟对时序的影响。
 
-当遇到此属性的时候，Vivado综合器就会将其视为DONT_TOUCH属性，并在网表中向前推送ASYNC_REG属性。后续的流程中，布局布线的工具也会收到该属性正确处理， 在后面布局的时候就能保证1号和2号触发器被放置到同一个SLICE中，可以减少线延时对时序的影响。假如没有这个属性，综合器很可能就把它们给优化掉，并且在后续的流程中也无法正确处理了。
+当遇到此属性的时候，Vivado综合器就会将其视为 DONT_TOUCH 属性，并在网表中向前推送ASYNC_REG属性。后续的流程中，布局布线的工具也会收到该属性正确处理， 在后面布局的时候就能保证1号和2号触发器被放置到同一个SLICE中，可以减少线延时对时序的影响。假如没有这个属性，综合器很可能就把它们给优化掉，并且在后续的流程中也无法正确处理了。
 
  这个属性可以用在RTL和XDC文件中。
 
@@ -191,6 +191,15 @@ KEEP_HIERARCHY
    (* keep_hirearchy = "true" *) u0 (.in1(in1), .in2(in2), .out1(temp1));
 
 
+.. code:: vhdl
+
+   --module
+   attribute keep_hirearchy : string;
+   sttribute keep_hirearchy of beh : architecture is "yes";	  
+
+   --instance
+   attribute keep_hirearchy : string;
+   sttribute keep_hirearchy of u0 : label is "yes";   
 
    
 
@@ -285,7 +294,7 @@ RAM_STYLE
 .. code:: verilog
 
    //Verilog示例
-   (* ram_style = “distributed” *) reg [size-1:0] myram [2**addr-1:0];  
+   (* ram_style = "distributed" *) reg [size-1:0] myram [2**addr-1:0];  
 
 .. code:: vhdl
 
@@ -308,7 +317,7 @@ RAM_DECOMP
 .. code:: verilog
 
    //Verilog示例
-   (* ram_decomp = “power” *) reg [size-1:0] myram [2**addr-1:0]; 
+   (* ram_decomp = "power" *) reg [size-1:0] myram [2**addr-1:0]; 
 
 .. code:: tcl
 
@@ -331,7 +340,7 @@ ROM_STYLE
    
    --VHDL 示例
    attribute rom_style : string;
-   attribute rom_style of myrom : signal is “distributed”;
+   attribute rom_style of myrom : signal is "distributed";
 
 ----------------------------------------------------------------------
 RAM内容的初始化方式
@@ -351,11 +360,11 @@ RAM内容的初始化方式
    type ram_type is array (0 to 31) of std_logic_vector(19 downto 0); 
    signal RAM : ram_type :=
    (
-   X”0200A”, X”00300”, X”08101”, X”04000”, X”08601”, X”0233A”, 
-   X”00300”, X”08602”, X”02310”, X”0203B”, X”08300”, X”04002”, 
-   X”08201”, X”00500”, X”04001”, X”02500”, X”00340”, X”00241”, 
-   X”04002”, X”08300”, X”08201”, X”00500”, X”08101”, X”00602”, 
-   X”04003”, X”0241E”, X”00301”, X”00102”, X”02122”, X”02021”, X”0030D”, X"08201"
+   X"0200A", X"00300", X"08101", X"04000", X"08601", X"0233A", 
+   X"00300", X"08602", X"02310", X"0203B", X"08300", X"04002", 
+   X"08201", X"00500", X"04001", X"02500", X"00340", X"00241", 
+   X"04002", X"08300", X"08201", X"00500", X"08101", X"00602", 
+   X"04003", X"0241E", X"00301", X"00102", X"02122", X"02021", X"0030D", X"08201"
    );
 
 也可将RAM中所有bit位置都初始化为同一个值：
@@ -404,9 +413,26 @@ Verilog 使用系统任务 $readmemb 或 $readmemh 来分别下载二进制和16
 
    reg [31:0] ram [0:63];
    initial begin
-   $readmemb(“rams_20c.data”, ram, 0, 63); end
+   $readmemb("rams_20c.data", ram, 0, 63); end
 
 
+
+----------------------------------------------------------------------
+MAX_FANOUT
+----------------------------------------------------------------------
+
+该属性告诉综合工具，限制寄存器和信号的扇出。可以在 RTL 中指定该属性，将其作为工程的一部分，其值为整数。该属性只能用于寄存器和组合信号。可以在 RTL 或 XDC 中设置该属性。该属性可以覆盖在综合属性设置中 -fanout_limit 的值。
+
+
+.. code:: verilog
+
+   (* max_fanout = 50 *) reg sig1;
+
+.. code:: vhdl
+
+   signal sig1 : std_logic;
+   attribute max_fanout : integer;
+   attribute max_fanout : signal is 50;
 
 
 
@@ -414,6 +440,7 @@ Verilog 使用系统任务 $readmemb 或 $readmemh 来分别下载二进制和16
 
 
 
+	  
 
 https://cloud.tencent.com/developer/article/1530601
 

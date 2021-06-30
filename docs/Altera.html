@@ -97,6 +97,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#modelsim">ModelSim</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#signaltapii">SignalTapII</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">综合属性</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
@@ -268,6 +269,39 @@
 <div class="section" id="signaltapii">
 <h2>SignalTapII<a class="headerlink" href="#signaltapii" title="永久链接至标题">¶</a></h2>
 <img alt="_images/SignalTapII_use0.png" src="_images/SignalTapII_use0.png" />
+</div>
+<div class="section" id="id1">
+<h2>综合属性<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>在一些应用中，有些特定的信号我们需要保留，用于进行采集检测，而综合器会自动优化把它综合掉，因此需要告诉综合器，不让它优化掉需要保留的信号。</p>
+<p><strong>需要保留的信号是引线</strong></p>
+<p>verilog HDL 定义的时候在后面增加</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="cm">/* synthesis keep */</span>
+
+<span class="c1">// 例如</span>
+<span class="kt">wire</span> <span class="n">keep_wire</span> <span class="cm">/* synthesis keep */</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>VHDL 需要麻烦些，多写几行定义约束</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">keep_wire</span> <span class="o">:</span> <span class="kt">std_logic</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">keep</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">keep</span> <span class="k">of</span> <span class="n">keep_wire</span> <span class="o">:</span> <span class="k">signal</span> <span class="k">is</span> <span class="n">true</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>需要保留的是寄存器</strong></p>
+<p>verilog HDL 定义的时候在后面增加</p>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>/* synthesis noprune */  避免优化掉没output的reg
+/* synthesis preserve */ 避免將reg优化为常数，或者合并重复的reg。
+
+// 例如
+reg reg1 /* synthesis preserve */;
+</pre></div>
+</div>
+<p>VHDL 同样需要麻烦些，多写几行定义约束</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">reg1</span> <span class="o">:</span> <span class="kt">std_logic</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">preserve</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+<span class="k">attribute</span> <span class="n">preserve</span> <span class="k">of</span> <span class="n">reg1</span> <span class="o">:</span> <span class="k">signal</span> <span class="k">is</span> <span class="n">true</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 </div>
 
