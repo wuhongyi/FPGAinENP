@@ -1,40 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>经验总结 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="verilog 临时存放" href="tempverilog.html" />
@@ -66,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,25 +90,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
-<p class="caption"><span class="caption-text">语法</span></p>
+<p class="caption" role="heading"><span class="caption-text">语法</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
 </ul>
-<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<p class="caption" role="heading"><span class="caption-text">硬件介绍</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
@@ -108,23 +116,23 @@
 <li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
 <li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
-<p class="caption"><span class="caption-text">计数器</span></p>
+<p class="caption" role="heading"><span class="caption-text">计数器</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
-<p class="caption"><span class="caption-text">状态机</span></p>
+<p class="caption" role="heading"><span class="caption-text">状态机</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
-<p class="caption"><span class="caption-text">FIFO</span></p>
+<p class="caption" role="heading"><span class="caption-text">FIFO</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">HLS</span></p>
+<p class="caption" role="heading"><span class="caption-text">HLS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
 </ul>
-<p class="caption"><span class="caption-text">经验总结</span></p>
+<p class="caption" role="heading"><span class="caption-text">经验总结</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">经验总结</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">计数器</a></li>
@@ -143,6 +151,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -177,19 +186,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>经验总结</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/exp.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/exp.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -202,9 +213,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>经验总结<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id2">
+<section id="id2">
 <h2>计数器<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><p>画出输入、输出波形（根据功能要求、画出输入和输出的波形）</p></li>
@@ -216,8 +227,8 @@
 <li><p>写出计数器代码</p></li>
 <li><p>写出其它信号代码</p></li>
 </ul>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>状态机<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><p>明确功能</p></li>
@@ -229,23 +240,23 @@
 <li><p>状态机代码</p></li>
 <li><p>功能代码</p></li>
 </ul>
-</div>
-<div class="section" id="fifo">
+</section>
+<section id="fifo">
 <h2>FIFO<a class="headerlink" href="#fifo" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><p>FIFO的写使能写数据，同时用组合逻辑或者同时用时序逻辑。</p></li>
 <li><p>FIFO的读使能，用组合逻辑。</p></li>
 <li><p>数据的输出用组合逻辑。</p></li>
 </ul>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>波形<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><p>时序逻辑的波形观看方法：时钟上升沿前看输入，时钟上升沿后看输出。</p></li>
 <li><p>组合逻辑的波形观看方法：输入变输出即刻变。</p></li>
 </ul>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h2>抄书<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <p><strong>与门</strong></p>
 <p>与门是具有两个或多个输入端和一个输入端的逻辑门。当所有的输入都是逻辑1时，与门输出为逻辑1.换句话说，如果任何输出为0则输出为0。</p>
@@ -401,7 +412,7 @@
    <span class="k">output</span>    <span class="n">t_rdy</span><span class="p">;</span>
    <span class="k">output</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">t_data</span><span class="p">;</span>
 
-   <span class="k">localparam</span> <span class="no">IDLE_T</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d0</span><span class="p">,</span> <span class="no">ASSERT_TRDY</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">,</span> <span class="no">DEASSERT_TRDY</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d2</span><span class="p">;</span>
+   <span class="k">localparam</span> <span class="n">IDLE_T</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d0</span><span class="p">,</span> <span class="n">ASSERT_TRDY</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">,</span> <span class="n">DEASSERT_TRDY</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d2</span><span class="p">;</span>
 
    <span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>          <span class="n">t_hndshk_state</span><span class="p">,</span> <span class="n">t_hndshk_state_nxt</span><span class="p">;</span>
    <span class="kt">reg</span>                <span class="n">t_rdy</span><span class="p">,</span> <span class="n">t_rdy_nxt</span><span class="p">;</span>
@@ -420,7 +431,7 @@
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">(</span><span class="n">data_avail</span><span class="p">)</span> <span class="c1">// if the data is available in transmit s ide</span>
               <span class="k">begin</span>
-                 <span class="n">t_hndshk_state_nxt</span> <span class="o">=</span> <span class="no">ASSERT_TRDY</span><span class="p">;</span>
+                 <span class="n">t_hndshk_state_nxt</span> <span class="o">=</span> <span class="n">ASSERT_TRDY</span><span class="p">;</span>
                  <span class="n">t_rdy_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
                  <span class="n">t_data_nxt</span> <span class="o">=</span> <span class="n">transmit_data</span><span class="p">;</span><span class="c1">// data to be transferre d</span>
               <span class="k">end</span>
@@ -430,7 +441,7 @@
             <span class="k">if</span><span class="p">(</span><span class="n">r_ack_tclk</span><span class="p">)</span>
               <span class="k">begin</span>
                  <span class="n">t_rdy_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
-                 <span class="n">t_hndshk_state_nxt</span> <span class="o">=</span> <span class="no">DEASSERT_TRDY</span><span class="p">;</span>
+                 <span class="n">t_hndshk_state_nxt</span> <span class="o">=</span> <span class="n">DEASSERT_TRDY</span><span class="p">;</span>
                  <span class="n">t_data_nxt</span> <span class="o">=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
               <span class="k">end</span>
             <span class="k">else</span>
@@ -445,12 +456,12 @@
               <span class="k">begin</span>
                  <span class="k">if</span><span class="p">(</span><span class="n">data_avail</span><span class="p">)</span>
                    <span class="k">begin</span>
-                      <span class="n">t_hndshk_state_nxt</span> <span class="o">=</span> <span class="no">ASSERT_TRDY</span><span class="p">;</span>
+                      <span class="n">t_hndshk_state_nxt</span> <span class="o">=</span> <span class="n">ASSERT_TRDY</span><span class="p">;</span>
                       <span class="n">t_rdy_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
                       <span class="n">t_data_nxt</span> <span class="o">=</span> <span class="n">transmit_data</span><span class="p">;</span>
                    <span class="k">end</span>
                  <span class="k">else</span>
-                   <span class="n">t_hndshk_state_nxt</span> <span class="o">=</span> <span class="no">IDLE_T</span><span class="p">;</span>
+                   <span class="n">t_hndshk_state_nxt</span> <span class="o">=</span> <span class="n">IDLE_T</span><span class="p">;</span>
               <span class="k">end</span>
          <span class="k">end</span>
        <span class="k">default</span><span class="o">:</span>
@@ -463,7 +474,7 @@
      <span class="k">begin</span>
      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">resetb_tclk</span><span class="p">)</span>
        <span class="k">begin</span>
-          <span class="n">t_hndshk_state</span> <span class="o">&lt;=</span> <span class="no">IDLE_T</span><span class="p">;</span>
+          <span class="n">t_hndshk_state</span> <span class="o">&lt;=</span> <span class="n">IDLE_T</span><span class="p">;</span>
           <span class="n">t_rdy</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
           <span class="n">t_data</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
           <span class="n">r_ack_d1</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
@@ -498,7 +509,7 @@
    <span class="k">input</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">t_data</span><span class="p">;</span>
    <span class="k">output</span>    <span class="n">r_ack</span><span class="p">;</span>
 
-   <span class="k">localparam</span> <span class="no">IDLE_R</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span> <span class="no">ASSERT_ACK</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">localparam</span> <span class="n">IDLE_R</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span> <span class="n">ASSERT_ACK</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
    <span class="kt">reg</span>               <span class="n">r_hndshk_state</span><span class="p">,</span> <span class="n">r_hndshk_state_nxt</span><span class="p">;</span>
    <span class="kt">reg</span>               <span class="n">r_ack</span><span class="p">,</span> <span class="n">r_ack_nxt</span><span class="p">;</span>
    <span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>        <span class="n">t_data_rclk</span><span class="p">,</span> <span class="n">t_data_rclk_nxt</span><span class="p">;</span>
@@ -515,7 +526,7 @@
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">(</span><span class="n">t_rdy_rclk</span><span class="p">)</span>
               <span class="k">begin</span>
-                 <span class="n">r_hndshk_state_nxt</span> <span class="o">=</span> <span class="no">ASSERT_ACK</span><span class="p">;</span>
+                 <span class="n">r_hndshk_state_nxt</span> <span class="o">=</span> <span class="n">ASSERT_ACK</span><span class="p">;</span>
                  <span class="n">r_ack_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
                  <span class="n">t_data_rclk_nxt</span> <span class="o">=</span> <span class="n">t_data</span><span class="p">;</span>
               <span class="k">end</span>
@@ -525,7 +536,7 @@
             <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">t_rdy_rclk</span><span class="p">)</span>
               <span class="k">begin</span>
                  <span class="n">r_ack_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
-                 <span class="n">r_hndshk_state_nxt</span> <span class="o">=</span> <span class="no">IDLE_R</span><span class="p">;</span>
+                 <span class="n">r_hndshk_state_nxt</span> <span class="o">=</span> <span class="n">IDLE_R</span><span class="p">;</span>
               <span class="k">end</span>
             <span class="k">else</span>
               <span class="n">r_ack_nxt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
@@ -540,7 +551,7 @@
      <span class="k">begin</span>
      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">resetb_rclk</span><span class="p">)</span>
        <span class="k">begin</span>
-          <span class="n">r_hndshk_state</span> <span class="o">&lt;=</span> <span class="no">IDLE_R</span><span class="p">;</span>
+          <span class="n">r_hndshk_state</span> <span class="o">&lt;=</span> <span class="n">IDLE_R</span><span class="p">;</span>
           <span class="n">r_ack</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
           <span class="n">t_data_rclk</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
           <span class="n">t_rdy_d1</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
@@ -662,8 +673,8 @@
    <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">gnt_vector</span><span class="p">,</span> <span class="n">gnt_vector_nxt</span><span class="p">;</span>
    <span class="kt">wire</span>      <span class="n">any_request</span><span class="p">;</span>
 
-   <span class="k">parameter</span> <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">,</span> <span class="no">END_ACCESS</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">;</span>
-   <span class="k">parameter</span> <span class="no">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="no">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="n">IDLE</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">,</span> <span class="n">END_ACCESS</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="n">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="n">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
 
 
    <span class="k">assign</span> <span class="n">any_request</span> <span class="o">=</span> <span class="p">(</span><span class="n">req_vector</span><span class="o">!=</span><span class="mi">&#39;d0</span><span class="p">);</span>
@@ -673,20 +684,20 @@
      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">arbiter_state</span><span class="p">;</span>
      <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="n">gnt_vector</span><span class="p">;</span>
      <span class="k">case</span><span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
-            <span class="k">if</span><span class="p">(</span><span class="n">any_request</span><span class="p">)</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">any_request</span><span class="p">)</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
             <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
             <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
             <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">2</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
             <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">3</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
          <span class="k">end</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">((</span><span class="n">end_access_vector</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vector</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vector</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vector</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vector</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vector</span><span class="p">[</span><span class="mh">2</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vector</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vector</span><span class="p">[</span><span class="mh">3</span><span class="p">]))</span>
               <span class="k">begin</span>
-                 <span class="k">if</span><span class="p">(</span><span class="n">any_request</span><span class="p">)</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
-                 <span class="k">else</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+                 <span class="k">if</span><span class="p">(</span><span class="n">any_request</span><span class="p">)</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
+                 <span class="k">else</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
 
                  <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
                  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vector</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span> <span class="n">gnt_vector_nxt</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
@@ -702,7 +713,7 @@
      <span class="k">begin</span>
      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">resetb</span><span class="p">)</span>
        <span class="k">begin</span>
-          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
           <span class="n">gnt_vector</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
        <span class="k">end</span>
      <span class="k">else</span>
@@ -741,8 +752,8 @@
    <span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">grant_posn</span><span class="p">,</span> <span class="n">grant_posn_nxt</span><span class="p">;</span>
 
 
-   <span class="k">parameter</span> <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">,</span> <span class="no">END_ACCESS</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">;</span>
-   <span class="k">parameter</span> <span class="no">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="no">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="n">IDLE</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">,</span> <span class="n">END_ACCESS</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="n">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="n">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
 
    <span class="k">assign</span> <span class="n">any_req_asserted</span> <span class="o">=</span> <span class="p">(</span><span class="n">req_vec</span><span class="o">!=</span><span class="mi">&#39;d0</span><span class="p">);</span>
 
@@ -764,11 +775,11 @@
      <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="n">gnt_vec</span><span class="p">;</span>
 
      <span class="k">case</span><span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">((</span><span class="n">gnt_vec</span><span class="o">==</span><span class="mi">&#39;d0</span><span class="p">)</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]))</span>
               <span class="k">begin</span>
-                 <span class="k">if</span><span class="p">(</span><span class="n">any_req_asserted</span><span class="p">)</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+                 <span class="k">if</span><span class="p">(</span><span class="n">any_req_asserted</span><span class="p">)</span> <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
                  <span class="k">if</span><span class="p">(</span><span class="n">relative_req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
                    <span class="k">begin</span>
                       <span class="k">case</span><span class="p">(</span><span class="n">grant_posn</span><span class="p">)</span>
@@ -821,11 +832,11 @@
                    <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">;</span>
               <span class="k">end</span>
          <span class="k">end</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">((</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]))</span>
               <span class="k">begin</span>
-                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
 
                  <span class="k">if</span><span class="p">(</span><span class="n">relative_req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
                    <span class="k">begin</span>
@@ -886,7 +897,7 @@
      <span class="k">begin</span>
      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">resetb</span><span class="p">)</span>
        <span class="k">begin</span>
-          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
           <span class="n">gnt_vec</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
           <span class="n">grant_posn</span> <span class="o">&lt;=</span> <span class="mi">&#39;d2</span><span class="p">;</span>
        <span class="k">end</span>
@@ -950,8 +961,8 @@
    <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">req_vec_wt_stored_nxt</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
    <span class="kt">wire</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>        <span class="n">cnt_reqdone_vec</span><span class="p">;</span>
 
-   <span class="k">parameter</span> <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">,</span> <span class="no">ARM_VALUE</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b010</span><span class="p">,</span> <span class="no">END_ACCESS</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b100</span><span class="p">;</span>
-   <span class="k">parameter</span> <span class="no">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="no">ARM_VALUE_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">,</span> <span class="no">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">2</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="n">IDLE</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">,</span> <span class="n">ARM_VALUE</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b010</span><span class="p">,</span> <span class="n">END_ACCESS</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b100</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="n">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="n">ARM_VALUE_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">,</span> <span class="n">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">2</span><span class="p">;</span>
 
    <span class="k">assign</span>  <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt_0</span><span class="p">;</span>
    <span class="k">assign</span>  <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt_1</span><span class="p">;</span>
@@ -966,11 +977,11 @@
      <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_req_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">];</span>
 
      <span class="k">case</span><span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">(</span><span class="n">req_n_valid</span><span class="p">)</span>
               <span class="k">begin</span>
-                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">ARM_VALUE</span><span class="p">;</span>
+                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">ARM_VALUE</span><span class="p">;</span>
                  <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
                  <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span>
                  <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">2</span><span class="p">];</span>
@@ -980,25 +991,25 @@
                  <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">;</span>
               <span class="k">end</span>
          <span class="k">end</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">ARM_VALUE_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">ARM_VALUE_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">((</span><span class="n">gnt_vec</span><span class="o">==</span><span class="mi">&#39;d0</span><span class="p">)</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]))</span>
               <span class="k">begin</span>
                  <span class="k">if</span><span class="p">(</span><span class="n">req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;!</span><span class="n">cnt_reqdone_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
                    <span class="k">begin</span>
-                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
                       <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">;</span>
                       <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">-</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
                    <span class="k">end</span>
                  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;!</span><span class="n">cnt_reqdone_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span>
                    <span class="k">begin</span>
-                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
                       <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b010</span><span class="p">;</span>
                       <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_req_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">-</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
                    <span class="k">end</span>
                  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">req_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;!</span><span class="n">cnt_reqdone_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">])</span>
                    <span class="k">begin</span>
-                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
                       <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b100</span><span class="p">;</span>
                       <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_req_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">-</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
                    <span class="k">end</span>
@@ -1011,11 +1022,11 @@
                    <span class="k">end</span>
               <span class="k">end</span>
          <span class="k">end</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">((</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]))</span>
               <span class="k">begin</span>
-                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">ARM_VALUE</span><span class="p">;</span>
+                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">ARM_VALUE</span><span class="p">;</span>
 
                  <span class="k">if</span><span class="p">(</span><span class="n">req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;!</span><span class="n">cnt_reqdone_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
                    <span class="k">begin</span>
@@ -1053,7 +1064,7 @@
      <span class="k">begin</span>
      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">resetb</span><span class="p">)</span>
        <span class="k">begin</span>
-          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
           <span class="n">gnt_vec</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
           <span class="n">count_req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
           <span class="n">count_req_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
@@ -1117,8 +1128,8 @@
    <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>         <span class="n">req_vec_wt_stored_nxt</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
    <span class="kt">wire</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>        <span class="n">req_vec_wt</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
 
-   <span class="k">parameter</span> <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">,</span> <span class="no">ARM_VALUE</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b010</span><span class="p">,</span> <span class="no">END_ACCESS</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b100</span><span class="p">;</span>
-   <span class="k">parameter</span> <span class="no">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="no">ARM_VALUE_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">,</span> <span class="no">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">2</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="n">IDLE</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">,</span> <span class="n">ARM_VALUE</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b010</span><span class="p">,</span> <span class="n">END_ACCESS</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b100</span><span class="p">;</span>
+   <span class="k">parameter</span> <span class="n">IDLE_ID</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span> <span class="n">ARM_VALUE_ID</span> <span class="o">=</span> <span class="mh">1</span><span class="p">,</span> <span class="n">END_ACCESS_ID</span> <span class="o">=</span> <span class="mh">2</span><span class="p">;</span>
 
    <span class="k">assign</span>  <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt_0</span><span class="p">;</span>
    <span class="k">assign</span>  <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt_1</span><span class="p">;</span>
@@ -1156,11 +1167,11 @@
      <span class="n">grant_posn_nxt</span> <span class="o">=</span> <span class="n">grant_posn</span><span class="p">;</span>
 
      <span class="k">case</span><span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">IDLE_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">(</span><span class="n">req_n_valid</span><span class="p">)</span>
               <span class="k">begin</span>
-                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">ARM_VALUE</span><span class="p">;</span>
+                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">ARM_VALUE</span><span class="p">;</span>
                  <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
                  <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span>
                  <span class="n">count_req_vec_nxt</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_vec_wt</span><span class="p">[</span><span class="mh">2</span><span class="p">];</span>
@@ -1170,13 +1181,13 @@
                  <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">;</span>
               <span class="k">end</span>
          <span class="k">end</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">ARM_VALUE_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">ARM_VALUE_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">((</span><span class="n">gnt_vec</span><span class="o">==</span><span class="mi">&#39;d0</span><span class="p">)</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]))</span>
               <span class="k">begin</span>
                  <span class="k">if</span><span class="p">(</span><span class="n">relative_req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;!</span><span class="n">relative_cntdone_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
                    <span class="k">begin</span>
-                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
                       <span class="k">case</span><span class="p">(</span><span class="n">grant_posn</span><span class="p">)</span>
                         <span class="mh">2</span><span class="mi">&#39;d0</span><span class="o">:</span> <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b010</span><span class="p">;</span>
                         <span class="mh">2</span><span class="mi">&#39;d1</span><span class="o">:</span> <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b100</span><span class="p">;</span>
@@ -1198,7 +1209,7 @@
                    <span class="k">end</span>
                  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">relative_req_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;!</span><span class="n">relative_cntdone_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span>
                    <span class="k">begin</span>
-                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
                       <span class="k">case</span><span class="p">(</span><span class="n">grant_posn</span><span class="p">)</span>
                         <span class="mh">2</span><span class="mi">&#39;d0</span><span class="o">:</span> <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b100</span><span class="p">;</span>
                         <span class="mh">2</span><span class="mi">&#39;d1</span><span class="o">:</span> <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">;</span>
@@ -1220,7 +1231,7 @@
                    <span class="k">end</span>
                  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">relative_req_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;!</span><span class="n">relative_cntdone_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">])</span>
                    <span class="k">begin</span>
-                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">END_ACCESS</span><span class="p">;</span>
+                      <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">END_ACCESS</span><span class="p">;</span>
                       <span class="k">case</span><span class="p">(</span><span class="n">grant_posn</span><span class="p">)</span>
                         <span class="mh">2</span><span class="mi">&#39;d0</span><span class="o">:</span> <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">;</span>
                         <span class="mh">2</span><span class="mi">&#39;d1</span><span class="o">:</span> <span class="n">gnt_vec_nxt</span> <span class="o">=</span> <span class="mh">3</span><span class="mb">&#39;b010</span><span class="p">;</span>
@@ -1249,11 +1260,11 @@
                    <span class="k">end</span>
               <span class="k">end</span>
          <span class="k">end</span>
-       <span class="n">arbiter_state</span><span class="p">[</span><span class="no">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
+       <span class="n">arbiter_state</span><span class="p">[</span><span class="n">END_ACCESS_ID</span><span class="p">]</span><span class="o">:</span>
          <span class="k">begin</span>
             <span class="k">if</span><span class="p">((</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">])</span><span class="o">||</span><span class="p">(</span><span class="n">end_access_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">&amp;</span><span class="n">gnt_vec</span><span class="p">[</span><span class="mh">2</span><span class="p">]))</span>
               <span class="k">begin</span>
-                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="no">ARM_VALUE</span><span class="p">;</span>
+                 <span class="n">arbiter_state_nxt</span> <span class="o">=</span> <span class="n">ARM_VALUE</span><span class="p">;</span>
                  <span class="k">if</span><span class="p">(</span><span class="n">relative_req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="o">&amp;!</span><span class="n">relative_cntdone_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
                    <span class="k">begin</span>
                       <span class="k">case</span><span class="p">(</span><span class="n">grant_posn</span><span class="p">)</span>
@@ -1337,7 +1348,7 @@
      <span class="k">begin</span>
      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">resetb</span><span class="p">)</span>
        <span class="k">begin</span>
-          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+          <span class="n">arbiter_state</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
           <span class="n">gnt_vec</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
           <span class="n">count_req_vec</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
           <span class="n">count_req_vec</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">&#39;d0</span><span class="p">;</span>
@@ -1369,37 +1380,37 @@
 <p><strong>总线接口</strong></p>
 <p>当多个（两个或两个以上）用户需要共享资源或相互之间传送数据时，可以使用总线进行互联。PCI 总线就是一种典型的并行总线，不同的用户可以通过它进行数据收发。典型的总线具有三组信号：地址线、数据线和控制信号。此外还需要一定的总线仲裁机制，使每个用户可以获得总线的使用许可，从而可以使用总线传送数据和命令。</p>
 <p>在获取许可之后，用户可以开始向总线上发送命令、数据和地址。有的总线中地址线和数据线是复用的。获得许可后，用户首先输出地址，随后输出一个或多个数据。需要注意的是，获得许可后，用户可能不会立刻输出地址或数据。获得许可意味着它被选为下一个可以使用总线的用户，它需要等待（通过特定的信号）最后一个用户完成总线操作后才能开始自己的总线操作。为了提高总线效率，在选择下一个用户之前仲裁已经进行，但只有在当前用户完成总线操作后，该用户才能访问总线。</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="tempverilog.html" class="btn btn-neutral float-right" title="verilog 临时存放" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="HLS.html" class="btn btn-neutral float-left" title="高层次综合" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="tempverilog.html" class="btn btn-neutral float-right" title="verilog 临时存放" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="HLS.html" class="btn btn-neutral float-left" title="高层次综合" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -1407,7 +1418,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

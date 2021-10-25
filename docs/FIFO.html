@@ -1,40 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>FIFO &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="高层次综合" href="HLS.html" />
@@ -66,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,25 +90,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
-<p class="caption"><span class="caption-text">语法</span></p>
+<p class="caption" role="heading"><span class="caption-text">语法</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
 </ul>
-<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<p class="caption" role="heading"><span class="caption-text">硬件介绍</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
@@ -108,15 +116,15 @@
 <li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
 <li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
-<p class="caption"><span class="caption-text">计数器</span></p>
+<p class="caption" role="heading"><span class="caption-text">计数器</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
-<p class="caption"><span class="caption-text">状态机</span></p>
+<p class="caption" role="heading"><span class="caption-text">状态机</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
-<p class="caption"><span class="caption-text">FIFO</span></p>
+<p class="caption" role="heading"><span class="caption-text">FIFO</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">FIFO</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">FIFO 规则</a><ul>
@@ -130,11 +138,11 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">HLS</span></p>
+<p class="caption" role="heading"><span class="caption-text">HLS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
 </ul>
-<p class="caption"><span class="caption-text">经验总结</span></p>
+<p class="caption" role="heading"><span class="caption-text">经验总结</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
@@ -146,6 +154,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -180,19 +189,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>FIFO</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/FIFO.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/FIFO.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -205,71 +216,71 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="fifo">
+  <section id="fifo">
 <h1>FIFO<a class="headerlink" href="#fifo" title="永久链接至标题">¶</a></h1>
 <p>FIFO （First Input First Output），即先入先出队列。在数字电路设计中所说的 FIFO 实际上是指 FIFO 存储器，主要用于数据缓存和异步处理，当然 FIFO 存储器缓存数据也遵循先入先出的原则。</p>
 <p>FIFO 本质上是一个 RAM，它与普通存储器的区别是没有外部读/写地址线，这样使用起来非常简单，但缺点是只能顺序写入数据，顺序读出数据，其数据地址由内部读/写指针自动加1完成，不能像普通存储器那样可以由地址线决定读取或写入某个指定的地址。</p>
-<div class="section" id="id1">
+<section id="id1">
 <h2>FIFO 规则<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<div class="section" id="fifo1-show-ahead">
+<section id="fifo1-show-ahead">
 <h3>FIFO规则1： 使用 Show-ahead 都模式<a class="headerlink" href="#fifo1-show-ahead" title="永久链接至标题">¶</a></h3>
 <p>根据 FIFO 的读模式，一般有两种使用模式：Show-ahead 和 Nornal 模式。这两种模式的区别在生成 FIFO IP 核步骤中说明。</p>
 <p>其中 Normal 模式是读使能有效后的下一拍读出相应数据。而 Show-ahead 模式是先进行数据输出，在读使能有效时对 FIFO 输出数据进行更新。即 FIFO 中的第一个数据输出在总线上，在读使能信号到来的下一拍直接输出第二个数据。</p>
 <p>推荐使用 Show-ahead 模式，因为在这种模式下可以将读使能信号与读出数据当做有效信号和数据来使用，只要读使能有效则对应的数据就始终有效。</p>
-</div>
-<div class="section" id="fifo2">
+</section>
+<section id="fifo2">
 <h3>FIFO规则2： 读、写隔离规则<a class="headerlink" href="#fifo2" title="永久链接至标题">¶</a></h3>
 <p>读、写隔离规则是指： 读控制和写控制是独立的，它们之间除了用 FIFO 交流信息外，不能有任何信息传递。因此，既不能根据 FIFO 的读状态或者读出的数据来决定写行为，也不能根据 FIFO 的写状态和写入的数据来决定读行为。</p>
-</div>
-<div class="section" id="fifo3">
+</section>
+<section id="fifo3">
 <h3>FIFO规则3： 读使能必须判断空状态，并且用组合逻辑产生<a class="headerlink" href="#fifo3" title="永久链接至标题">¶</a></h3>
 <p>rdreq 必须由组合逻辑产生，原因与 empty 有关。</p>
 <p>通过下图来说明 rdreq 与 empty 的关系。使用 Show-ahead 模式，假设 FIFO 中存有 3 字节数据，现对 FIFO 进行读操作，要把 FIFO 中存的所有数据读出来。</p>
 <img alt="_images/FIFO_rdreq.png" src="_images/FIFO_rdreq.png" />
 <p>从图中可以看出，由于电路存在一定延时，在 a 时刻 FIFO 已经为空，empty 变为高电平需要经历一段时间。如果用时序逻辑产生 rereq，在 a 时刻 empty 为 0，则表示 FIFO 中还有数据（实际上已经为空），因此 rereq 还要保持一个时钟周期。在 FIFO 为空的情况下要再读取一个数据，读操作会出错。如果用组合逻辑产生 rereq，当 empty 为 1 时，rdreq 马上拉低，图中的实线部分波形，就不会出现读取空 FIFO 的错误。</p>
-</div>
-<div class="section" id="fifo4-fifo">
+</section>
+<section id="fifo4-fifo">
 <h3>FIFO规则4： 处理报文时，把指示信号与数据一起存入FIFO<a class="headerlink" href="#fifo4-fifo" title="永久链接至标题">¶</a></h3>
 <p>FIFO 不仅能保存“数据”，也能保存“指示信号”，因此可以将数据和对应的“指示信号值”一起写入 FIFO。</p>
 <p>假设一个 8 位宽度的数据，如生成一个 10 位宽度的 FIFO，保存到 FIFO 的数据是 {din, din_sop, din_eop}。通过这种方式保存后，就很容易产生 dout_sop 和 dout_eop 信号了，从 FIFO 中读到的数据，就可以用来判断报文的开始和结束，从而用于其它判断等。</p>
-</div>
-<div class="section" id="fifo5-fifo">
+</section>
+<section id="fifo5-fifo">
 <h3>FIFO规则5： 读、写时钟不同时，必须用异步FIFO<a class="headerlink" href="#fifo5-fifo" title="永久链接至标题">¶</a></h3>
 <p>FIFO 按时钟分可以分为同步 FIFO 和异步 FIFO。</p>
 <p>同步 FIFO：指读时钟和写时钟都相同的 FIFO。同步 FIFO 内部没有异步处理，因此结构简单，资源占用较少。</p>
 <p>异步 FIFO 是指读时钟和写时钟可以不同的 FIFO。异步 FIFO 内部有专门的异步处理电路，处理读、写信号的交互，因此异步 FIFO 结构复杂，占用资源较大。</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="HLS.html" class="btn btn-neutral float-right" title="高层次综合" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="FSM.html" class="btn btn-neutral float-left" title="状态机" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="HLS.html" class="btn btn-neutral float-right" title="高层次综合" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="FSM.html" class="btn btn-neutral float-left" title="状态机" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -277,7 +288,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

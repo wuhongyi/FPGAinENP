@@ -1,40 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>VHDL temp &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="LPM（library of parameterized mudules）" href="LPM.html" />
@@ -66,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,25 +90,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
-<p class="caption"><span class="caption-text">语法</span></p>
+<p class="caption" role="heading"><span class="caption-text">语法</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
 </ul>
-<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<p class="caption" role="heading"><span class="caption-text">硬件介绍</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
@@ -108,23 +116,23 @@
 <li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
 <li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
-<p class="caption"><span class="caption-text">计数器</span></p>
+<p class="caption" role="heading"><span class="caption-text">计数器</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
-<p class="caption"><span class="caption-text">状态机</span></p>
+<p class="caption" role="heading"><span class="caption-text">状态机</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
-<p class="caption"><span class="caption-text">FIFO</span></p>
+<p class="caption" role="heading"><span class="caption-text">FIFO</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">HLS</span></p>
+<p class="caption" role="heading"><span class="caption-text">HLS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
 </ul>
-<p class="caption"><span class="caption-text">经验总结</span></p>
+<p class="caption" role="heading"><span class="caption-text">经验总结</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
@@ -145,6 +153,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -179,19 +188,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>VHDL temp</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/tempvhdl.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/tempvhdl.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -204,9 +215,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="vhdl-temp">
+  <section id="vhdl-temp">
 <h1>VHDL temp<a class="headerlink" href="#vhdl-temp" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id1">
+<section id="id1">
 <h2>缩位与/缩位或运算<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p>缩位运算符，即 “reduction operator”。对于 VHDL 来说，很少有人知道其缩位运算符是什么。首先缩位运算的意思是把一个 vector 合并成一位，例如缩位与运算符：对于一个 std_logic_vector 名为 example 的变量，完成 examlle[0] and example[1] and … and example[22] 这样的运算的运算符。</p>
 <ul class="simple">
@@ -230,8 +241,8 @@
 <span class="n">res</span> <span class="o">&lt;=</span> <span class="n">and_reduct</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h2>循环<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">N_HISTOGRAM_REGS</span><span class="o">-</span><span class="mi">1</span> <span class="k">loop</span>
   <span class="n">tmp_histogram</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="n">to_unsigned</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N_HISTOGRAM_BIT</span><span class="p">));</span>
@@ -252,10 +263,10 @@
 <span class="k">end</span> <span class="k">generate</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>信号处理<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
-<div class="section" id="hls">
+<section id="hls">
 <h3>HLS 生成模块<a class="headerlink" href="#hls" title="永久链接至标题">¶</a></h3>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">BaselineRestorer</span> <span class="k">is</span>
   <span class="k">port</span> <span class="p">(</span>
@@ -423,8 +434,8 @@
 <span class="k">end</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3>手写模块<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- 1,2,4,8 个点平均</span>
 <span class="k">entity</span> <span class="nc">NoiseFilter</span> <span class="k">is</span>
@@ -507,38 +518,38 @@
 <span class="k">end</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="LPM.html" class="btn btn-neutral float-right" title="LPM（library of parameterized mudules）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="tempverilog.html" class="btn btn-neutral float-left" title="verilog 临时存放" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="LPM.html" class="btn btn-neutral float-right" title="LPM（library of parameterized mudules）" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tempverilog.html" class="btn btn-neutral float-left" title="verilog 临时存放" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -546,7 +557,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

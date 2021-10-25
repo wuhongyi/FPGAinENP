@@ -1,40 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>VHDL &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="verilog" href="verilog.html" />
@@ -66,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,18 +90,18 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
-<p class="caption"><span class="caption-text">语法</span></p>
+<p class="caption" role="heading"><span class="caption-text">语法</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">VHDL</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">程序结构</a><ul>
@@ -143,7 +151,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
 </ul>
-<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<p class="caption" role="heading"><span class="caption-text">硬件介绍</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
@@ -151,23 +159,23 @@
 <li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
 <li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
-<p class="caption"><span class="caption-text">计数器</span></p>
+<p class="caption" role="heading"><span class="caption-text">计数器</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
-<p class="caption"><span class="caption-text">状态机</span></p>
+<p class="caption" role="heading"><span class="caption-text">状态机</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
-<p class="caption"><span class="caption-text">FIFO</span></p>
+<p class="caption" role="heading"><span class="caption-text">FIFO</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">HLS</span></p>
+<p class="caption" role="heading"><span class="caption-text">HLS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
 </ul>
-<p class="caption"><span class="caption-text">经验总结</span></p>
+<p class="caption" role="heading"><span class="caption-text">经验总结</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
@@ -179,6 +187,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -213,19 +222,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>VHDL</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/VHDL.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/VHDL.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -238,9 +249,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="vhdl">
+  <section id="vhdl">
 <h1>VHDL<a class="headerlink" href="#vhdl" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id1">
+<section id="id1">
 <h2>程序结构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p>一个完整的 VHDL 程序的以及各部分说明如下：</p>
 <ul class="simple">
@@ -280,7 +291,7 @@
 </dl>
 </li>
 </ul>
-<div class="section" id="id2">
+<section id="id2">
 <h3>实体<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
 <p>实体用于定义电路的输入/输出引脚，但并不描述电路的具体构造和实现的功能。</p>
 <p>实体声明的格式是：</p>
@@ -336,8 +347,8 @@ END [实体名]; -- 可以只用 END 结束实体声明，不一定加实体名
 </dl>
 </li>
 </ul>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h3>结构体<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 <p>结构体描述实体内部的结构或功能。一个实体可对应多个结构体。每个结构体分别代表该实体功能的不同实现方案或不同描述方式。在同一时刻，只有一个结构体起作用，可以通过配置来决定使用哪一个结构体进行综合或仿真。</p>
 <p>结构体的语法格式如下：</p>
@@ -358,8 +369,8 @@ END [结构体名]
 <li><p>子程序调用： 调用过程（PROCEDURE）或函数（FUNCTION），并将获得的结果赋值给信号。</p></li>
 <li><p>元件例化语句： 调用其它设计实体描述的电路，将其作为本设计实体的一个元件。元件例化时实现层次化设计的重要语句。</p></li>
 </ul>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3>库与包的调用<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>当要引用一个库时，首先要对库名进行说明，其格式为：</p>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>LIBRARY 库名; -- 如 LIBRARY IEEE;  即调用IEEE标准库
@@ -376,11 +387,11 @@ END [结构体名]
 <span class="k">use</span> <span class="nn">ieee.numeric_std.</span><span class="k">all</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id5">
+</section>
+</section>
+<section id="id5">
 <h2>基本数据类型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
-<div class="section" id="id6">
+<section id="id6">
 <h3>预定义数据类型<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
 <p>常见的预定义数据类型及其简要说明如下：</p>
 <ul class="simple">
@@ -408,8 +419,8 @@ END [结构体名]
 <p>关键字 to 表示数组从左到右是生序排列，而 downto 则是降序排列。</p>
 <p><strong>整数数据类型</strong></p>
 <p>整数类型的数包括正整数、负整数和零。 在 VHDL 中，整数的取值范围为 -(2^31 -1) ~ (2^31 -1)。整数类型的数常用于加、减、乘、除四则运算。在使用整数时，必须用 range … to … 限定整数的范围，综合器将根据所限定的范围来决定此信号或变量的二进制数的位数。若所设计的整数范围包括负数，则该数将以二进制补码的形式出现。</p>
-</div>
-<div class="section" id="ieee">
+</section>
+<section id="ieee">
 <h3>IEEE 预定义标准逻辑位与矢量<a class="headerlink" href="#ieee" title="永久链接至标题">¶</a></h3>
 <p>在 IEEE 库的程序包 std_logic_1164 中，定义了两个十分重要的数据类型，即标准逻辑位 std_logic 和标准逻辑矢量 std_logic_vector。</p>
 <p><strong>标准逻辑位数据类型</strong></p>
@@ -429,8 +440,8 @@ END [结构体名]
 <p><strong>标准逻辑位矢量数据类型</strong></p>
 <p>标准逻辑位矢量是基于 std_logic 类型的数组。简而言之， std_logic_vector 和 std_logic 的关系就像 bit_vector 与 bit 的关系。</p>
 <p>需要强调的是，使用 std_logic 和 std_logic_vector 时，一定要调用 IEEE 库中的 std_logic_1164 的程序包。</p>
-</div>
-<div class="section" id="id7">
+</section>
+<section id="id7">
 <h3>用户自定义的数据类型<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
 <p>用户自定义的数据类型主要有枚举类型（enumerated types）和数组类型（array types）等，前者常用于状态机描述，而后者常用于 ROM 和 RAM 的描述等。</p>
 <p><strong>枚举类型</strong></p>
@@ -454,13 +465,13 @@ END [结构体名]
 <span class="k">type</span> <span class="n">word</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="mi">31</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span> <span class="k">of</span> <span class="kt">bit</span><span class="p">;</span> <span class="c1">-- 1 word= 32 bits</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id8">
+</section>
+</section>
+<section id="id8">
 <h2>数据对象<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
 <p>在 VHDL 中，数据对象（data object）有 3 类: 信号（signal）、变量（variable）和常量（constant）。</p>
 <p>VHDL 中的变量和常量与软件高级语言中的变量和常量相似，而信号则具有更多的硬件特征，是硬件描述语言所特有的数据对象。</p>
-<div class="section" id="id9">
+<section id="id9">
 <h3>信号<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
 <p>信号是用来描述实体内部节点的重要数据类型。</p>
 <img alt="_images/differentsignalandport.png" src="_images/differentsignalandport.png" />
@@ -475,8 +486,8 @@ END [结构体名]
 </div>
 <p>信号赋值语句同样适用于位矢量和标准逻辑矢量，只要赋值符号左、右两边的位数相同即可。</p>
 <p>需要特别强调的是，信号的赋值具有“非立即性”，即会有延时。这与实际硬件的传播延迟特性十分吻合。</p>
-</div>
-<div class="section" id="id10">
+</section>
+<section id="id10">
 <h3>变量<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
 <p>变量只能在进程和子程序中使用，主要用于描述算法和方便程序中的数值计算。</p>
 <p>定义变量的语法格式如下：</p>
@@ -491,8 +502,8 @@ END [结构体名]
 <p>表达式可以是一个数值，也可以是一个与目标变量数据类型相同的变量，或者是运算表达式。</p>
 <p>变量与信号的区别不仅仅再与声明与赋值语句的格式，最重要的区别在于信号与实际电路的某个节点或信号线对应，因此硬件具有传播延迟特征，所有信号的赋值具有延时特性；而变量是一个抽象值，它不与任何实际电路连线对应，因此它的赋值是立即生效的。</p>
 <p>在实际应用中，信号的行为更接近硬件的实际情况，因此将更多时用信号进行电路内部数据传递。只有在描述一些算法时，才用到变量。当然，有些情况下（如作矢量的索引值等）只能时用变量。</p>
-</div>
-<div class="section" id="id11">
+</section>
+<section id="id11">
 <h3>常数<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
 <p>VHDL 中的常数与软件高级语言中的常数十分相似，作用如下：</p>
 <ul class="simple">
@@ -504,12 +515,12 @@ END [结构体名]
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>constant 常数名 : 数据类型 := 设置值
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id12">
+</section>
+</section>
+<section id="id12">
 <h2>运算符<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
 <p>VHDL 的运算符主要有 4 种：算术运算符、并置运算符、关系运算符和逻辑运算符。</p>
-<div class="section" id="id13">
+<section id="id13">
 <h3>算术运算符<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
 <table class="colwidths-given docutils align-default" id="id24">
 <caption><span class="caption-text">常见算术运算符及其说明</span><a class="headerlink" href="#id24" title="永久链接至表格">¶</a></caption>
@@ -559,8 +570,8 @@ END [结构体名]
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="id14">
+</section>
+<section id="id14">
 <h3>并置运算符<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
 <p>并置运算符 “&amp;” 用于将多个元素或矢量连接成新的矢量。例如：</p>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span> <span class="n">A</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
@@ -576,8 +587,8 @@ END [结构体名]
 <span class="n">E</span><span class="o">&lt;=</span><span class="n">B</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">&amp;</span><span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="c1">--元素与元素并置</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id15">
+</section>
+<section id="id15">
 <h3>关系运算符<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
 <p>VHDL 预定义的关系运算符如下所列：</p>
 <ul class="simple">
@@ -591,8 +602,8 @@ END [结构体名]
 <p>关系运算符的作用是将相同数据类型的数据对象进行数值比较或关系排序判断，并将结果以 boolean 类型的数据表示，即 true 或 false。</p>
 <p>VHDL 规定，“=” 和 “/=” 的操作对象可以是 VHDL 种任何数据类型构成的操作数；其余关系运算符的操作对象，则仅限于整数数据类型、枚举数据类型以及由整数型或枚举型数据类型元素构成的一维数组。</p>
 <p>需要注意的是，“小于或等于”关系运算符 “&lt;=” 的形式与信号赋值操作符一模一样。判别二者的关键在于其使用环境：在条件语句（如 if_then_else、when 等）中的条件式（即条件判断语句）中出现的 “&lt;=” 是关系运算符，其它情况则是信号赋值操作符。</p>
-</div>
-<div class="section" id="id16">
+</section>
+<section id="id16">
 <h3>逻辑运算符<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
 <p>VHDL 共定义了 7 种逻辑运算符。</p>
 <ul class="simple">
@@ -612,9 +623,9 @@ END [结构体名]
 </pre></div>
 </div>
 <p>这样可使整个逻辑表达式层次清除，提高程序的可读性，同时方便查错。</p>
-</div>
-</div>
-<div class="section" id="id17">
+</section>
+</section>
+<section id="id17">
 <h2>并行语句<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h2>
 <p>并行语句（concurrent statements）是硬件描述语言区别于一般软件程序语言的最显著的特点之一。所有并行语句在结构体中的执行都是同时进行的，即它们的执行顺序与语句书写的顺序无关。</p>
 <p>所谓 “并行”，指的是这些并行语句之间没有执行顺序的先、后之分，但并不意味着并行语句内部也一定是并行方式运行的。事实上，并行语句内部的语句运行可以是并行的（如块语句），也可以是顺序的（如进程）。</p>
@@ -628,7 +639,7 @@ END [结构体名]
 <li><p>块语句</p></li>
 </ul>
 <img alt="_images/concurrentstatements.png" src="_images/concurrentstatements.png" />
-<div class="section" id="id18">
+<section id="id18">
 <h3>并行信号赋值语句<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
 <p>并行信号赋值语句又分为以下 3 种类型：</p>
 <ul class="simple">
@@ -673,8 +684,8 @@ END [结构体名]
 </pre></div>
 </div>
 <p>在执行 when_else 语句时，赋值条件按书写的先后顺序逐项测试，一旦发现某一项赋值条件得到满足，即将相应表达式的值赋给目标信号，并不再测试下面的赋值条件。换言之，各赋值子句有优先级的差别，按书写先后顺序从高到低排列。</p>
-</div>
-<div class="section" id="id19">
+</section>
+<section id="id19">
 <h3>进程语句<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
 <p>进程语句 process 可以说是 VHDL 语言中最重要的语句之一，它的特点如下：</p>
 <ul class="simple">
@@ -756,8 +767,8 @@ end process [进程标号];
 </li>
 <li><dl class="simple">
 <dt>时钟沿的 VHDL 描述方法</dt><dd><ul>
-<li><p>假设时钟信号的为 clock，且数据类型为 std_logic，则时钟沿在 VHDL 中的描述方法如下：<cite>上升沿描述： clock’ event and clock=‘1’</cite>，<cite>下降沿描述： clock’ event and clock=‘0’</cite></p></li>
-<li><p>其中， clock’event 表示在 clock 信号上有事件发生（即信号发生变化）。若变化后 clock 值为 ‘1’，则表示时钟从 ‘0’ 变成 ‘1’，因此 clock’event and clock=‘1’ 就表示时钟上升沿。</p></li>
+<li><p>假设时钟信号的为 clock，且数据类型为 std_logic，则时钟沿在 VHDL 中的描述方法如下：<cite>上升沿描述： clock’ event and clock=’1’</cite>，<cite>下降沿描述： clock’ event and clock=’0’</cite></p></li>
+<li><p>其中， clock’event 表示在 clock 信号上有事件发生（即信号发生变化）。若变化后 clock 值为 ‘1’，则表示时钟从 ‘0’ 变成 ‘1’，因此 clock’event and clock=’1’ 就表示时钟上升沿。</p></li>
 <li><p>除了前面的表示方法外，还有两个预定义的函数来表示时钟沿：上升沿描述 rising_edge(clock)，下降沿描述 falling_edge(clock)。</p></li>
 </ul>
 </dd>
@@ -774,14 +785,14 @@ end process [进程标号];
 <li><p>一个进程不可同时对时钟上、下沿敏感。</p></li>
 <li><p>进程中的信号赋值是在进程挂起时生效的，而变量赋值则是即时生效的。</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="id20">
+</section>
+</section>
+<section id="id20">
 <h2>顺序语句<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h2>
 <p>顺序语句是与并行语句相对而言的，其特点是：每一条顺序语句的执行顺序与其书写顺序对应，改变顺序语句的书写顺序有可能改变综合的结果。顺序语句只能出现在进程和子程序中。</p>
 <p>前面介绍进程时提到过，所谓“顺序执行”是指仿真意义上具有一定的顺序性（或者说在逻辑上有先、后之分），并不意味着这些语句对应的硬件结构也有相同的顺序性。当顺序语句综合后，映射为实际的门电路，系统一上电，这些门电路就同时开始工作。电路可实现逻辑上的顺序执行，实际上所有门电路是并行地工作，并没有先、后之分。这种以并行的工作方式实现顺序的逻辑是硬件描述语言的一大特点，也是进程可以在被激活的瞬间执行完进程中所有语句的原因。</p>
 <p>VHDL 中主要的顺序语句有 6 种：赋值语句、流程控制语句、空操作语句、等待语句、子程序调用语句和返回语句。</p>
-<div class="section" id="id21">
+<section id="id21">
 <h3>赋值语句<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
 <p>赋值语句包括信号赋值语句和变量赋值语句。信号赋值语句在进程与子程序之外是并行语句，在进程与子程序之内则为顺序语句；而变量赋值语句只存在于进程和子程序中。</p>
 <p>信号和变量的一些不同之处：</p>
@@ -790,8 +801,8 @@ end process [进程标号];
 <li><p>信号在结构体中、进程外定义，而变量在进程内定义。换句话说，信号的有效域为整个结构体，可在不同进程间传递数值；变量的有效域只是定义该变量的进程，不能为多个进程所用。</p></li>
 <li><p>操作过程不同。在进程中，便来嗯赋值语句一旦被执行，目标变量立即被赋予新值，在执行下一条语句时，该变量的值为上一句新赋的值；而信号的赋值语句即使被执行，也不会使信号立即发生代入，下一条语句执行时，仍使用原来的信号值（信号是在进程挂起时才发生代入的）。</p></li>
 </ul>
-</div>
-<div class="section" id="id22">
+</section>
+<section id="id22">
 <h3>流程控制语句<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h3>
 <p>常用的流程控制语句有 3 个：if 语句、case 语句和 loop 语句。</p>
 <p><strong>if 语句</strong></p>
@@ -874,11 +885,11 @@ end loop [loop 标号];
 <p>使用 loop 语句时，要注意循环次数范围只能用具体数值表示。</p>
 <p><strong>null 语句</strong></p>
 <p>null 语句即空操作语句。它不执行任何操作，只是让程序接着往下执行。null 语句一般用在 case 语句中，用于表示在某些情况下对输出不作任何改变。所谓的“不作任何改变”，实质上隐含了锁存信号的意思。因此在设计纯组合逻辑电路，就不要使用 null 语句。</p>
-</div>
-</div>
-<div class="section" id="id23">
+</section>
+</section>
+<section id="id23">
 <h2>VHDL中数据类型转换与移位<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h2>
-<div class="section" id="signedunsignedstd-logic-vector">
+<section id="signedunsignedstd-logic-vector">
 <h3>signed、unsigned以及std_logic_vector之间的区别<a class="headerlink" href="#signedunsignedstd-logic-vector" title="永久链接至标题">¶</a></h3>
 <p>首先就是 signed 与 unsigned 这两种数据类型。他们的定义为：</p>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="kt">UNSIGNED</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="kt">NATURAL</span> <span class="k">range</span> <span class="o">&lt;&gt;</span><span class="p">)</span> <span class="k">of</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
@@ -892,8 +903,8 @@ end loop [loop 标号];
 <li><p>unsigned : 代表数字9；</p></li>
 <li><p>signed : 代表数字 -7（补码表示的）；</p></li>
 </ul>
-</div>
-<div class="section" id="numeric-std">
+</section>
+<section id="numeric-std">
 <h3>NUMERIC_STD<a class="headerlink" href="#numeric-std" title="永久链接至标题">¶</a></h3>
 <p>使用 NUMERIC_STD 可以完全替代 std_logic_arith、std_logic_unsigned、std_logic_signed 这三个库文件！</p>
 <ul class="simple">
@@ -908,8 +919,8 @@ end loop [loop 标号];
 <span class="n">DOUT</span><span class="p">(</span><span class="n">to_integer</span><span class="p">(</span><span class="kt">unsigned</span><span class="p">(</span><span class="n">DIN</span><span class="p">)))</span> <span class="o">&lt;=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="shift-left-and-shift-right">
+</section>
+<section id="shift-left-and-shift-right">
 <h3>shift_left() and shift_right()<a class="headerlink" href="#shift-left-and-shift-right" title="永久链接至标题">¶</a></h3>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>r_Unsigned_L &lt;= shift_left(unsigned(r_Shift1), 1);
 r_Signed_L   &lt;= shift_left(signed(r_Shift1), 1);
@@ -918,38 +929,38 @@ r_Unsigned_R &lt;= shift_right(unsigned(r_Shift1), 2);
 r_Signed_R   &lt;= shift_right(signed(r_Shift1), 2)；
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="verilog.html" class="btn btn-neutral float-right" title="verilog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="Vivado.html" class="btn btn-neutral float-left" title="Vivado 软件" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="verilog.html" class="btn btn-neutral float-right" title="verilog" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Vivado.html" class="btn btn-neutral float-left" title="Vivado 软件" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -957,7 +968,6 @@ r_Signed_R   &lt;= shift_right(signed(r_Shift1), 2)；
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

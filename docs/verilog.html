@@ -1,40 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>verilog &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="时序约束" href="TimingConstraints.html" />
@@ -66,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,18 +90,18 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
-<p class="caption"><span class="caption-text">语法</span></p>
+<p class="caption" role="heading"><span class="caption-text">语法</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">verilog</a><ul>
@@ -156,7 +164,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
 </ul>
-<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<p class="caption" role="heading"><span class="caption-text">硬件介绍</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
@@ -164,23 +172,23 @@
 <li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
 <li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
-<p class="caption"><span class="caption-text">计数器</span></p>
+<p class="caption" role="heading"><span class="caption-text">计数器</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
-<p class="caption"><span class="caption-text">状态机</span></p>
+<p class="caption" role="heading"><span class="caption-text">状态机</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
-<p class="caption"><span class="caption-text">FIFO</span></p>
+<p class="caption" role="heading"><span class="caption-text">FIFO</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">HLS</span></p>
+<p class="caption" role="heading"><span class="caption-text">HLS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
 </ul>
-<p class="caption"><span class="caption-text">经验总结</span></p>
+<p class="caption" role="heading"><span class="caption-text">经验总结</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
@@ -192,6 +200,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -226,19 +235,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>verilog</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/verilog.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/verilog.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -251,13 +262,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="verilog">
+  <section id="verilog">
 <h1>verilog<a class="headerlink" href="#verilog" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id1">
+<section id="id1">
 <h2>程序结构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p>Verilog 的基本设计单元是模块（module）。一个模块是由两部分组成的，一部分描述接口，一部分描述逻辑功能，用来定义怎么由输入到输出的。</p>
 <p>Verilog 程序由三部分构成：I/O 端口声明、信号声明、功能描述。</p>
-<div class="section" id="id2">
+<section id="id2">
 <h3>端口声明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
 <p>模块的端口声明了模块的输入输出接口。其格式如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>module 模块名(口1, 口2, 口3, ...);
@@ -266,8 +277,8 @@
 <p>模块的端口表示的是模块的输入和输出口名，也就是说，它与别的模块联系端口的标识。在模块被引用时，在被引用的模块中，有些信号要输入到被引用的模块中，有的信号需要从被引用的模块中取出来。在引用模块时其端口可以用两种方法连接：
 - 在引用时，严格按照模块定义的端口顺序来连接，不用标明原模块定义的规定的端口名，例如：模块名(连接端口1信号名,连接端口2信号名,连接端口3信号名,…);
 - 在引用时用“.”符号，标明原模块时定义时规定的端口名，例如：模块名(.端口1名(连接信号1名),.端口2名(连接信号2名), …);。这样表示的好出在于可以用端口名与被引用模块的端口相对应，而不必严格按端口顺序对应，提高了程序的可读性和可移植性。</p>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h3>模块内容<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 <p>模块的内容包括 I/O 说明、内部信号声明和功能定义。</p>
 <p>I/O 说明的格式如下：</p>
@@ -295,8 +306,8 @@ inout [信号位宽-1:0] 端口名k;//共有k个双向总线端口
 </pre></div>
 </div>
 <p>在模块内部用到的与端口有关的 wire 和 reg 类型变量的声明。例如：</p>
-<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span><span class="n">width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span> <span class="mh">0</span><span class="p">]</span> <span class="no">R变量1</span><span class="p">,</span> <span class="no">R变量2</span><span class="p">;</span>
-<span class="kt">wire</span> <span class="p">[</span><span class="n">width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span> <span class="mh">0</span><span class="p">]</span> <span class="no">W变量1</span><span class="p">,</span> <span class="no">W变量2</span><span class="p">;</span>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="p">[</span><span class="n">width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span> <span class="mh">0</span><span class="p">]</span> <span class="n">R变量1</span><span class="p">,</span> <span class="n">R变量2</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="n">width</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span> <span class="mh">0</span><span class="p">]</span> <span class="n">W变量1</span><span class="p">,</span> <span class="n">W变量2</span><span class="p">;</span>
 <span class="c1">// ...</span>
 </pre></div>
 </div>
@@ -321,16 +332,16 @@ inout [信号位宽-1:0] 端口名k;//共有k个双向总线端口
 <li><p>用“always”块，如 always&#64;(posedge clk or posedge clr) begin if(clr) q&lt;=0; else if(en) q&lt;= d; end</p></li>
 </ul>
 <p>采用“assgin”语句是描述组合逻辑最常用的方法之一。而“always”块既可用于描述组合逻辑，也可描述时序逻辑。用“always”块的例子生成了一个带有异步清除端的 D 触发器。“always”块可用很多描述手段来表达逻辑，例如上例就用了 if…else 语句来表达逻辑关系。如按一定的风格来编写“always”块，可以通过综合工具把源代码自动综合成用门级结构表示的组合或时序逻辑电路。</p>
-</div>
-</div>
-<div class="section" id="id4">
+</section>
+</section>
+<section id="id4">
 <h2>数据类型及其常量和变量<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>verilog 中总共有 19 种数据类型。数据类型是用来表示数字电路硬件中的数据存储和传送元素的。这里介绍 4 种最基本的数据类型，它们是：reg 型、wire 型、integer 型和 parameter 型。</p>
 <p>verilog 语言种也有常量和变量之分，它们分别属于 19 种数据类型。下面就最常用的几种进行介绍。</p>
-<div class="section" id="id5">
+<section id="id5">
 <h3>常量<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
 <p>在程序运行中，其值不能被改变的量城为常量。下面首先对在 verilog 语言中使用的数字及其表示方式进行介绍。</p>
-<div class="section" id="id6">
+<section id="id6">
 <h4>数字<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
 <p><strong>整数</strong></p>
 <p>在 verilog 中，整型常量即整常数有以下 4 种进制表示形式：
@@ -378,12 +389,12 @@ inout [信号位宽-1:0] 端口名k;//共有k个双向总线端口
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="mh">10</span><span class="o">=</span><span class="mh">32</span><span class="mi">&#39;d10</span><span class="o">=</span><span class="mh">32</span><span class="mb">&#39;b1010</span>
 <span class="mh">1</span><span class="o">=</span><span class="mh">32</span><span class="mi">&#39;d1</span><span class="o">=</span><span class="mh">32</span><span class="mb">&#39;b1</span>
 <span class="o">-</span><span class="mh">1</span><span class="o">=-</span><span class="mh">32</span><span class="mi">&#39;d1</span><span class="o">=</span><span class="mh">32&#39;hFFFFFFFF</span>
-<span class="p">&#39;</span><span class="no">BX</span><span class="o">=</span><span class="mh">32</span><span class="p">&#39;</span><span class="no">BX</span><span class="o">=</span><span class="mh">32</span><span class="p">&#39;</span><span class="no">BXXXXXXX</span><span class="p">...</span><span class="no">X</span>
-<span class="s">&quot;AB&quot;</span><span class="o">=</span><span class="mh">16</span><span class="p">&#39;</span><span class="no">B01000001_01000010</span>  <span class="c1">// 字符串 AB，为十六进制数 16&#39;h4142</span>
+<span class="p">&#39;</span><span class="n">BX</span><span class="o">=</span><span class="mh">32</span><span class="p">&#39;</span><span class="n">BX</span><span class="o">=</span><span class="mh">32</span><span class="p">&#39;</span><span class="n">BXXXXXXX</span><span class="p">...</span><span class="n">X</span>
+<span class="s">&quot;AB&quot;</span><span class="o">=</span><span class="mh">16</span><span class="p">&#39;</span><span class="n">B01000001_01000010</span>  <span class="c1">// 字符串 AB，为十六进制数 16&#39;h4142</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="parameter">
+</section>
+<section id="parameter">
 <h4>参数（parameter）型<a class="headerlink" href="#parameter" title="永久链接至标题">¶</a></h4>
 <p>在 verilog 中用 parameter 来定义常量，即用 parameter 来定义一个标识符代表一个常量，称为符号常量，即标识符形式的常量，采用标识符代表一个常量可提高程序的可读性和可维护性。parameter 型数据是一种常数型的数据，其说明格式如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>parameter 参数名1=表达式, 参数名2=表达式, ..., 参数名n=表达式;
@@ -398,13 +409,13 @@ inout [信号位宽-1:0] 端口名k;//共有k个双向总线端口
 </pre></div>
 </div>
 <p>参数型常量经常用于定义延迟时间和变量宽度。在模块或实例引用时，可通过参数传递改变在被引用模块或实例中已定义的参数。</p>
-</div>
-</div>
-<div class="section" id="id7">
+</section>
+</section>
+<section id="id7">
 <h3>变量<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
 <p>变量是一种在程序运行过程中可以改变的量，在 verilog 中变量的数据类型有多种，这里介绍几种常用的。</p>
 <p>网络数据类型表示结构实体之间的物理连接。网络类型的变量不能储存值，而且它必须受到驱动器（例如门或连续赋值语句，assign）的驱动。如果没有驱动器连接到网络类型的变量上，则该变量就是高阻值，即其值为 z。</p>
-<div class="section" id="wire">
+<section id="wire">
 <h4>wire 型<a class="headerlink" href="#wire" title="永久链接至标题">¶</a></h4>
 <p>wire 型数据常用来表示用以 assign 关键字指定的组合逻辑信号。verilog 程序模块中输入、输出信号类型默认时自动定义为 wire 型。wire 型信号可以用做任何方程式的输入，也可以用做“assign”语句或实例元件的输出。</p>
 <p>wire 型信号的格式同 reg 型信号的格式很类似。其格式如下：</p>
@@ -418,8 +429,8 @@ wire [n:1] 数据名1, 数据名2, ..., 数据名i;
 <span class="kt">wire</span> <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">1</span><span class="p">]</span> <span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">;</span> <span class="c1">// 定义了二个 4 位的 wire 型数据</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="reg">
+</section>
+<section id="reg">
 <h4>reg 型<a class="headerlink" href="#reg" title="永久链接至标题">¶</a></h4>
 <p>寄存器是数据储存单元的抽象。寄存器数据类型的关键字是 reg。通过赋值语句可以改变寄存器储存的值，其作用与改变触发器储存的值相当。verilog 语言提供了功能强大的结构语句，使设计者能有效地控制是否执行这些赋值语句。这些控制结构用来描述硬件触发条件，例如时钟的上升沿和多路器的选通信号。reg 类型数据的默认初始值位不定值 x。</p>
 <p>reg 型数据常用来表示“always”模块内的指定，常代表触发器。通常，在设计中要由“always”模块通过使用行为描述语句来表达逻辑关系。在“always”模块内被赋值的每一个信号都必须定义成 reg 型。</p>
@@ -436,8 +447,8 @@ reg [n:1] 数据名1, 数据名2, ...,数据名i;
 </div>
 <p>对于 reg 型数据，其赋值语句的作用就如同改变一组触发器的存储单元的值。在 verilog 中有许多构造（construct）用来控制何时或是否执行这些赋值语句。这些控制构造可用来描述硬件触发器的各种具体情况，如触发条件时用时间的上升沿，或用来描述判断逻辑的细节，如各种多路选择器。</p>
 <p>reg 型数据的默认初始值时不定值。reg 型数据可以赋正值，也可以赋负值。但当一个 reg 型数据时一个表达式中的操作数时，它的值被当作时无符号值，即正值。例如，当一个 4 位的寄存器用做表达式中的操作数时，如果开始寄存器被赋以值 -1，则在表达式中进行运算时，其值被认为是 +15。</p>
-</div>
-<div class="section" id="memory">
+</section>
+<section id="memory">
 <h4>memory 型<a class="headerlink" href="#memory" title="永久链接至标题">¶</a></h4>
 <p>verilog 通过对 reg 型变量建立数组来对存储器建模，可以描述 RAM 型存储器、ROM 存储器和 reg 文件。数组中的每一个单元通过一个数组索引进行寻址。在 verilog 语言中没有多维数组存在。menory 型数据是通过扩展 reg 型数据的地址范围来生成的。其格式如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>reg [n-1:0] 存储器名[m-1:0];
@@ -450,10 +461,10 @@ reg [n-1:0] 存储器名[m:1];
 <span class="c1">// 定义了一个名为 mema 的存储器，该存储器有 256 个 8 位的存储器。该存储器的地址范围是 0 到 255。</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="id8">
+</section>
+</section>
+</section>
+<section id="id8">
 <h2>运算符及表达式<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
 <p>verilog 语言的运算符范围很广，其运算符按其功能可分为以下几类：</p>
 <ul class="simple">
@@ -467,7 +478,7 @@ reg [n-1:0] 存储器名[m:1];
 <li><p>拼接运算符（{ }）</p></li>
 <li><p>其它</p></li>
 </ul>
-<div class="section" id="id9">
+<section id="id9">
 <h3>算术运算符<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
 <p>在 verilog 语言中，算术运算符又称为二进制运算符，共有下面几种：</p>
 <ul class="simple">
@@ -484,8 +495,8 @@ reg [n-1:0] 存储器名[m:1];
 <li><p>% （模运算符，或称为求余运算符，要求%两侧均为整型数据。）</p></li>
 </ul>
 <p>在进行整数除法运算时，结果值要略去小数部分，只取整数部分；而进行取模运算时，结果值的符号位采用模运算式里第一个操作数的符号位。</p>
-</div>
-<div class="section" id="id10">
+</section>
+<section id="id10">
 <h3>位运算符<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
 <p>verilog 作为一种硬件描述语言，是针对硬件电路而言的。在硬件电路中信号有 4 种状态值，即 1，0，x，z。在电路中信号进行与、或、非时，反映在 verilog 中则是相应的操作数的位运算。verilog 提供了以下 5 种位运算符：</p>
 <ul>
@@ -498,8 +509,8 @@ reg [n-1:0] 存储器名[m:1];
 <li><p>^    按位异或</p></li>
 <li><p>^~   按位同或（异或非）</p></li>
 </ul>
-</div>
-<div class="section" id="id11">
+</section>
+<section id="id11">
 <h3>逻辑运算符<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
 <p>在 verilog 语言中存在 3 种逻辑运算符：</p>
 <ul class="simple">
@@ -509,8 +520,8 @@ reg [n-1:0] 存储器名[m:1];
 </ul>
 <p>逻辑运算符中“&amp;&amp;”和“||”的优先级别低于关系运算符，“!”高于算术运算符。</p>
 <p>为了提高程序的可读性，明确表达各运算符元间的优先关系，建议使用括号。</p>
-</div>
-<div class="section" id="id12">
+</section>
+<section id="id12">
 <h3>关系运算符<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
 <p>关系运算符共有以下 4 种：</p>
 <ul class="simple">
@@ -521,8 +532,8 @@ reg [n-1:0] 存储器名[m:1];
 </ul>
 <p>在进行关系运算时，如果声明的关系是假的（false），则返回值是0；如果声明的关系是真的（true），则返回值是1；如果某个操作数的值不定，则关系是模糊的，返回值是不定值。</p>
 <p>所有的关系运算符有着相同的优先级别。关系运算符的优先级别低于算术运算符的优先级别。</p>
-</div>
-<div class="section" id="id13">
+</section>
+<section id="id13">
 <h3>等式运算符<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
 <p>在 verilog 语言中存在 4 种等式运算符：</p>
 <ul class="simple">
@@ -532,8 +543,8 @@ reg [n-1:0] 存储器名[m:1];
 <li><p>!== （不等于）</p></li>
 </ul>
 <p>“==”和“!=”又称为逻辑等式运算符，其结果由两个操作数的值决定。由于操作数种某些位可能是不定值 x 和高阻值 z，结果可能为不定值 x。而“===”和“!==” 运算符则不同，它在对操作数进行比较时对某些位的不定值 x 和高阻值 z 也进行比较，两个操作数必须完全一致，其结果才是1，否则为0。“===”和“!==” 运算符常用于 case 表达式的判别，所以又称为“case 等式运算符”。这 4 个等式运算符的优先级别是相同的。</p>
-</div>
-<div class="section" id="id14">
+</section>
+<section id="id14">
 <h3>移位运算符<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
 <p>在 verilog 种有两种移位运算符：“&lt;&lt;”（左移位运算符）和“&gt;&gt;”（右移位运算符）。其使用方法如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="n">n</span>
@@ -541,8 +552,8 @@ reg [n-1:0] 存储器名[m:1];
 <span class="c1">// a 代表要进行移位的操作数，n 代表要移几位。这两种移位运算都用0来填补移出的空位。</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id15">
+</section>
+<section id="id15">
 <h3>位拼接运算符<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
 <p>在 verilog 语言中有一个特殊的运算符：位拼接运算符。用这个运算符可以把两个或多个信号的某些位拼接起来进行运算操作。其使用方法如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>{信号1的某几位, 信号2的某几位, ..., ..., 信号n的某几位}
@@ -552,11 +563,11 @@ reg [n-1:0] 存储器名[m:1];
 </pre></div>
 </div>
 <p>在位拼接表达式中不允许存在没有指明位数的信号。这是因为在计算拼接信号位宽的大小时必须知道其中每个信号的位宽。</p>
-</div>
-</div>
-<div class="section" id="id16">
+</section>
+</section>
+<section id="id16">
 <h2>赋值语句和块语句<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
-<div class="section" id="id17">
+<section id="id17">
 <h3>赋值语句<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h3>
 <p>在 verilog 中，信号有两种赋值方式：</p>
 <ul class="simple">
@@ -579,8 +590,8 @@ reg [n-1:0] 存储器名[m:1];
 </dl>
 </li>
 </ul>
-</div>
-<div class="section" id="id18">
+</section>
+<section id="id18">
 <h3>块语句<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
 <p>块语句用来将两条或多条语句组合在一起，使其在格式上看更像一条语句。通常用 begin_end 来标识顺序执行的语句，用它来标识的块称为顺序块。块内的语句时按顺序执行的，即只有上面一条语句执行完后下面的语句才能执行</p>
 <p>顺序块的格式如下：</p>
@@ -603,11 +614,11 @@ end
 // 块名即该块的名字，一个标识名。块内声明语句可以是参数声明语句、reg 型变量声明语句、integer型变量声明语句和reg型变量声明语句。
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id19">
+</section>
+</section>
+<section id="id19">
 <h2>条件语句<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h2>
-<div class="section" id="if-else">
+<section id="if-else">
 <h3>if_else 语句<a class="headerlink" href="#if-else" title="永久链接至标题">¶</a></h3>
 <p>if 语句是用来判断所给定的条件是否满足，根据判定的结果（真或假）决定执行给出的两种操作之一。 verilog 语言提供了 3 种形式的 if 语句。</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// if(表达式) 语句</span>
@@ -634,8 +645,8 @@ end
 </pre></div>
 </div>
 <p>条件语句必须在过程块语句中使用。所谓的过程块是指由 initial 和 always 语句引导的执行语句集合。除这两种块语句引导的 bengin end 块中可以编写条件语句外，模块汇总的其它地方都不能编写。</p>
-</div>
-<div class="section" id="case">
+</section>
+<section id="case">
 <h3>case 语句<a class="headerlink" href="#case" title="永久链接至标题">¶</a></h3>
 <p>case 语句是一种多分支选择语句，if 语句只有两个分支可供选择，而实际问题中常常需要用到多分支选择。verilog 语言提供的 case 语句直接处理多分支选择。它的一般形式如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>case(表达式) &lt;case分支项&gt; endcase
@@ -658,8 +669,8 @@ end
 <li><p>与 case 语句中的控制表达式和多分支表达式这种比较结构相比，if_else_if 结构中的条件表达式更为直观一些。</p></li>
 <li><p>对于那些分支式中存在不定值x和高阻值z的位时，case语句提供了处理这种情况的手段。</p></li>
 </ul>
-</div>
-<div class="section" id="id20">
+</section>
+<section id="id20">
 <h3>条件语句的语法<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
 <p>条件语句用于根据某个条件来确定是否执行其后的语句，关键字 if 和 else 用于表示条件语句。verilog 语言共有3种类型的条件语句，条件语句的用法如下所示。</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// 第一类条件语句：没有 else 语句</span>
@@ -679,8 +690,8 @@ end
 </pre></div>
 </div>
 <p>条件语句的执行过程为：计算条件表达式 &lt;expression&gt;，如果结果为真（1或非零值），则执行 true_statement 语句；如果条件为假（0或者不确定值x），则执行 false_statement 语句。造条件表达式中可以包含任何操作符。true_statement 和 false_statement 可以时一条语句，也可以时一组语句。如果时一组语句，则通常使用 begin、end 关键字将它们组成一个块语句。</p>
-</div>
-<div class="section" id="id21">
+</section>
+<section id="id21">
 <h3>多路分支语句<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
 <p>前面讲述的条件语句 if_else_if 的形式从多个选项中确定一个结果。如果选项的数目很多，那么使用起来很不方便。而使用 case 语句来描述这种情况时非常简便的。</p>
 <p>case 语句使用关键字 case、endcase、和 default 来表示。</p>
@@ -694,9 +705,9 @@ end
 </pre></div>
 </div>
 <p>case 语句中的每一条分支语句都可以时一条语句或一组语句。多条语句需要使用关键字 begin_end 组合为一个块语句。在执行时，首先计算条件表达式的值，然后按顺序将它和各个候选项进行比较；如果等于第一个候选项，则执行对应的语句 statement1；如果和全部候选项都不相等，则执行 default_statement 语句。</p>
-</div>
-</div>
-<div class="section" id="id22">
+</section>
+</section>
+<section id="id22">
 <h2>循环语句<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h2>
 <p>在 verilog 中存在着 4 种类型的循环语句，用来控制执行语句的执行次数。</p>
 <ul class="simple">
@@ -713,7 +724,7 @@ end
 </dl>
 </li>
 </ul>
-<div class="section" id="forever">
+<section id="forever">
 <h3>forever 语句<a class="headerlink" href="#forever" title="永久链接至标题">¶</a></h3>
 <p>forever 语句的格式如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>forever 语句;
@@ -722,8 +733,8 @@ forever begin 多条语句 end
 </pre></div>
 </div>
 <p>forever 循环语句常用于产生周期性的波形，用来作为仿真测试信号。它与always语句不同之处在于不能独立写在程序中，而必须写在 initial 块中。</p>
-</div>
-<div class="section" id="repeat">
+</section>
+<section id="repeat">
 <h3>repeat 语句<a class="headerlink" href="#repeat" title="永久链接至标题">¶</a></h3>
 <p>repeat 语句的格式如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>repeat(表达式) 语句;
@@ -732,8 +743,8 @@ repeat(表达式) begin 多条语句 end
 </pre></div>
 </div>
 <p>在 repeat 语句中，其表达式通常为常量表达式。</p>
-</div>
-<div class="section" id="while">
+</section>
+<section id="while">
 <h3>while 语句<a class="headerlink" href="#while" title="永久链接至标题">¶</a></h3>
 <p>while 语句的格式如下：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>while(表达式) 语句;
@@ -741,8 +752,8 @@ repeat(表达式) begin 多条语句 end
 while(表达式) begin 多条语句 end
 </pre></div>
 </div>
-</div>
-<div class="section" id="for">
+</section>
+<section id="for">
 <h3>for 语句<a class="headerlink" href="#for" title="永久链接至标题">¶</a></h3>
 <p>for 语句的一般形式为：</p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span>for(表达式1; 表达式2; 表达式3) 语句;
@@ -773,9 +784,9 @@ end
 </pre></div>
 </div>
 <p>这样对于需要8条语句才能完成的一个循环控制，for循环语句只需要两条即可。</p>
-</div>
-</div>
-<div class="section" id="id23">
+</section>
+</section>
+<section id="id23">
 <h2>生成块<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h2>
 <p>生成语句可以动态地生成 verilog 代码。这一声明语句方便了参数化模块的生成。当对矢量中的多个位进行重复操作时，或者当进行多个模块的实例引用的重复操作时，或者在根据参数的定义来确定程序中是否应该包括某段 verilg 代码的时候，使用生成语句能够大大简化程序的编写过程。</p>
 <p>生成语句能够控制变量的声明、任务或函数的调用，还能对实例引用进行全面的控制。编写代码时必须在模块中说明生成的实例范围，关键字 generate-endgenerate 用来指定该范围。</p>
@@ -785,7 +796,7 @@ end
 <li><p>条件语句</p></li>
 <li><p>case 生成</p></li>
 </ul>
-<div class="section" id="id24">
+<section id="id24">
 <h3>循环生成语句<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h3>
 <p>循环生成语句允许使用者对下面的模块或模块项进行多次实例引用：</p>
 <ul class="simple">
@@ -800,18 +811,18 @@ end
 <span class="k">module</span> <span class="n">bitwise_xor</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">i0</span><span class="p">,</span> <span class="n">i1</span><span class="p">);</span>
 
 <span class="c1">// 参数声明语句，参数可以重新定义</span>
-<span class="k">parameter</span> <span class="no">N</span> <span class="o">=</span> <span class="mh">32</span><span class="p">;</span>
+<span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mh">32</span><span class="p">;</span>
 
 <span class="c1">// 端口声明语句</span>
-<span class="k">output</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">;</span>
-<span class="k">input</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">i0</span><span class="p">,</span><span class="n">i1</span><span class="p">;</span>
+<span class="k">output</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">;</span>
+<span class="k">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">i0</span><span class="p">,</span><span class="n">i1</span><span class="p">;</span>
 
 <span class="c1">// 声明一个临时循环变量，该变量只用于生成块的循环计算</span>
 <span class="k">genvar</span> <span class="n">j</span><span class="p">;</span>
 
 <span class="c1">// 用一个单循环生成按位异或的异或门（xor）</span>
 <span class="k">generate</span>
-  <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="no">N</span><span class="p">;</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span>
+  <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">N</span><span class="p">;</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span>
     <span class="k">begin</span><span class="o">:</span> <span class="n">xor_loop</span> <span class="c1">//xor_loop 是赋予循环生成语句的名字，目的在于通过它对循环生成语句之中的变量进行层次化引用。</span>
       <span class="k">xor</span> <span class="n">g1</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">i0</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">i1</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
     <span class="k">end</span> <span class="c1">// 在生成块内部结束循环</span>
@@ -819,9 +830,9 @@ end
 
 <span class="c1">// 另外一种编写形式</span>
 
-<span class="kt">reg</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">;</span>
 <span class="k">generate</span>
-  <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="no">N</span><span class="p">;</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span>
+  <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">N</span><span class="p">;</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span>
     <span class="k">begin</span><span class="o">:</span> <span class="kt">bit</span>
       <span class="k">always</span> <span class="p">@</span> <span class="p">(</span><span class="n">i0</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">or</span> <span class="n">i1</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i0</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">^</span><span class="n">i0</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
     <span class="k">end</span>
@@ -830,8 +841,8 @@ end
 <span class="k">endmodule</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id25">
+</section>
+<section id="id25">
 <h3>条件生成语句<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h3>
 <p>条件生成语句类似于 if_else_if 的生成构造，该结构可以在设计模块中根据经过仔细推敲并确定表达式，有条件地调用（实例引用）以下这些 verilog 结构：</p>
 <ul class="simple">
@@ -869,8 +880,8 @@ end
 <span class="k">endmodule</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id26">
+</section>
+<section id="id26">
 <h3>case 生成语句<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h3>
 <p>case 生成语句可以在设计模块中，根据仔细推敲确定多选一 case 构造，有条件地调用（实例引用）下面这些 verilog 结构：</p>
 <ul class="simple">
@@ -883,60 +894,60 @@ end
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// 本模块生成 N 位的加法器</span>
 <span class="k">module</span> <span class="n">adder</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
 <span class="c1">// 参数声明</span>
-<span class="k">parameter</span> <span class="no">N</span> <span class="o">=</span> <span class="mh">4</span><span class="p">;</span>
+<span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mh">4</span><span class="p">;</span>
 
 <span class="c1">// 端口声明</span>
-<span class="k">output</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sum</span><span class="p">;</span>
+<span class="k">output</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sum</span><span class="p">;</span>
 <span class="k">output</span> <span class="n">co</span><span class="p">;</span>
-<span class="n">intput</span> <span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a0</span><span class="p">,</span><span class="n">a1</span><span class="p">;</span>
+<span class="n">intput</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a0</span><span class="p">,</span><span class="n">a1</span><span class="p">;</span>
 <span class="k">input</span> <span class="n">ci</span><span class="p">;</span>
 
 <span class="c1">// 根据总线的位宽，调用（实例引用）相应的加法器</span>
 <span class="c1">// 参数 N 在调用（实例引用）时可以重新定义，调用（实例引用）不同位宽的加法器是根据不同的 N 来决定的</span>
 <span class="k">generate</span>
-<span class="k">case</span><span class="p">(</span><span class="no">N</span><span class="p">)</span>
+<span class="k">case</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
   <span class="c1">// 当N=1或2时分别选用位宽为1位或2位的加法器</span>
   <span class="mh">1</span><span class="o">:</span> <span class="n">adder_1bit</span> <span class="n">adder1</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
   <span class="mh">2</span><span class="o">:</span> <span class="n">adder_2bit</span> <span class="n">adder2</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
-  <span class="k">default</span><span class="o">:</span> <span class="n">adder_cla</span> <span class="p">#(</span><span class="no">N</span><span class="p">)</span> <span class="n">adder3</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
+  <span class="k">default</span><span class="o">:</span> <span class="n">adder_cla</span> <span class="p">#(</span><span class="n">N</span><span class="p">)</span> <span class="n">adder3</span><span class="p">(</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">ci</span><span class="p">);</span>
 <span class="k">endcase</span>
 <span class="k">endgenerate</span>
 
 <span class="k">endmodule</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="TimingConstraints.html" class="btn btn-neutral float-right" title="时序约束" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="VHDL.html" class="btn btn-neutral float-left" title="VHDL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="TimingConstraints.html" class="btn btn-neutral float-right" title="时序约束" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="VHDL.html" class="btn btn-neutral float-left" title="VHDL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -944,7 +955,6 @@ end
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

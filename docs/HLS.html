@@ -1,40 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>高层次综合 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="经验总结" href="exp.html" />
@@ -66,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,25 +90,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
-<p class="caption"><span class="caption-text">语法</span></p>
+<p class="caption" role="heading"><span class="caption-text">语法</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
 </ul>
-<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<p class="caption" role="heading"><span class="caption-text">硬件介绍</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
@@ -108,19 +116,19 @@
 <li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
 <li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
-<p class="caption"><span class="caption-text">计数器</span></p>
+<p class="caption" role="heading"><span class="caption-text">计数器</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
-<p class="caption"><span class="caption-text">状态机</span></p>
+<p class="caption" role="heading"><span class="caption-text">状态机</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
-<p class="caption"><span class="caption-text">FIFO</span></p>
+<p class="caption" role="heading"><span class="caption-text">FIFO</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">HLS</span></p>
+<p class="caption" role="heading"><span class="caption-text">HLS</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">高层次综合</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">创建一个高级合成项目</a></li>
@@ -129,7 +137,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">经验总结</span></p>
+<p class="caption" role="heading"><span class="caption-text">经验总结</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
@@ -141,6 +149,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -175,19 +184,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>高层次综合</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/HLS.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/HLS.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -200,7 +211,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>高层次综合<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <p>利用 FPGA 进行算法实现已经被广泛认知,但对于很多没有 FPGA 和 HDL 设计经验的开发者而言,往往又觉得开发门槛较高,因此全球相关的科研和工程人员都在致力于如何将 FPGA 技术介绍给更多的开发者,使更多人从 FPGA 的并行性、高性能、低功耗、灵活配置中获益。其中,Vivado       HLS(高层次综合)就是一个成功的代表。通过 Vivado HLS 工具中,开发者可利用 C/C++ 语言对 FPGA 进行编程,这项技术已经趋于成熟,在实验核物理中也已广泛采用。</p>
 <p>根据 Vivado HLS 的使用指南,我们将对我们的输入程序作出以下规范:</p>
@@ -213,7 +224,7 @@
 <li><p>不使用递归方程</p></li>
 <li><p>精准的表达我们的交互接口</p></li>
 </ul>
-<div class="section" id="id2">
+<section id="id2">
 <h2>创建一个高级合成项目<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>打开 Vivado HLS 图形用户界面(GUI)，在欢迎页面中,选择创建新项目以打开项目向导。</p>
 <img alt="_images/VivadoHLS_0.png" src="_images/VivadoHLS_0.png" />
@@ -233,35 +244,35 @@
 <p>HLS 项目的第一步是确认 C 代码是正确的。这个过程称为 C 验证或 C 仿真。在这个项目中,测试台将函数的输出数据与已知的好值进行比较。</p>
 <p>高级合成步骤中,您将 C 设计合成为 RTL 设计,并查看合成报告。单击运行 C 合成工具栏按钮。合成完成后,报告文件将自动打开。</p>
 <img alt="_images/VivadoHLS_6.png" src="_images/VivadoHLS_6.png" />
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>综合创建的端口<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>输入的原始程序如下：</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">fir</span> <span class="p">(</span><span class="n">data_t</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">coef_t</span> <span class="n">c</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">data_t</span> <span class="n">x</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="k">static</span> <span class="n">data_t</span> <span class="n">shift_reg</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
-  <span class="n">acc_t</span> <span class="n">acc</span><span class="p">;</span>
-  <span class="n">data_t</span> <span class="n">data</span><span class="p">;</span>
-  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">fir</span><span class="w"> </span><span class="p">(</span><span class="n">data_t</span><span class="w"> </span><span class="o">*</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">coef_t</span><span class="w"> </span><span class="n">c</span><span class="p">[</span><span class="n">N</span><span class="p">],</span><span class="w"> </span><span class="n">data_t</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="n">data_t</span><span class="w"> </span><span class="n">shift_reg</span><span class="p">[</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">acc_t</span><span class="w"> </span><span class="n">acc</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">data_t</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
 
-  <span class="n">acc</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
- <span class="nl">Shift_Accum_Loop</span><span class="p">:</span>
-  <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">)</span>
-    <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
-     <span class="p">{</span>
-       <span class="n">shift_reg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
-       <span class="n">data</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
-     <span class="p">}</span>
-      <span class="k">else</span>
-     <span class="p">{</span>
-       <span class="n">shift_reg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">shift_reg</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
-       <span class="n">data</span> <span class="o">=</span> <span class="n">shift_reg</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-     <span class="p">}</span>
-      <span class="n">acc</span><span class="o">+=</span><span class="n">data</span><span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">];;</span>
-    <span class="p">}</span>
-  <span class="o">*</span><span class="n">y</span><span class="o">=</span><span class="n">acc</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">  </span><span class="n">acc</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="nl">Shift_Accum_Loop</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">N</span><span class="mi">-1</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">shift_reg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">       </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">shift_reg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">shift_reg</span><span class="p">[</span><span class="n">i</span><span class="mi">-1</span><span class="p">];</span><span class="w"></span>
+<span class="w">       </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shift_reg</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="n">acc</span><span class="o">+=</span><span class="n">data</span><span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">];;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="o">*</span><span class="n">y</span><span class="o">=</span><span class="n">acc</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>综合生成的 verilog 代码接口如下：</p>
@@ -340,8 +351,8 @@
 <li><p>展开 Export RTL 命令创建的 impl 文件夹。</p></li>
 <li><p>展开文件夹，找到打包成 zip 文件的 IP，准备添加到 Vivado IP 目录</p></li>
 </ul>
-</div>
-<div class="section" id="tcl-shell">
+</section>
+<section id="tcl-shell">
 <h2>Tcl Shell<a class="headerlink" href="#tcl-shell" title="永久链接至标题">¶</a></h2>
 <p>我们知道用vivado的hls工具将C++代码实现成电路时，可以加”展开”啊、”流水线”啊、”内联”啊、”串联变并联”啊等等不同效果的directive(实现方式)。同一段代码能选择的directive很多，有时候我们不好直接判断一段代码选什么directive才会达到最好的效果，那就只能一个个directive地加，然后比较效果。</p>
 <p>为了从繁琐的操作中将自己解放出来，我们可以用tcl来完成加directive的操作。</p>
@@ -354,22 +365,22 @@
 </pre></div>
 </div>
 <p>脚本示例：</p>
-<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">open_project</span> projname
-<span class="nv">set_top</span> foo
-<span class="nv">add_files</span> foo.cpp
-<span class="nv">add_files</span> <span class="o">-</span>tb main.cpp
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">open_project</span><span class="w"> </span>projname
+<span class="nv">set_top</span><span class="w"> </span>foo
+<span class="nv">add_files</span><span class="w"> </span>foo.cpp
+<span class="nv">add_files</span><span class="w"> </span><span class="o">-</span>tb<span class="w"> </span>main.cpp
 
-<span class="k">set</span> all_solution <span class="k">[</span><span class="nb">list</span> no_directive pipeline unroll unroll_2 unroll_4 unroll_5 unroll_10 <span class="k">]</span>
-<span class="k">set</span> all_directive <span class="k">[</span><span class="nb">list</span> no_directive pipeline unroll unroll_2 unroll_4 unroll_5 unroll_10 <span class="k">]</span>
-<span class="k">foreach</span> solution <span class="nv">$all_solution</span> directive <span class="nv">$all_directive</span> <span class="k">{</span>
-<span class="nv">open_solution</span> <span class="o">-</span>reset <span class="nv">$solution</span>
-<span class="nv">set_part</span> <span class="k">{</span><span class="nv">xc7z020clg400-1</span><span class="k">}</span>
-<span class="nv">create_clock</span> <span class="o">-</span>period <span class="mi">10</span> <span class="o">-</span>name default
-<span class="nb">source</span> <span class="s2">&quot;$directive.tcl&quot;</span>
+<span class="k">set</span><span class="w"> </span>all_solution<span class="w"> </span><span class="k">[</span><span class="nb">list</span><span class="w"> </span>no_directive<span class="w"> </span>pipeline<span class="w"> </span>unroll<span class="w"> </span>unroll_2<span class="w"> </span>unroll_4<span class="w"> </span>unroll_5<span class="w"> </span>unroll_10<span class="w"> </span><span class="k">]</span>
+<span class="k">set</span><span class="w"> </span>all_directive<span class="w"> </span><span class="k">[</span><span class="nb">list</span><span class="w"> </span>no_directive<span class="w"> </span>pipeline<span class="w"> </span>unroll<span class="w"> </span>unroll_2<span class="w"> </span>unroll_4<span class="w"> </span>unroll_5<span class="w"> </span>unroll_10<span class="w"> </span><span class="k">]</span>
+<span class="k">foreach</span><span class="w"> </span>solution<span class="w"> </span><span class="nv">$all_solution</span><span class="w"> </span>directive<span class="w"> </span><span class="nv">$all_directive</span><span class="w"> </span><span class="k">{</span><span class="w"></span>
+<span class="nv">open_solution</span><span class="w"> </span><span class="o">-</span>reset<span class="w"> </span><span class="nv">$solution</span>
+<span class="nv">set_part</span><span class="w"> </span><span class="k">{</span><span class="nv">xc7z020clg400-1</span><span class="k">}</span>
+<span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>default
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;$directive.tcl&quot;</span>
 <span class="nv">csim_design</span>
 <span class="nv">csynth_design</span>
 <span class="nv">cosim_design</span>
-<span class="nv">export_design</span> <span class="o">-</span>format ip_catalog
+<span class="nv">export_design</span><span class="w"> </span><span class="o">-</span>format<span class="w"> </span>ip_catalog
 <span class="k">}</span>
 <span class="nb">exit</span>
 </pre></div>
@@ -380,37 +391,37 @@
 <p>Vivado HLS数据类型及数据类型转换</p>
 <p><a class="reference external" href="https://blog.csdn.net/qq_40230112/article/details/106340144?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242">https://blog.csdn.net/qq_40230112/article/details/106340144?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242</a></p>
 <p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/gnq1597858079367.html">https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/gnq1597858079367.html</a></p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="exp.html" class="btn btn-neutral float-right" title="经验总结" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="FIFO.html" class="btn btn-neutral float-left" title="FIFO" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="exp.html" class="btn btn-neutral float-right" title="经验总结" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="FIFO.html" class="btn btn-neutral float-left" title="FIFO" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -418,7 +429,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

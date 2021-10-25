@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 四 1月  7 22:06:16 2021 (+0800)
-.. Last-Updated: 五 1月  8 20:37:47 2021 (+0800)
+.. Last-Updated: 一 10月 25 12:20:20 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 3
+..     Update #: 4
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -16,8 +16,12 @@ LPM（library of parameterized mudules）
 - https://blog.csdn.net/next_fse/article/details/73864596
 - http://blog.sina.com.cn/s/blog_6e350d8801011hfx.html
 
-文件位置，安装目录下 quartus/eda/fv_lib/verilog
-  
+xilinx 文件位置，安装目录下 ids_lite/ISE/data/xportlib
+Altera 文件位置，安装目录下 libraries/megafunctions
+
+文件位置，安装目录下 quartus/eda/fv_lib/verilog quartus/eda/fv_lib/vhdl
+参考 quartus/qdesigns
+
 ALTERA在LPM（library of parameterized mudules）库中提供了参数可配置的单时钟FIFO（SCFIFO）和双时钟FIFO（DCFIFO）。FIFO主要应用在需要数据缓冲且数据符合先进先出规律的同步或异步场合。LPM中的FIFO包含以下几种：
 
 - SCFIFO：单时钟FIFO；

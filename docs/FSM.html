@@ -1,40 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>状态机 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="FIFO" href="FIFO.html" />
@@ -66,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,25 +90,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
-<p class="caption"><span class="caption-text">语法</span></p>
+<p class="caption" role="heading"><span class="caption-text">语法</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
 </ul>
-<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<p class="caption" role="heading"><span class="caption-text">硬件介绍</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
@@ -108,11 +116,11 @@
 <li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
 <li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
-<p class="caption"><span class="caption-text">计数器</span></p>
+<p class="caption" role="heading"><span class="caption-text">计数器</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="counter.html">计数器</a></li>
 </ul>
-<p class="caption"><span class="caption-text">状态机</span></p>
+<p class="caption" role="heading"><span class="caption-text">状态机</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">状态机</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">状态机规则</a><ul>
@@ -127,15 +135,15 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">FIFO</span></p>
+<p class="caption" role="heading"><span class="caption-text">FIFO</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">HLS</span></p>
+<p class="caption" role="heading"><span class="caption-text">HLS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
 </ul>
-<p class="caption"><span class="caption-text">经验总结</span></p>
+<p class="caption" role="heading"><span class="caption-text">经验总结</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
@@ -147,6 +155,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -181,19 +190,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>状态机</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/FSM.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/FSM.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -206,11 +217,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>状态机<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id2">
+<section id="id2">
 <h2>状态机规则<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<div class="section" id="id3">
+<section id="id3">
 <h3>状态机规则1： 使用四段式写法<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 <p>四段式不是指四个 always 代码，而是四段代码。另外需要注意的是，四段式状态机并非固定不变。如果没有输出信号就只有三段代码（两个always）；如果有多个输出信号，那么就会有多个always。</p>
 <p>第一段，同步时序的 always 模块，格式化描述次态迁移到现态寄存器。</p>
@@ -222,7 +233,7 @@
 <p><strong>verilog</strong></p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">always</span><span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span><span class="k">begin</span>
    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="k">begin</span>
-      <span class="n">state_c</span><span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+      <span class="n">state_c</span><span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
    <span class="k">end</span>
    <span class="k">else</span> <span class="k">begin</span>
       <span class="n">state_c</span><span class="o">&lt;=</span> <span class="n">state_n</span><span class="p">;</span>
@@ -241,7 +252,7 @@
     <span class="k">case</span><span class="p">(</span><span class="n">state_c</span><span class="p">)</span>
         <span class="nl">IDLE:</span><span class="k">begin</span>
             <span class="k">if</span><span class="p">(</span><span class="n">idle2s1_start</span><span class="p">)</span><span class="k">begin</span>
-              <span class="n">state_n</span> <span class="o">=</span> <span class="no">S1</span><span class="p">;</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="n">S1</span><span class="p">;</span>
             <span class="k">end</span>
             <span class="k">else</span> <span class="k">begin</span>
               <span class="n">state_n</span> <span class="o">=</span> <span class="n">state_c</span><span class="p">;</span>
@@ -249,7 +260,7 @@
         <span class="k">end</span>
         <span class="nl">S1:</span><span class="k">begin</span>
             <span class="k">if</span><span class="p">(</span><span class="n">s12s2_start</span><span class="p">)</span><span class="k">begin</span>
-              <span class="n">state_n</span> <span class="o">=</span> <span class="no">S2</span><span class="p">;</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="n">S2</span><span class="p">;</span>
             <span class="k">end</span>
             <span class="k">else</span> <span class="k">begin</span>
               <span class="n">state_n</span> <span class="o">=</span> <span class="n">state_c</span><span class="p">;</span>
@@ -257,14 +268,14 @@
         <span class="k">end</span>
         <span class="nl">S2:</span><span class="k">begin</span>
             <span class="k">if</span><span class="p">(</span><span class="n">s22idl</span><span class="p">)</span><span class="k">begin</span>
-              <span class="n">state_n</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+              <span class="n">state_n</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
             <span class="k">end</span>
             <span class="k">else</span> <span class="k">begin</span>
               <span class="n">state_n</span> <span class="o">=</span> <span class="n">state_c</span><span class="p">;</span>
             <span class="k">end</span>
         <span class="k">end</span>
         <span class="k">default</span><span class="o">:</span><span class="k">begin</span>
-            <span class="n">state_n</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+            <span class="n">state_n</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
         <span class="k">end</span>
     <span class="k">endcase</span>
 <span class="k">end</span>
@@ -277,9 +288,9 @@
 </pre></div>
 </div>
 <p><strong>verilog</strong></p>
-<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">idle2s1_start</span> <span class="o">=</span>  <span class="n">state_c</span><span class="o">==</span><span class="no">IDLE</span> <span class="o">&amp;&amp;</span> <span class="p">;</span>
-<span class="k">assign</span>  <span class="n">s12s2_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="no">S1</span>   <span class="o">&amp;&amp;</span> <span class="p">;</span>
-<span class="k">assign</span>  <span class="n">s22idl_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="no">S2</span>   <span class="o">&amp;&amp;</span> <span class="p">;</span>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">idle2s1_start</span> <span class="o">=</span>  <span class="n">state_c</span><span class="o">==</span><span class="n">IDLE</span> <span class="o">&amp;&amp;</span> <span class="p">;</span>
+<span class="k">assign</span>  <span class="n">s12s2_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="n">S1</span>   <span class="o">&amp;&amp;</span> <span class="p">;</span>
+<span class="k">assign</span>  <span class="n">s22idl_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="n">S2</span>   <span class="o">&amp;&amp;</span> <span class="p">;</span>
 </pre></div>
 </div>
 <p>第四段，设计输出信号。规范要求一段 always 代码设计一个信号，因此有多少个输出信号就有多少段 always 代码。</p>
@@ -293,7 +304,7 @@
      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="k">begin</span>
         <span class="n">out1</span> <span class="o">&lt;=</span><span class="mh">1</span><span class="mb">&#39;b0</span>
      <span class="k">end</span>
-     <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">state_c</span><span class="o">==</span><span class="no">S1</span><span class="p">)</span><span class="k">begin</span>
+     <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">state_c</span><span class="o">==</span><span class="n">S1</span><span class="p">)</span><span class="k">begin</span>
         <span class="n">out1</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
      <span class="k">end</span>
      <span class="k">else</span> <span class="k">begin</span>
@@ -302,23 +313,23 @@
 <span class="k">end</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3>状态机规则2：四段式状态机第一段写法不变<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>设计状态机时所有四段式状态机模板的第一段除了名字外的代码都可以直接用，不需要进行改动。</p>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h3>状态机规则3：第二段的状态转移条件用信号来表示<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
 <p>设计状态机时，要求四段式状态机的第二段中用信号名来表示转移条件，而无须直接写出具体的转移条件。</p>
 <p>用信号名表示的好处是后续修改时只需改动信号的名字，并且方便根据状态机的命名修改对应的跳转条件。</p>
-</div>
-<div class="section" id="assign-xx2xx-start">
+</section>
+<section id="assign-xx2xx-start">
 <h3>状态机规则4：用 assign 将状态转移条件写成 XX2XX_start 的形式<a class="headerlink" href="#assign-xx2xx-start" title="永久链接至标题">¶</a></h3>
 <p>状态机规则 3 要求转移条件用信号名来表示，这样一来设计就要编写很多信号名称，这也是设计工作中的一大困扰。因此制定此规则：将状态转移的条件信号用 xx2xx_start 的形式表示。</p>
 <p>例如有三个状态 IDLE、READ、WRITE，若从 IDLE 跳转到 READ 状态，其跳转条件可以命名为：idle2read_start；若从 IDLE 跳转到 WRITE，其跳转条件可以命名为：idle2write_start。</p>
 <p>这个命名方式既能够解决命名的困扰，又能直接从信号名看出信号的作用。</p>
-</div>
-<div class="section" id="assign">
+</section>
+<section id="assign">
 <h3>状态机规则5：assign 定义状态转移条件信号时，必须加上当前状态<a class="headerlink" href="#assign" title="永久链接至标题">¶</a></h3>
 <p>状态机的第二段代码中使用信号名来表示转移条件，在代码后则需用 assign 对相应信号进行定义。注意，定义这个转移条件信号时必须加上当前状态，以避免因两个不同状态由同一种变化条件发生转移而导致错误。</p>
 <p><strong>VHDL</strong></p>
@@ -327,13 +338,13 @@
 </pre></div>
 </div>
 <p><strong>verilog</strong></p>
-<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">idle2s1_start</span> <span class="o">=</span> <span class="n">state_c</span><span class="o">==</span><span class="no">IDLE</span>  <span class="o">&amp;&amp;</span> <span class="no">XX</span><span class="p">;</span>
-<span class="k">assign</span> <span class="n">s12s2_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="no">S1</span>   <span class="o">&amp;&amp;</span> <span class="no">XX</span><span class="p">;</span>
-<span class="k">assign</span> <span class="n">s22idl_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="no">S2</span>   <span class="o">&amp;&amp;</span> <span class="no">XX</span><span class="p">;</span>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">idle2s1_start</span> <span class="o">=</span> <span class="n">state_c</span><span class="o">==</span><span class="n">IDLE</span>  <span class="o">&amp;&amp;</span> <span class="n">XX</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">s12s2_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="n">S1</span>   <span class="o">&amp;&amp;</span> <span class="n">XX</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">s22idl_start</span>  <span class="o">=</span><span class="n">state_c</span><span class="o">==</span><span class="n">S2</span>   <span class="o">&amp;&amp;</span> <span class="n">XX</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="state-n-state-c">
+</section>
+<section id="state-n-state-c">
 <h3>状态机规则6：状态不变时使用state_n = state_c<a class="headerlink" href="#state-n-state-c" title="永久链接至标题">¶</a></h3>
 <p>编写状态机代码时有很大一部分错误是复制粘贴过程出错造成的，很多会出现复制其它状态的代码时忘记修改状态的错误。此外，也有一部分写第二段状态机时，容易把状态保持不变写成 state_n=state_n。这个写法是错误的，因为组合逻辑只有锁存器才能有保持电路，而数字电路中通常不希望出现锁存器。</p>
 <p>为此，这里规定，其四段式状态机的第二段，状态不变时使用 state_n=state_c。如下所示，可以自行对比。这样写不但可以减少出错的可能，还可以减少调试的时间。</p>
@@ -345,7 +356,7 @@
 <p><strong>verilog</strong></p>
 <div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="nl">IDLE:</span><span class="k">begin</span>
    <span class="k">if</span><span class="p">(</span><span class="n">idle2s1_start</span><span class="p">)</span><span class="k">begin</span>
-     <span class="n">state_n</span> <span class="o">=</span> <span class="no">S1</span><span class="p">;</span>
+     <span class="n">state_n</span> <span class="o">=</span> <span class="n">S1</span><span class="p">;</span>
    <span class="k">end</span>
    <span class="k">else</span> <span class="k">begin</span>
      <span class="n">state_n</span> <span class="o">=</span> <span class="n">state_c</span><span class="p">;</span>
@@ -354,46 +365,46 @@
 
 <span class="nl">IDLE:</span><span class="k">begin</span>
    <span class="k">if</span><span class="p">(</span><span class="n">idle2s1_start</span><span class="p">)</span><span class="k">begin</span>
-     <span class="n">state_n</span> <span class="o">=</span> <span class="no">S1</span><span class="p">;</span>
+     <span class="n">state_n</span> <span class="o">=</span> <span class="n">S1</span><span class="p">;</span>
    <span class="k">end</span>
    <span class="k">else</span> <span class="k">begin</span>
-     <span class="n">state_n</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+     <span class="n">state_n</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
    <span class="k">end</span>
 <span class="k">end</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="FIFO.html" class="btn btn-neutral float-right" title="FIFO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="counter.html" class="btn btn-neutral float-left" title="计数器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="FIFO.html" class="btn btn-neutral float-right" title="FIFO" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="counter.html" class="btn btn-neutral float-left" title="计数器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -401,7 +412,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

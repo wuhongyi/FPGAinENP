@@ -1,40 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>计数器 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="状态机" href="FSM.html" />
@@ -66,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -75,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,25 +90,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
+<p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">软件安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ISE.html">ISE 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Altera.html">Altera 软件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vivado.html">Vivado 软件</a></li>
 </ul>
-<p class="caption"><span class="caption-text">语法</span></p>
+<p class="caption" role="heading"><span class="caption-text">语法</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="VHDL.html">VHDL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verilog.html">verilog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TimingConstraints.html">时序约束</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">原语</a></li>
 </ul>
-<p class="caption"><span class="caption-text">硬件介绍</span></p>
+<p class="caption" role="heading"><span class="caption-text">硬件介绍</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="LUPO.html">LUPO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DT5495.html">DT5495</a></li>
@@ -108,7 +116,7 @@
 <li class="toctree-l1"><a class="reference internal" href="DT5550.html">DT5550</a></li>
 <li class="toctree-l1"><a class="reference internal" href="R5560.html">R5560</a></li>
 </ul>
-<p class="caption"><span class="caption-text">计数器</span></p>
+<p class="caption" role="heading"><span class="caption-text">计数器</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">计数器</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">计数器规则</a><ul>
@@ -127,19 +135,19 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">状态机</span></p>
+<p class="caption" role="heading"><span class="caption-text">状态机</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FSM.html">状态机</a></li>
 </ul>
-<p class="caption"><span class="caption-text">FIFO</span></p>
+<p class="caption" role="heading"><span class="caption-text">FIFO</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="FIFO.html">FIFO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">HLS</span></p>
+<p class="caption" role="heading"><span class="caption-text">HLS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="HLS.html">高层次综合</a></li>
 </ul>
-<p class="caption"><span class="caption-text">经验总结</span></p>
+<p class="caption" role="heading"><span class="caption-text">经验总结</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="exp.html">经验总结</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tempverilog.html">verilog 临时存放</a></li>
@@ -151,6 +159,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -185,19 +194,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>计数器</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/counter.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/counter.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -210,11 +221,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>计数器<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id2">
+<section id="id2">
 <h2>计数器规则<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<div class="section" id="id3">
+<section id="id3">
 <h3>计数器规则1: 计数器逐一考虑三要素–初值、加1条件、结束条件<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 <p>任何计数器都有三个要素：初值、加1条件、结束值</p>
 <ul class="simple">
@@ -222,37 +233,37 @@
 <li><p>加1条件：计数器执行加1条件</p></li>
 <li><p>结束值：计数器计数周期的最后一个值 设计计数器，要逐一考虑这三个要素，一般是先考虑初值，再考虑加1条件，最后再考虑结束值。</p></li>
 </ul>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3>计数器规则2:计数初值必须为0<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>计数器的默认值和开始值一定要为0。这是我们规范的统一要求。我们知道一般编程语言计数都是从0开始的，0表示第1个，1表示第2个，。。。这里我们也参考这种做法，计数器都从0开始计数。</p>
 <p>所有计数器都统一从0开始计数，有助于我们阅读理解、方便使用，从而不用从头看具体代码，就能清楚这个数值的含义。</p>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h3>计数器规则3：使用某一计数值，必须同时满足加1条件<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
 <p>计数器从0开始计数，计数器的默认值，也就是复位值也是0。当计数器值为0时，如何判断这是计数器的第一个值还是还没开始计数的默认值呢？</p>
 <p>可以通过加1条件来判断。当加1条件无效时，计数器值为0表示未开始计数的默认值；当加1条件有效时，计数器值为0表示计数器的第1个值。以此类推，当cnt==x-1时，不表示数到x；只有当cnt==x-1时，并且加1条件有效时，才表示数到x。</p>
 <p>例如：当加1条件为add_cnt，且 add_cnt &amp;&amp; cnt==4时，表示计数到5个；而当 add_cnt==0 &amp;&amp; cnt==4时，不表示计数到5个。</p>
-</div>
-<div class="section" id="x-1">
+</section>
+<section id="x-1">
 <h3>计数器规则4：结束条件必须同时满足加1条件，且结束值必须是 x-1 的形式。<a class="headerlink" href="#x-1" title="永久链接至标题">¶</a></h3>
 <p>计数器的结束条件必须同时满足加1条件。例如假设要计数5个，那么结束值是4，但是结束条件不是 cnt==4 而是 add_cnt &amp;&amp; cnt==4。因为 cnt==4 不表示计数到5个，只有 add_cnt &amp;&amp; cnt==4 时，才表示计数到 5 个。</p>
 <p>为了更好地阅读代码，我们这里规定结束值必须是 x-1 的形式，即 add_cnt &amp;&amp; cnt==4 要写成 add_cnt &amp;&amp; cnt==5-1。这里的“5”表示希望计算的个数，“-1”则是固定格式。有了这个约定后，计数的边界就很明确了。</p>
-</div>
-<div class="section" id="assign-1-cnt-1">
+</section>
+<section id="assign-1-cnt-1">
 <h3>计数器规则5：当取某个数时，assign 形式必须为：（加1条件） &amp;&amp; （cnt==计数值-1）<a class="headerlink" href="#assign-1-cnt-1" title="永久链接至标题">¶</a></h3>
 <p>当要从计数器取某个数时，例如要取计数器的第5个点，就很容易写成cnt==5-1，这是不正确的。正确的写法时：（加1条件）&amp;&amp;（cnt==计数值-1），如 add_cnt &amp;&amp; cnt==5-1。</p>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h3>计数器规则6：结束后必须回到0<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
 <p>每轮计数周期结束后，计数器变回0，这是为了使计数器能够循环重复计数。</p>
-</div>
-<div class="section" id="id7">
+</section>
+<section id="id7">
 <h3>计数器规则7：若需要限定范围，则推荐使用“&gt;=”和“&lt;”两种符号<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
 <p>设计时，考虑边界值通常要花费一些心思，而且容易出错。为此，我们约定：若需要限定范围，则推荐使用“&gt;=”和“&lt;”两种符号。例如要取前8个数，那么就取 cnt&gt;=0 &amp;&amp; cnt&lt;8。注意，一定是“大与或等于”和“小于”符号，而不使用“大与”和“小于或等于”符号。</p>
 <p>该规则参考编程里的for循环语句。假如要循环 8 次，for 循环的条件通常会写成“i==0; i&lt;8; i++”，前面的0表示开始值，后面的8表示循环次数。当然，也可以写成“i==0; i&lt;=7; i++”，但是这数字的意义就实在令人费解了，虽然知道7是从8-1得来的，但多一个“-1”的思考，就纯属画蛇添足了。</p>
-</div>
-<div class="section" id="id8">
+</section>
+<section id="id8">
 <h3>计数器规则8：设计步骤<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
 <p><strong>设计步骤: 先写计数器的always段，条件用名字代替；然后用assign写出加1条件；最后用assign写出结束条件</strong></p>
 <p>我们的计数器模版代码包括三段。</p>
@@ -399,48 +410,48 @@ end
 <span class="k">assign</span> <span class="n">end_cnt</span> <span class="o">=</span> <span class="n">add_cnt</span> <span class="o">&amp;&amp;</span> <span class="n">cnt</span> <span class="o">==</span>  <span class="o">-</span><span class="mh">1</span><span class="p">;</span> <span class="c1">//补充计数器数多少数</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id9">
+</section>
+<section id="id9">
 <h3>计数器规则9：加1条件必须与计数器严格对齐，其它信号一律向计数器对齐<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
 <p>我们设计出计数器，但一般计数器不是最终的目的，最终的目的是输出各种信号。设计计数器是为了方便产生这些输出信号（包括中间信号），并能从计数器获取变化条件。例如：信号dout在计数到6时拉高，则其变1的条件是：add_cnt &amp;&amp; cnt==6-1。</p>
 <p>假设有两个信号：dout0在计数到6时拉高；dout1在计数到7时拉高。一种做法是dout0变1的条件是add_cnt &amp;&amp; cnt==6-1，dout1变1的条件是dout0==1。这个dout1就是间接与计数器对齐。这是非常不好的方法。这里我们建议一律向计数器对齐，dout1变1的条件应该为add_cnt &amp;&amp; cnt==7-1。</p>
-</div>
-<div class="section" id="id10">
+</section>
+<section id="id10">
 <h3>计数器规则10：命名必须符合规范<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
 <p><strong>比如：add_cnt 表示加1条件；end_cnt 表示结束条件</strong></p>
 <p>如无特别说明，计数器的命名都要符合规范，加1条件的前缀为 “add_”，结束条件的前缀为 “end_”。</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="FSM.html" class="btn btn-neutral float-right" title="状态机" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="R5560.html" class="btn btn-neutral float-left" title="R5560" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="FSM.html" class="btn btn-neutral float-right" title="状态机" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="R5560.html" class="btn btn-neutral float-left" title="R5560" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -448,7 +459,6 @@ end
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
