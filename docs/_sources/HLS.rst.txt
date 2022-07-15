@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  7 19:57:40 2020 (+0800)
-.. Last-Updated: 一 6月 14 21:42:03 2021 (+0800)
+.. Last-Updated: 五 7月 15 12:24:05 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 9
+..     Update #: 10
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -230,6 +230,33 @@ Tcl Shell
    exit
 
 里面用了 foreach 循环来把整个新建 solution 的流程套起来，在每个循环里面用 source 来调用同一个文件夹下事先写好的装 directive 的 tcl 文件。
+
+
+
+
+
+
+
+
+浮点运算存在运算精度问题，统一个算法，放在不同的实现环境，结果会不同。
+
+
+在C++代码中， hls有两个头文件
+
+.. code:: c++
+	  
+   #include<cmath> //这个放在testbench中
+   #include<hls_math.h>  //这个文件放在 要编译成STL代码的cpp文件中
+
+
+这样可以保证在simulation的时候， hls_math中的数学函数返回的结果与STL后返回的精度一致。 否者，如果都用cmath，会导致C-simulation的时候结果一致，但在co-simulation 的时候结果不一致 。
+
+
+
+
+
+
+
 
 
    

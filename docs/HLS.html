@@ -386,6 +386,13 @@
 </pre></div>
 </div>
 <p>里面用了 foreach 循环来把整个新建 solution 的流程套起来，在每个循环里面用 source 来调用同一个文件夹下事先写好的装 directive 的 tcl 文件。</p>
+<p>浮点运算存在运算精度问题，统一个算法，放在不同的实现环境，结果会不同。</p>
+<p>在C++代码中， hls有两个头文件</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;cmath&gt;</span><span class="c1"> //这个放在testbench中</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&lt;hls_math.h&gt;</span><span class="c1">  //这个文件放在 要编译成STL代码的cpp文件中</span><span class="cp"></span>
+</pre></div>
+</div>
+<p>这样可以保证在simulation的时候， hls_math中的数学函数返回的结果与STL后返回的精度一致。 否者，如果都用cmath，会导致C-simulation的时候结果一致，但在co-simulation 的时候结果不一致 。</p>
 <p><a class="reference external" href="https://china.xilinx.com/video/hardware/using-the-vivado-hls-tcl-interface.html">https://china.xilinx.com/video/hardware/using-the-vivado-hls-tcl-interface.html</a>
 <a class="reference external" href="https://blog.csdn.net/weixin_42683394/article/details/112312283">https://blog.csdn.net/weixin_42683394/article/details/112312283</a></p>
 <p>Vivado HLS数据类型及数据类型转换</p>
@@ -408,7 +415,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
+        &#169; 版权所有 2019-2022, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
