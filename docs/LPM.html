@@ -404,7 +404,7 @@ Altera 文件位置，安装目录下 libraries/megafunctions</p>
 <div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>  <span class="n">xpm_memory_sdpram_inst</span> <span class="o">:</span> <span class="n">xpm_memory_sdpram</span>
     <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span>
       <span class="c1">-- Common module generics</span>
-      <span class="n">MEMORY_SIZE</span> <span class="o">=&gt;</span> <span class="n">maxDelay</span><span class="p">,</span> <span class="c1">--positive integer</span>
+      <span class="n">MEMORY_SIZE</span> <span class="o">=&gt;</span> <span class="n">maxDelay</span><span class="o">*</span><span class="n">busWidth</span><span class="p">,</span> <span class="c1">--positive integer</span>
       <span class="n">MEMORY_PRIMITIVE</span> <span class="o">=&gt;</span> <span class="s">&quot;auto&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;auto&quot;, &quot;distributed&quot;, &quot;block&quot; or &quot;ultra&quot; ;</span>
       <span class="n">CLOCKING_MODE</span> <span class="o">=&gt;</span> <span class="s">&quot;common_clock&quot;</span><span class="p">,</span><span class="c1">--string; &quot;common_clock&quot;, &quot;independent_clock&quot;</span>
       <span class="n">MEMORY_INIT_FILE</span> <span class="o">=&gt;</span> <span class="s">&quot;none&quot;</span><span class="p">,</span> <span class="c1">--string; &quot;none&quot; or &quot;&lt;filename&gt;.mem&quot;</span>
@@ -528,7 +528,7 @@ Altera 文件位置，安装目录下 libraries/megafunctions</p>
 
   <div role="contentinfo">
     <p>
-        &#169; 版权所有 2019-2022, Hongyi Wu(吴鸿毅).
+        &#169; 版权所有 2019-2024, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>

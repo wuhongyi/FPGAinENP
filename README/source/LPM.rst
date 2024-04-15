@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 四 1月  7 22:06:16 2021 (+0800)
-.. Last-Updated: 一 10月 25 12:20:20 2021 (+0800)
+.. Last-Updated: 一 4月 15 21:33:00 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 4
+..     Update #: 5
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -225,7 +225,7 @@ https://www.cnblogs.com/rouwawa/p/7066635.html
     xpm_memory_sdpram_inst : xpm_memory_sdpram
       generic map (
         -- Common module generics
-        MEMORY_SIZE => maxDelay, --positive integer
+        MEMORY_SIZE => maxDelay*busWidth, --positive integer
         MEMORY_PRIMITIVE => "auto", --string; "auto", "distributed", "block" or "ultra" ;
         CLOCKING_MODE => "common_clock",--string; "common_clock", "independent_clock"
         MEMORY_INIT_FILE => "none", --string; "none" or "<filename>.mem"

@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'FPGA 在中低能实验核物理中的应用'
-copyright = '2019-2022, Hongyi Wu(吴鸿毅)'
+copyright = '2019-2024, Hongyi Wu(吴鸿毅)'
 author = 'Hongyi Wu(吴鸿毅)'
 
 # The full version, including alpha/beta/rc tags

@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 五 7月 26 20:21:45 2019 (+0800)
-.. Last-Updated: 一 6月 21 14:31:55 2021 (+0800)
+.. Last-Updated: 一 4月 15 21:36:35 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 12
+..     Update #: 13
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -14,7 +14,7 @@ README
 ##################################################
 
 
-国际上最大的两个 FPGA 厂家为 Xilinx 和 Altrea（已被Intel收购），Xilinx 公司的软件有 ISE(已停止更新，适用于早年推出的FPGA) 和 Vivado（适用于新推出的FPGA），Altera公司的软件为 Quartus。我们已有的 LUPO/DT5495/MZTIO 可编程逻辑刚好对应三个软件。对于数字信号处理模块，已有的 DT5550/R5560SE 已经在测试中。
+国际上最大的两个 FPGA 厂家为 Xilinx 和 Altrea（已被Intel收购），Xilinx 公司的软件有 ISE(已停止更新，适用于早年推出的FPGA) 和 Vivado（适用于新推出的FPGA），Altera公司的软件为 Quartus。我们已有的 LUPO/DT5495/MZTIO 可编程逻辑刚好对应三个软件。对于数字信号处理模块，已有的 DT5550/R5560SE/R5560/V2740/V2745/V2730 已经在测试中。
 
 编程语言 VHDL/verilog 两种, 本质上没有多大的区别。 我已经写好两种语言的关键模块的模版， 直接套用就可以。 整个编程的核心就是熟练掌握计数器/状态机以及FIFO的使用。
 
