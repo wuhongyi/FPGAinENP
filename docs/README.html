@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>README &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
+  <title>FPGA 在中低能实验核物理中的应用 &mdash; FPGA 在中低能实验核物理中的应用 编写中 文档</title>
   
 
   
@@ -92,7 +92,7 @@
             
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">README</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FPGA 在中低能实验核物理中的应用</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">ISE/Altera/Vivado软件</span></p>
 <ul>
@@ -187,7 +187,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>README</li>
+      <li>FPGA 在中低能实验核物理中的应用</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -206,10 +206,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="readme">
-<h1>README<a class="headerlink" href="#readme" title="永久链接至标题">¶</a></h1>
-<p>国际上最大的两个 FPGA 厂家为 Xilinx 和 Altrea（已被Intel收购），Xilinx 公司的软件有 ISE(已停止更新，适用于早年推出的FPGA) 和 Vivado（适用于新推出的FPGA），Altera公司的软件为 Quartus。我们已有的 LUPO/DT5495/MZTIO 可编程逻辑刚好对应三个软件。对于数字信号处理模块，已有的 DT5550/R5560SE/R5560/V2740/V2745/V2730 已经在测试中。</p>
-<p>编程语言 VHDL/verilog 两种, 本质上没有多大的区别。 我已经写好两种语言的关键模块的模版， 直接套用就可以。 整个编程的核心就是熟练掌握计数器/状态机以及FIFO的使用。</p>
+  <section id="fpga">
+<h1>FPGA 在中低能实验核物理中的应用<a class="headerlink" href="#fpga" title="永久链接至标题">¶</a></h1>
+<p><a class="reference external" href="http://wuhongyi.cn/FPGAinENP/">http://wuhongyi.cn/FPGAinENP/</a></p>
+<p>本教程主要面向中低能实验核物理方向</p>
+<p>有问题请联系 吴鸿毅（<a class="reference external" href="mailto:wuhongyi&#37;&#52;&#48;qq&#46;com">wuhongyi<span>&#64;</span>qq<span>&#46;</span>com</a> / <a class="reference external" href="mailto:wuhongyi&#37;&#52;&#48;pku&#46;edu&#46;cn">wuhongyi<span>&#64;</span>pku<span>&#46;</span>edu<span>&#46;</span>cn</a>）</p>
+<hr class="docutils" />
+<p>国际上最大的两个 FPGA 厂家为 Xilinx 和 Altrea（已被Intel收购），Xilinx 公司的软件有 ISE(已停止更新，适用于早年推出的FPGA) 和 Vivado（适用于新推出的FPGA），Altera公司的软件为 Quartus。本教程已有的 LUPO/DT5495/MZTIO 可编程逻辑刚好对应三个软件。对于数字信号处理模块，已有的 CAEN DT5550/R5560/DT5560/V2740/V2745/V2730/DT1260 已经在测试中。</p>
+<p>编程语言 VHDL/verilog 两种, 本质上没有多大的区别。 本教程提供两种语言的关键模块的模版， 直接套用就可以。 整个开发的核心就是熟练掌握计数器/状态机以及 FIFO 的使用。</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt>ISE/Altera/Vivado 软件</dt><dd><ul>
@@ -244,7 +248,11 @@
 <li><p>DT5495</p></li>
 <li><p>MZTIO</p></li>
 <li><p>DT5550</p></li>
-<li><p>R5560SE</p></li>
+<li><p>R5560</p></li>
+<li><p>DT5560</p></li>
+<li><p>2740/2745</p></li>
+<li><p>2730</p></li>
+<li><p>DT1260</p></li>
 </ul>
 </dd>
 </dl>
@@ -256,10 +264,10 @@
 <dt>项目实践</dt><dd><ul>
 <li><dl class="simple">
 <dt>计数器</dt><dd><ul>
-<li><p>时钟降频（很简单）</p></li>
-<li><p>LED灯（很简单）</p></li>
-<li><p>scaler（很简单）</p></li>
-<li><p>信号展宽（很简单）</p></li>
+<li><p>时钟降频</p></li>
+<li><p>LED灯</p></li>
+<li><p>scaler</p></li>
+<li><p>信号展宽</p></li>
 <li><p>UART(有个不错的verilog模版，需要进一步优化，提高普适性)</p></li>
 <li><p>IIC</p></li>
 <li><p>显示器实现示波器功能</p></li>
@@ -269,7 +277,7 @@
 </li>
 <li><dl class="simple">
 <dt>状态机</dt><dd><ul>
-<li><p>SPI(CAEN DT5495 有个VHDL模版，需要按照我们的规范重新优化)</p></li>
+<li><p>SPI(CAEN DT5495 有个VHDL模版，需要按照规范重新优化)</p></li>
 <li><p>基于FPGA的在线监视（将获取的数据直接发送到可编程板卡进行处理，可进行初步的处理后，再通过网络发送到下游的服务器存储）</p></li>
 </ul>
 </dd>
@@ -277,14 +285,14 @@
 </li>
 <li><dl class="simple">
 <dt>FIFO</dt><dd><ul>
-<li><p>信号延迟（简单）</p></li>
+<li><p>信号延迟</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>脉冲发生器</dt><dd><ul>
-<li><p>基本波形的脉冲产生(简单)</p></li>
+<li><p>基本波形的脉冲产生</p></li>
 <li><p>任意波形的脉冲产生</p></li>
 </ul>
 </dd>
@@ -295,7 +303,7 @@
 <dt>数字信号触发算法</dt><dd><ul>
 <li><p>XIA fast filter</p></li>
 <li><p>RC-CR2</p></li>
-<li><p>前沿甄别</p></li>
+<li><p>LE</p></li>
 <li></li>
 </ul>
 </dd>
